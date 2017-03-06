@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<resources>
+    <!-- Inherit from the light Material Theme -->
+	<!--<style name="MyCustomTheme" parent="android:Theme.Material.Light">-->
+		<style name="MyCustomTheme" parent="@style/Theme.AppCompat.Light.NoActionBar">
+        <!-- Customizations go here -->
+		<item name="android:colorPrimary">@color/blue_main_color</item>
+        <!-- Override the color of UI controls -->
+		<item name="android:windowNoTitle">true</item>
+	    <!--We will be using the toolbar so no need to show ActionBar-->
+	    <item name="android:windowActionBar">false</item>
+		<!-- colorAccent is used as the default value for colorControlActivated
+	         which is used to tint widgets -->
+       <!-- <item name="android:colorAccent">@color/yellow_accent_color</item>-->
+    </style>
+</resources>
