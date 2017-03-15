@@ -35,18 +35,24 @@
     <Compile Include="Repositories\UserRepository.cs" />
     <Compile Include="Models\BaseModel.cs" />
     <Compile Include="Models\User.cs" />
-    <Compile Include="Contracts\Services\IUserDataService.cs" />
-    <Compile Include="Contracts\Webservices\IUserWebservice.cs" />
     <Compile Include="WebServices\BaseWebservice.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\LocatorViewModel.cs" />
     <Compile Include="ViewModel\RegisterViewModel.cs" />
     <Compile Include="Contracts\Library\IDeviceInfo.cs" />
     <Compile Include="ViewModel\PasswordRetrievalViewModel.cs" />
-    <Compile Include="ViewModel\LoggedInViewModel.cs" />
     <Compile Include="Models\Registration.cs" />
     <Compile Include="Utility\IDialogService.cs" />
     <Compile Include="Utility\DialogService.cs" />
+    <Compile Include="WebServices\IUserWebservice.cs" />
+    <Compile Include="Services\IUserDataService.cs" />
+    <Compile Include="Repositories\IUserRepository.cs" />
+    <Compile Include="Models\WebServiceCallResult.cs" />
+    <Compile Include="Helpers\IDialogService.cs" />
+    <Compile Include="Helpers\IBackService.cs" />
+    <Compile Include="Helpers\IPopUpService.cs" />
+    <Compile Include="ViewModel\HomeViewModel.cs" />
+    <Compile Include="ViewModel\TemplateViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Contracts\" />
@@ -61,6 +67,8 @@
     <Folder Include="Models\" />
     <Folder Include="Contracts\Webservices\" />
     <Folder Include="Contracts\Library\" />
+    <Folder Include="Helpers\" />
+    <Folder Include="Models\WebServices\" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json">

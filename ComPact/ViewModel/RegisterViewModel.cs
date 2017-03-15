@@ -2,6 +2,7 @@
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using ComPact.Helpers;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Views;
@@ -13,8 +14,12 @@ namespace ComPact
 		private readonly INavigationService _navigationService;
 		private readonly IUserDataService _userDataService;
 		private readonly IDialogService _dialogService;
-		//public ICommand RegisterUserAsyncCommand { get; set; }
-
+		private readonly IBackService _backService;
+		private readonly IPopUpService _popUpService;
+		#region Parameters
+		/**
+		 * Parameters
+		 */
 		private string _firstName;
 		public string FirstName
 		{
@@ -75,79 +80,192 @@ namespace ComPact
 				Set(ref _confirmPassword, value);
 			}
 		}
+		private bool _admin;
+		public bool Admin
+		{
+			get
+			{
+				return _admin;
+			}
+			set
+			{
+				Set(ref _admin, value);
+			}
+		}
+		private Registration _registration;
+		public Registration Registration
+		{
+			get
+			{
+				return _registration;
+			}
+			set
+			{
+				Set(ref _registration, value);
+			}
+		}
+		#endregion
+		#region Commands
+		private RelayCommand _registerUserAsyncCommand;
+		public RelayCommand RegisterUserAsyncCommand
+		{
+			get
+			{
+				if (_registerUserAsyncCommand == null)
+				{
+					return _registerUserAsyncCommand
+						?? (_registerUserAsyncCommand = new RelayCommand(
+							async () =>
+							{
+								await RegisterUserAsync();
+							}));
+				}
+				return _registerUserAsyncCommand;
+			}
+		}
 
+		private RelayCommand _backRedirectCommand;
+		public RelayCommand BackRedirectCommand
+		{
+			get
+			{
+				if (_backRedirectCommand == null)
+				{
+					return _backRedirectCommand = new RelayCommand(BackRedirect);
+				}
+				return _backRedirectCommand;
+			}
+		}
 
-		private RelayCommand<Registration> _registerUserAsyncCommand;
-		public RelayCommand<Registration> RegisterUserAsyncCommand;
+		//private RelayCommand<Registration> _registerUserAsyncCommand3;
+		//public RelayCommand<Registration> RegisterUserAsyncCommand3
 		//{
 		//	get
 		//	{
-		//		return _registerUserAsyncCommand 
-		//			?? (_registerUserAsyncCommand = new RelayCommand<Registration>(async registration =>
-		//		{
-		//			var service = _userDataService;
-		//			var result =  await RegisterUserAsync(registration);
-		//			//_navigationService.NavigateTo("loggedInPage");
-		//			//return result;
-		//		}));
+		//		return _registerUserAsyncCommand3
+		//			?? (_registerUserAsyncCommand3 = new RelayCommand<Registration>(
+		//				async registration =>
+		//				{
+		//					await RegisterUserAsync3(registration);
+		//				}));
 		//	}
 		//}
+		#endregion
 
-
-		private async Task<string> RegisterUserAsync()
+		#region Constructor
+		public RegisterViewModel(INavigationService navigationService, IUserDataService userDataService, IDialogService dialogService, IBackService backService, IPopUpService popUpService)
 		{
+			_userDataService = userDataService;
+			_navigationService = navigationService;
+			_dialogService = dialogService;
+			_backService = backService;
+			_popUpService = popUpService;
 
-			//if (emailIsValid(emailTxt))
-			//{
-			//if (passwordTxt == confirmPswTxt && passwordTxt != "")
-			//{
-			//try
-			//{
-			string firstName = _firstName;
-			string lastName = _lastName;
-			string email = _email;
-			string password = _password;
-			string confirmPassword = _confirmPassword;
-			bool admin = true;
 
-			//string firstName = RegisterInfo.FirstName;
-			//string lastName = RegisterInfo.LastName;
-			//string email = RegisterInfo.Email;
-			//string password = RegisterInfo.Password;
-			//bool admin = RegisterInfo.Admin;
 
-			User newUser = new User(null, firstName, lastName, email, password, admin);
-			return await this.CreateUserAsync(newUser);
-			//string msg = "Your account has succesfully been created";
+			Init();
 
-			//if (response == "400")
-			//{
-			//	dialogBuilder(this, "error " + response, "Email is already taken!").Show();
-			//}
-			//else
-			//{
-			//	Toast.MakeText(this, "Account created", ToastLength.Long).Show();
-			//}
-			//}
-			//catch (Exception err)
-			//{
-			//	dialogBuilder(this, "error " + response, "Oops! Something went wrong, please try again later").Show();
-			//}
-			//}
-			//else
-			//{
-			//	dialogBuilder(this, "passwords do not match!", "Please make sure your passwords match eachother!").Show();
-			//}
 		}
 
+		void Init()
+		{	
+			//Register values
+			//Register commands
+			//RegisterCommands();
+		}
 
-		private async Task<string> CreateUserAsync(User user)
+		//void RegisterCommands()
+		//{
+		//	RegisterUserAsyncCommand = new RelayCommand<Registration>(async registration =>
+		//	{
+		//		await RegisterUserAsync();
+		//	});
+		//}
+		#endregion
+
+		#region Methods
+		/**
+		 * Normaal gezien wil ik dat deze functie een registeration parameter krijgt dat doorgegeven wordt pas op de onclick
+		 * Dit blijkt niet mogelijk te zijn aangezien enkel een binding dynamisch zijn waarden aanpast in een setCommand 
+		 * Een binding is enkel mogelijk door visuals te koppelen aan waarden imo
+		 */
+		async Task<User> RegisterUserAsync()
 		{
-			string response = await _userDataService.CreateUserAsync(user);
+			Admin = true;
+			_registration = new Registration(FirstName, LastName, Email, Password, ConfirmPassword, Admin);
+			string firstName = _registration.FirstName;
+			string lastName = _registration.LastName;
+			string email = _registration.Email;
+			string password = _registration.Password;
+			string confirmPassword = _registration.ConfirmPassword;
+			bool admin = _registration.Admin;
+			if (firstName != null && lastName != null && email != null && password != null && confirmPassword != null && admin != null)
+			{
+
+				if (EmailIsValid(email))
+				{
+
+					if (password == confirmPassword)
+					{
+						try
+						{
+							var newUser = new User(null, firstName, lastName, email, password, admin);
+							Tuple<int, User> tupleResponse = await CreateUserAsync(newUser);
+							//Item1 = responsecode
+							int responseCode = tupleResponse.Item1;
+							//Item2 = User Object
+							User user = tupleResponse.Item2;
+
+							if (responseCode == 400)
+							{
+								_dialogService.ShowMessage("Email is already taken!");
+							}
+							else
+							{
+								_popUpService.Show("Account created!", "long");
+								return user;
+							}
+						}
+						catch (Exception err)
+						{
+							_dialogService.ShowMessage("Oops! Something went wrong, please try again later");
+						}
+					}
+					else
+					{
+						_dialogService.ShowMessage("Please make sure your passwords match eachother!");
+					}
+				}
+				else
+				{
+					_dialogService.ShowMessage("Email is not valid!");
+				}
+			}
+			else
+			{
+				_dialogService.ShowMessage("Fill all fields in please");
+			}
+			return null;
+		}
+		void BackRedirect()
+		{
+			_backService.GoBack();
+		}
+
+		void LoginRedirect()
+		{
+			_navigationService.NavigateTo(LocatorViewModel.LoginPageKey);
+		}
+
+		async Task<Tuple<int, User>> CreateUserAsync(User user)
+		{
+			//1)Responsecode 2)UserObject
+			Tuple<int, User> response = await _userDataService.CreateUserAsync(user);
 
 			return response;
 		}
-		private static bool emailIsValid(string email)
+
+		bool EmailIsValid(string email)
 		{
 			string expresion;
 			expresion = "\\w+([-+.']\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*";
@@ -167,32 +285,9 @@ namespace ComPact
 				return false;
 			}
 		}
+		#endregion
 
 
 
-
-
-		//public RegisterViewModel()
-		//{
-		//	DetailText = "This is a detail page";
-		//}
-		//public RegisterViewModel(INavigationService navgiationService, IUserDataService userDataService, IDialogService dialogService)
-		//{
-		//	_dialogService = dialogService;
-		//	//_navigationService.NavigateTo(LocatorViewModel.);
-		//	_userDataService = userDataService;
-
-		//	//Commands
-		//	//RegisterUserAsyncCommand = new RelayCommand<string>(RegisterUserAsync);
-
-		//		//(string firstName, string lastName, string email, string password) => RegisterUserAsync(firstName, lastName, email, password));
-
-		//}
-		public RegisterViewModel(INavigationService navigationService)
-		{
-			_navigationService = navigationService;
-			_userDataService = new UserDataService(new UserWebservice());
-			//_dialogService = new DialogService();
-		}
 	}
 }

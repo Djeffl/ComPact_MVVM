@@ -2,6 +2,7 @@
 <resources>
     <color name="blue_main_color">#4b88be</color>
     <color name="yellow_accent_color">#f9f298</color>
+	<color name="accent_color"> #70A5D4</color>
     <color name="black_color">#212121</color>
 	<color name="white_color">#ffffff</color>
 </resources>

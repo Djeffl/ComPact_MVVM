@@ -5,6 +5,10 @@ using Microsoft.Practices.ServiceLocation;
 using GalaSoft.MvvmLight.Helpers;
 using System.Collections.Generic;
 using GalaSoft.MvvmLight.Threading;
+using Android.Content;
+using ComPact.Helpers;
+using ComPact.Droid.Helpers;
+using ComPact.Droid.Activities;
 
 namespace ComPact.Droid
 {
@@ -23,10 +27,10 @@ namespace ComPact.Droid
 
 					// Configure and register the MVVM Light NavigationService
 					var nav = new NavigationService();
-					//var uds = new UserDataService(new UserWebservice());
+					//var dpAlrt = new DialogService();
 
 					SimpleIoc.Default.Register<INavigationService>(() => nav);
-					//SimpleIoc.Default.Register<IUserDataService>(() => uds);
+					//SimpleIoc.Default.Register<IDialogService>(() => dpAlrt);
 
 					RegisterViews(nav);
 
@@ -46,10 +50,14 @@ namespace ComPact.Droid
 			nav.Configure(LocatorViewModel.LoginPageKey, typeof(LoginActivity));
 			nav.Configure(LocatorViewModel.RegisterPageKey, typeof(RegisterActivity));
 			nav.Configure(LocatorViewModel.PasswordRetrievalPageKey, typeof(PasswordRetrievalActivity));
+			nav.Configure(LocatorViewModel.HomePageKey, typeof(HomeActivity));
 		}
+
 		private static void RegisterIoc()
 		{
-			SimpleIoc.Default.Register<IDeviceInfo, DeviceInfo>();
+			SimpleIoc.Default.Register<IDialogService, DialogService>();
+			SimpleIoc.Default.Register<IBackService, BackService>();
+			SimpleIoc.Default.Register<IPopUpService, PopUpService>();
 		}
 	}
 }

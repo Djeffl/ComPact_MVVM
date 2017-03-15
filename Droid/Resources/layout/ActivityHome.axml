@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <include
+        android:id="@+id/toolbarHeader"
+        layout="@layout/ToolbarHeader" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="0dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        <!-- All your other elements in here -->
+            <FrameLayout
+                android:id="@+id/fragmentContainer"
+                android:layout_height="match_parent"
+                android:layout_width="match_parent" />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/show_pdf"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:minWidth="0dp"
+            android:includeFontPadding="false"
+            android:minHeight="0dp"
+            android:background="@color/primary_material_light"
+            android:orientation="horizontal"
+            android:weightSum="4"
+            android:backgroundTint="@color/accent_color">
+            <ImageButton
+                android:id="@+id/assignmentButton"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:src="@drawable/ic_assignment_white_24dp"
+                android:background="@color/accent_color" />
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:id="@+id/paymentButton"
+                android:src="@drawable/ic_payment_white_24dp"
+                android:background="@color/accent_color" />
+            <ImageButton
+                android:id="@+id/locationButton"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:src="@drawable/ic_location_on_white_24dp"
+                android:background="@color/accent_color" />
+            <ImageButton
+                android:id="@+id/messageButton"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:src="@drawable/ic_message_white_24dp"
+                android:background="@color/accent_color" />
+        </LinearLayout>
+    </RelativeLayout>
+</LinearLayout>

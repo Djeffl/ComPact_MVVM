@@ -1,19 +1,46 @@
 ﻿using System;
+using SQLite.Net.Attributes;
+
 namespace ComPact
 {
 	public class User: BaseModel
 	{
+
+		///// <summary>
+		///// List of base 64-encoded images
+		///// </summary>
+		///// <value>The images.</value>
+		//[Newtonsoft.Json.JsonProperty("images")]
+		//public List<string> Images { get; set; }
+		//[Newtonsoft.Json.JsonProperty("approved")]
+		//public int Approved { get; set; }
+
+		[PrimaryKey]
+		[Newtonsoft.Json.JsonProperty("_id")]
 		public string UserId { get; set; }
+		[Ignore]
+		[Newtonsoft.Json.JsonProperty("firstName")]
 		public string FirstName { get; set; }
+		[Ignore]
+		[Newtonsoft.Json.JsonProperty("lastName")]
 		public string LastName { get; set; }
+		[Ignore]
+		[Newtonsoft.Json.JsonProperty("email")]
 		public string Email { get; set; }
+		[Ignore]
+		[Newtonsoft.Json.JsonProperty("password")]
 		public string Password { get; set; }
-		public bool Admin { get; set; }
+		[Ignore]
+		[Newtonsoft.Json.JsonProperty("admin")]
+		public bool? Admin { get; set; }
+		[Ignore]
+		[Newtonsoft.Json.JsonProperty("qrCode")]
+		public byte[] QrCode { get; set; }
 
 		/**
 		 * Params id, firstname, lastname, email, password
 		 */
-		public User(string id, string firstName, string lastName, string email, string password, bool admin)
+		public User(string id, string firstName, string lastName, string email, string password, bool? admin)
 		{
 			UserId = id;
 			FirstName = firstName;
@@ -22,7 +49,9 @@ namespace ComPact
 			Password = password;
 			Admin = admin;
 		}
-		public User(){ }
+		public User()
+		{
+		}
 		private string fullName()
 		{
 			return FirstName + " " + LastName;

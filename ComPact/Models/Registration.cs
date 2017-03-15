@@ -14,11 +14,23 @@ namespace ComPact
 		 */
 		public Registration(string firstName, string lastName, string email, string password, string confirmPassword, bool admin)
 		{
-		FirstName = firstName;
-		LastName = lastName;
-		Email = email;
-		Password = password;
-		Admin = admin;
+			FirstName = firstName;
+			LastName = lastName;
+			Email = email;
+			Password = password;
+			ConfirmPassword = confirmPassword;
+			Admin = admin;
+		}
+
+		public static bool CanRegister(Registration registration)
+		{
+			bool response = false;
+			if (registration != null)
+			{
+				response = true;
+			}
+
+			return response;
 		}
 		public override string ToString()
 		{

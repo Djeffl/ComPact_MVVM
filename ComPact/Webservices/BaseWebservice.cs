@@ -54,7 +54,8 @@ namespace ComPact
 		 * Reference for HttpClient.PostAsJsonAsync 'System.Net.Http.Formatting.dll'
 		 * 
 		 */
-		public async Task<string> PostRequestAsync<T>(string urlExtend, T obj)
+		//public async Tuple<int, Task<T>> PostRequestAsync<T>(string urlExtend, T obj)
+		public async Task<Tuple<int, R>> PostRequestAsync<T, R>(string urlExtend, T obj)
 		{
 			HttpClient client = this.getHttpClient();
 			//HttpResponseMessage response = await client.PostAsJsonAsync(urlExtend, obj);
@@ -64,9 +65,10 @@ namespace ComPact
 			var postContent = new StringContent(data, Encoding.UTF8, "application/json");
 			var response = await client.PostAsync(urlExtend, postContent);
 			//string responseMsg = await response.Content.ReadAsStringAsync();
-			string statusCode = ((int)response.StatusCode).ToString();
-			//var result = JsonConvert.DeserializeObject<string>(response.Content.ReadAsStringAsync().Result);
-			return statusCode;
+			int statusCode = (int)response.StatusCode;
+			var result = JsonConvert.DeserializeObject<R>(response.Content.ReadAsStringAsync().Result);
+			return new Tuple<int, R>(statusCode, result);
+
 
 			//Return the URI of the created resource.
 			//return response.Headers.ToString();

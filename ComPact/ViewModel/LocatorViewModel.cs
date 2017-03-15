@@ -1,4 +1,6 @@
 ﻿using System;
+using ComPact.Helpers;
+using ComPact.ViewModel;
 using GalaSoft.MvvmLight.Ioc;
 using Microsoft.Practices.ServiceLocation;
 
@@ -12,6 +14,7 @@ namespace ComPact
 		public const string LoginPageKey = "LoginPage";
 		public const string RegisterPageKey = "RegisterPage";
 		public const string PasswordRetrievalPageKey = "PasswordRetrievalPage";
+		public const string HomePageKey = "HomePagekey";
 
 		public LoginViewModel LoginViewModel
 		{
@@ -37,11 +40,11 @@ namespace ComPact
 			}
 		}
 
-		public LoggedInViewModel LoggedInViewModel
+		public HomeViewModel HomeViewModel
 		{
 			get
 			{
-				return ServiceLocator.Current.GetInstance<LoggedInViewModel>();
+				return ServiceLocator.Current.GetInstance<HomeViewModel>();
 			}
 		}
 
@@ -52,10 +55,32 @@ namespace ComPact
 		{
 			ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
 
+			RegisterViewModels();
+			RegisterRepositories();
+			RegisterWebServices();
+			RegisterServices();
+			//RegisterHelpers();
+		}
+
+		void RegisterViewModels() 
+		{
 			SimpleIoc.Default.Register<LoginViewModel>();
 			SimpleIoc.Default.Register<RegisterViewModel>();
 			SimpleIoc.Default.Register<PasswordRetrievalViewModel>();
-			SimpleIoc.Default.Register<LoggedInViewModel>();
+			SimpleIoc.Default.Register<HomeViewModel>();
+		}
+
+		void RegisterServices()
+		{
+			SimpleIoc.Default.Register<IUserDataService, UserDataService>();
+		}
+		void RegisterWebServices()
+		{
+			SimpleIoc.Default.Register<IUserWebservice, UserWebservice>();
+		}
+		void RegisterRepositories()
+		{
+			//SimpleIoc.Default.Register<IUserRepository, UserRepository>();
 		}
 	}
 }

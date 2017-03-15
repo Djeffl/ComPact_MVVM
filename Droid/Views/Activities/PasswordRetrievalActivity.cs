@@ -1,9 +1,7 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
 using Android.App;
 using Android.Content;
 using Android.OS;
@@ -11,11 +9,12 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using GalaSoft.MvvmLight.Helpers;
+using GalaSoft.MvvmLight.Views;
 
 namespace ComPact.Droid
 {
 	[Activity(Label = "PasswordRetrievalActivity")]
-	public class PasswordRetrievalActivity : AppCompatActivityBase
+	public class PasswordRetrievalActivity : BaseActivity
 	{
 		//Keep track of bindings to avoid premature garbage collection
 		private readonly List<Binding> bindings = new List<Binding>();
@@ -23,11 +22,11 @@ namespace ComPact.Droid
 		//private TextView _detailTextView;
 
 		//Bind Viewmodel to activity
-		private RegisterViewModel ViewModel
+		private PasswordRetrievalViewModel ViewModel
 		{
 			get
 			{
-				return App.Locator.RegisterViewModel;
+				return App.Locator.PasswordRetrievalViewModel;
 			}
 		}
 

@@ -2,53 +2,52 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <include
-        android:id="@+id/toolbar"
-        layout="@layout/toolbar" />
+    android:layout_height="match_parent"
+    android:paddingLeft="30dp"
+    android:paddingRight="30dp">
     <ImageView
-        android:src="@android:drawable/ic_menu_report_image"
+        android:src="@drawable/logo_compact"
         android:layout_width="match_parent"
-        android:layout_height="196.0dp"
-        android:id="@+id/activityLoginLogoImageView" />
+        android:layout_height="225.0dp"
+        android:id="@+id/imageView1" />
     <EditText
         android:inputType="textEmailAddress"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/activityLoginEmailEditText"
+        android:id="@+id/activityLoginEmailInputLoginEditText"
         android:textAllCaps="false"
         android:autoText="false"
-        android:hint="Email" />
+        android:hint="Email"
+        android:text="jeffliekens7@hotmail.com" />
     <EditText
         android:inputType="textPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/activityLoginPasswordEditText"
-        android:hint="Password" />
+        android:id="@+id/activityLoginPasswordInputLoginEditText"
+        android:hint="Password"
+        android:text="test" />
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/activityLoginLinearLayout1"
+        android:id="@+id/linearLayout1"
         android:layout_marginTop="15dp"
         android:layout_marginBottom="20dp">
         <Button
+            android:theme="@style/main_button"
             android:text="Login"
-            android:id="@+id/activityLoginLoginBtn"
+            android:id="@+id/activityLoginLoginButton"
             android:layout_width="188.5dp"
             android:layout_height="58.5dp"
             android:textAllCaps="false"
-            android:textColor="#ffffffff"
-            android:background="#ff4b88be"
             android:layout_marginRight="8dp" />
         <Button
+            android:theme="@style/accent_button"
             android:text="Qr code"
-            android:id="@+id/activityLoginQrCodeBtn"
+            android:id="@+id/activityLoginQrCodeButton"
             android:layout_width="115dp"
             android:layout_height="59.5dp"
             android:textAllCaps="false"
-            android:textColor="#000000"
-            android:background="#fff9f298"
             android:layout_marginLeft="8dp" />
     </LinearLayout>
     <TextView

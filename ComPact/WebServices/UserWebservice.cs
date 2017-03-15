@@ -3,20 +3,29 @@ using System.Threading.Tasks;
 
 namespace ComPact
 {
-	public class UserWebservice: BaseWebservice, IUserWebservice
+	public class UserWebservice : BaseWebservice, IUserWebservice
 	{
 		//private static User user;
 		public UserWebservice()
 		{
 			//Task.Run(() => this.CreateUser("Jeff", "Liekens","jeffliekens7@hotmail.com","test")).Wait();
 		}
-		public async Task<string> CreateUserAsync(User newUser)
+		public async Task<Tuple<int, User>> CreateUserAsync(User newUser)
 		{
 			/**
 			 * @Params = specifieke url, object
 			 */
-			string response = await base.PostRequestAsync("users/new", newUser);
+			Tuple<int, User> response = await PostRequestAsync<User, User>("users/new", newUser);
 
+			return response;
+		}
+		/**
+		 * return ResponseCode, IdUser
+		 */
+		public async Task<Tuple<int, Object>> LoginUserAsync(string email, string password)
+		{
+			User loginObj = new User(null, null, null, email, password, null);
+			var response = await PostRequestAsync<User, Object>("users/login", loginObj);
 			return response;
 		}
 

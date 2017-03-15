@@ -2,44 +2,53 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingRight="25dp"
-    android:paddingLeft="25dp">
-    <EditText
-        android:inputType="textPersonName"
+    android:layout_height="match_parent">
+    <include
+        android:id="@+id/toolbarHeader"
+        layout="@layout/ToolbarHeader" />
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/activityRegisterFirstNameTextView"
-        android:hint="Firstname" />
-    <EditText
-        android:inputType="textPersonName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/activityRegisterLastNameTextView"
-        android:hint="Lastname" />
-    <EditText
-        android:inputType="textEmailAddress"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/activityRegisterEmailTextView"
-        android:hint="Email" />
-    <EditText
-        android:inputType="textPassword"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/activityRegisterPasswordTextView"
-        android:hint="Password" />
-    <EditText
-        android:inputType="textPassword"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/activityRegisterConfirmPasswordTextView"
-        android:hint="Retype password" />
-    <Button
-        android:text="Sign up!"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/activityRegisterRegisterButton"
-        android:background="#ff4b88be"
-        android:textAllCaps="false" />
+        android:layout_height="match_parent"
+        android:paddingRight="25dp"
+        android:paddingLeft="25dp">
+        <EditText
+            android:inputType="textPersonName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/activityRegisterFirstNameTextView"
+            android:hint="Firstname" />
+        <EditText
+            android:inputType="textPersonName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/activityRegisterLastNameTextView"
+            android:hint="Lastname" />
+        <EditText
+            android:inputType="textEmailAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/activityRegisterEmailTextView"
+            android:hint="Email" />
+        <EditText
+            android:inputType="textPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/activityRegisterPasswordTextView"
+            android:hint="Password" />
+        <EditText
+            android:inputType="textPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/activityRegisterConfirmPasswordTextView"
+            android:hint="Retype password" />
+        <Button
+            android:theme="@style/main_button"
+            android:text="Sign up!"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/activityRegisterRegisterButton"
+            android:background="#ff4b88be"
+            android:textAllCaps="false" />
+    </LinearLayout>
 </LinearLayout>
