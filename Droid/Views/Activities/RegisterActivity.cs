@@ -29,15 +29,19 @@ namespace ComPact.Droid
 		//Keep track of bindings to avoid premature garbage collection
 		private readonly List<Binding> bindings = new List<Binding>();
 		//Elements
-		private TextView _firstNameTextView;
-		private TextView _lastNameTextView;
-		private TextView _emailTextView;
-		private TextView _passwordTextView;
-		private TextView _confirmTextView;
+		private EditText _firstNameEditText;
+		private EditText _lastNameEditText;
+		private EditText _emailEditText;
+		private EditText _passwordEditText;
+		private EditText _confirmEditText;
 		private Button _registerButton;
-		private Toolbar _toolbar;
+
 		private ImageView _backImageView;
-		private ImageView _OptionsImageView;
+		private TextView _titleTextView;
+		private ImageView _optionsImageView;
+
+
+
 
 		//Bind Viewmodel to activity
 		private RegisterViewModel ViewModel
@@ -57,8 +61,8 @@ namespace ComPact.Droid
 
 			//Init elements
 			Init();
-			_OptionsImageView.Visibility = ViewStates.Gone;
-
+			_optionsImageView.Visibility = ViewStates.Gone;
+			_titleTextView.Text = "Register";
 			//bindings
 			SetBindings();
 
@@ -70,25 +74,32 @@ namespace ComPact.Droid
 		 */
 		void Init()
 		{
-			_firstNameTextView = FindViewById<TextView>(Resource.Id.activityRegisterFirstNameTextView);
-			_lastNameTextView = FindViewById<TextView>(Resource.Id.activityRegisterLastNameTextView);
-			_emailTextView = FindViewById<TextView>(Resource.Id.activityRegisterEmailTextView);
-			_passwordTextView = FindViewById<TextView>(Resource.Id.activityRegisterPasswordTextView);
-			_confirmTextView = FindViewById<TextView>(Resource.Id.activityRegisterConfirmPasswordTextView);
+			_firstNameEditText = FindViewById<EditText>(Resource.Id.activityRegisterFirstNameTextView);
+			_lastNameEditText = FindViewById<EditText>(Resource.Id.activityRegisterLastNameTextView);
+			_emailEditText = FindViewById<EditText>(Resource.Id.activityRegisterEmailTextView);
+			_passwordEditText = FindViewById<EditText>(Resource.Id.activityRegisterPasswordTextView);
+			_confirmEditText = FindViewById<EditText>(Resource.Id.activityRegisterConfirmPasswordTextView);
 			_registerButton = FindViewById<Button>(Resource.Id.activityRegisterRegisterButton);
 			_backImageView = FindViewById<ImageView>(Resource.Id.customToolbarBackImageView);
-			_OptionsImageView = FindViewById<ImageView>(Resource.Id.customToolbarOptionsImageView);
+			_optionsImageView = FindViewById<ImageView>(Resource.Id.customToolbarOptionsImageView);
+			_titleTextView = FindViewById<TextView>(Resource.Id.customToolbarTitleTextView);
+			Typeface face = Typeface.CreateFromAsset(this.Assets,"RobotoTTF/Roboto-Light.ttf");
+			_confirmEditText.Typeface = face;
+			_passwordEditText.Typeface = face;
+			_emailEditText.Typeface = face;
+			_lastNameEditText.Typeface = face;
+			_firstNameEditText.Typeface = face;
 		}
 		/**
 		 * Set the bindings of this activity
 		 */
 		void SetBindings()
 		{
-			this.SetBinding(() => ViewModel.FirstName, () => _firstNameTextView.Text, BindingMode.TwoWay);
-			this.SetBinding(() => ViewModel.LastName, () => _lastNameTextView.Text, BindingMode.TwoWay);
-			this.SetBinding(() => ViewModel.Email, () => _emailTextView.Text, BindingMode.TwoWay);
-			this.SetBinding(() => ViewModel.Password, () => _passwordTextView.Text, BindingMode.TwoWay);
-			this.SetBinding(() => ViewModel.ConfirmPassword, () => _confirmTextView.Text, BindingMode.TwoWay);
+			this.SetBinding(() => ViewModel.FirstName, () => _firstNameEditText.Text, BindingMode.TwoWay);
+			this.SetBinding(() => ViewModel.LastName, () => _lastNameEditText.Text, BindingMode.TwoWay);
+			this.SetBinding(() => ViewModel.Email, () => _emailEditText.Text, BindingMode.TwoWay);
+			this.SetBinding(() => ViewModel.Password, () => _passwordEditText.Text, BindingMode.TwoWay);
+			this.SetBinding(() => ViewModel.ConfirmPassword, () => _confirmEditText.Text, BindingMode.TwoWay);
 		}
 		/**
 		 * Register the commands from the ViewModel to the View
@@ -99,9 +110,6 @@ namespace ComPact.Droid
 			//_registerButton.SetCommand<Registration>("Click", ViewModel.RegisterUserAsyncCommand, GetRegistrationObject());
 			_registerButton.SetCommand("Click", ViewModel.RegisterUserAsyncCommand);
 			_backImageView.SetCommand("Click", ViewModel.BackRedirectCommand);
-
-
-			//ViewModel.RegisterUserAsyncCommand3.Execute(GetRegistrationObject());
 
 		}
 		/**

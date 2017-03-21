@@ -10,6 +10,7 @@ namespace ComPact
 		/**
 		 * return ResponseCode, IdUser
 		 */
-		Task<Tuple<int, Object>> LoginUserAsync(string email, string password);
+		Task<bool> LoginUserAsync(string email, string password);
+		bool HasUser();
 	}
 }

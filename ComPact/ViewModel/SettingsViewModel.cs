@@ -1,18 +1,17 @@
-﻿using System;
+﻿using ComPact.Helpers;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Views;
 
-namespace ComPact.ViewModel
+namespace ComPact
 {
-	public class TemplateViewModel: ViewModelBase
+	public class SettingsViewModel: ViewModelBase
 	{
 		/**
 		 * Declare Services
 		 */
-		//private readonly INavigationService _navigationService;
-		//private readonly IUserDataService _userDataService;
-		//private readonly IDialogService _dialogService;
+		private readonly INavigationService _navigationService;
+		private readonly IBackService _backService;
 		#region Parameters
 		/**
 		 * Parameters
@@ -31,18 +30,17 @@ namespace ComPact.ViewModel
 		}
 		#endregion
 		#region Commands
-
+		public RelayCommand BackRedirectCommand { get; set; }
 		#endregion
 		#region Constructor
 		/**
 		 * Init services & Init() & RegisterCommands();
 		 */
-		public TemplateViewModel(INavigationService navigationService)
+		public SettingsViewModel(INavigationService navigationService, IBackService backService)
 		{
 			//Init Services
-			//_navigationService = navigationService;
-			//_userDataService = userDataService;
-			//_dialogService = dialogService;
+			_navigationService = navigationService;
+			_backService = backService;
 
 			Init();
 
@@ -54,11 +52,15 @@ namespace ComPact.ViewModel
 		}
 		void RegisterCommands()
 		{
+			BackRedirectCommand = new RelayCommand(BackRedirect);
 		}
 		#endregion
 
 		#region Methods
-
+		void BackRedirect()
+		{
+			_backService.GoBack();
+		}
 		#endregion
 	}
 }

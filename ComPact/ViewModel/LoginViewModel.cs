@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Views;
+using Newtonsoft.Json;
 
 namespace ComPact
 {
@@ -40,11 +43,28 @@ namespace ComPact
 				Set(ref _password, value);
 			}
 		}
+		private RelayCommand _loginUserAsyncCommand;
+		public RelayCommand LoginUserAsyncCommand
+		{
+			get
+			{
+				if (_loginUserAsyncCommand == null)
+				{
+					return _loginUserAsyncCommand
+						?? (_loginUserAsyncCommand = new RelayCommand(
+							async () =>
+							{
+						await LoginUserAsync();
+							}));
+				}
+				return _loginUserAsyncCommand;
+			}
+		}
 		#endregion
 		#region Commands
 		public RelayCommand RegisterRedirectCommand { get; set; }
 		public RelayCommand PasswordRetrievalRedirectCommand { get; set; }
-		public RelayCommand LoginUserAsyncCommand { get; set; }
+		public RelayCommand QrLoginRedirectCommand { get; set; }
 		#endregion
 		#region Constructor
 		/**
@@ -56,20 +76,23 @@ namespace ComPact
 			_userDataService = userDataService;
 			_dialogService = dialogService;
 
-			Init();
-
 			RegisterCommands();
+			Init();
 		}
 		void Init()
 		{
 			//Register values
 			//Register commands
+			//if (_userDataService.HasUser())
+			//{
+			//	HomeRedirect();
+			//}
 		}
 		void RegisterCommands()
 		{
 			RegisterRedirectCommand = new RelayCommand(RegisterRedirect);
 			PasswordRetrievalRedirectCommand = new RelayCommand(PasswordRedirect);
-			LoginUserAsyncCommand = new RelayCommand(LoginUserAsync);
+			QrLoginRedirectCommand = new RelayCommand(QrLoginRedirect);
 		}
 		#endregion
 
@@ -86,36 +109,44 @@ namespace ComPact
 		{
 			_navigationService.NavigateTo(LocatorViewModel.HomePageKey);
 		}
+		void QrLoginRedirect()
+		{
+			_navigationService.NavigateTo(LocatorViewModel.LoginQrPageKey);
+		}
 
-		async void LoginUserAsync()
+		async Task LoginUserAsync()
 		{
 			string email = Email;
 			string password = Password;
-			if (email != null && password != null)
+			if (email != "" && password != "" && email != null && password != null)
 			{
 				try
 				{
-					var newUser = new User(null, null, null, email, password, null);
-					Tuple<int, Object> tupleResponse = await _userDataService.LoginUserAsync(email, password);
+					bool positiveResponseCode = await _userDataService.LoginUserAsync(email, password);
 
-					//Item1 = responsecode
-					int responseCode = tupleResponse.Item1;
-					//Item2 = UserId
-					var userId = tupleResponse.Item2;
-					_dialogService.ShowMessage(userId.ToString());
-					if (responseCode == 400 || responseCode == 401)
+
+					if (positiveResponseCode)
 					{
-						_dialogService.ShowMessage("The email and password combination doesn't match.");
+						HomeRedirect();
+						//_dialogService.ShowMessage("okey!");
 					}
+
 					else
 					{
-						//HomeRedirect();
+						_dialogService.ShowMessage("Your email and password do not match!");
 					}
 				}
 				catch (Exception err)
 				{
-					_dialogService.ShowMessage("Oops! Something went wrong, please try again later");
+					//comment me
+					_dialogService.ShowMessage(err.ToString());
+
+					_dialogService.ShowMessage("Oops something went wrong");
 				}
+			}
+			else
+			{
+				_dialogService.ShowMessage("Please fill in the fields.");
 			}
 		}
 		#endregion

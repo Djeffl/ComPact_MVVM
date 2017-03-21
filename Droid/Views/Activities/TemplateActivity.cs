@@ -28,7 +28,6 @@ namespace ComPact.Droid.Activities
 		protected override void OnCreate(Bundle savedInstanceState)
 		{
 			base.OnCreate(savedInstanceState);
-
 			//Set Lay out
 			SetContentView(Resource.Layout.ActivityHome);
 

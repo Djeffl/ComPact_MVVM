@@ -1,18 +1,17 @@
-﻿using System;
-using ComPact.Helpers;
+﻿using ComPact.Helpers;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Views;
 
-namespace ComPact.ViewModel
+namespace ComPact
 {
-	public class HomeViewModel: ViewModelBase
+	public class HelpViewModel: ViewModelBase
 	{
 		/**
-		 * Delcare Services
+		 * Declare Services
 		 */
 		private readonly INavigationService _navigationService;
-		//private readonly IUserDataService _userDataService;
+		private readonly IBackService _backService;
 		//private readonly IDialogService _dialogService;
 		#region Parameters
 		/**
@@ -32,20 +31,17 @@ namespace ComPact.ViewModel
 		}
 		#endregion
 		#region Commands
-		public RelayCommand HelpRedirectCommand { get; set; }
-		public RelayCommand SettingsRedirectCommand { get; set; }
+		public RelayCommand BackRedirectCommand { get; set; }
 		#endregion
 		#region Constructor
 		/**
 		 * Init services & Init() & RegisterCommands();
 		 */
-		public HomeViewModel(INavigationService navigationService)
+		public HelpViewModel(INavigationService navigationService, IBackService backService)
 		{
 			//Init Services
 			_navigationService = navigationService;
-
-			//_userDataService = userDataService;
-			//_dialogService = dialogService;
+			_backService = backService;
 
 			Init();
 
@@ -57,19 +53,14 @@ namespace ComPact.ViewModel
 		}
 		void RegisterCommands()
 		{
-			HelpRedirectCommand = new RelayCommand(HelpPageRedirect);
-			SettingsRedirectCommand = new RelayCommand(SettingsPageRedirect);
+			BackRedirectCommand = new RelayCommand(BackRedirect);
 		}
 		#endregion
 
 		#region Methods
-		void HelpPageRedirect()
+		void BackRedirect()
 		{
-			_navigationService.NavigateTo(LocatorViewModel.HelpPageKey);
-		}
-		void SettingsPageRedirect()
-		{
-			_navigationService.NavigateTo(LocatorViewModel.SettingsPageKey);
+			_backService.GoBack();
 		}
 		#endregion
 	}

@@ -48,9 +48,13 @@ namespace ComPact.Droid
 		private static void RegisterViews(NavigationService nav)
 		{
 			nav.Configure(LocatorViewModel.LoginPageKey, typeof(LoginActivity));
+			nav.Configure(LocatorViewModel.LoginQrPageKey, typeof(LoginQrActivity));
 			nav.Configure(LocatorViewModel.RegisterPageKey, typeof(RegisterActivity));
 			nav.Configure(LocatorViewModel.PasswordRetrievalPageKey, typeof(PasswordRetrievalActivity));
 			nav.Configure(LocatorViewModel.HomePageKey, typeof(HomeActivity));
+			nav.Configure(LocatorViewModel.HelpPageKey, typeof(HelpActivity));
+			nav.Configure(LocatorViewModel.SettingsPageKey, typeof(SettingsActivity));
+			//nav.Configure(LocatorViewModel.TasksPageKey, typeof(Fragments.TasksFragment));
 		}
 
 		private static void RegisterIoc()
@@ -58,6 +62,8 @@ namespace ComPact.Droid
 			SimpleIoc.Default.Register<IDialogService, DialogService>();
 			SimpleIoc.Default.Register<IBackService, BackService>();
 			SimpleIoc.Default.Register<IPopUpService, PopUpService>();
+			SimpleIoc.Default.Register<ISQLite, SQLite_Android>();
+			//SimpleIoc.Default.Register<IMenuDialogService, MenuDialogService>();
 		}
 	}
 }

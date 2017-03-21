@@ -1,4 +1,5 @@
 ﻿using System;
+using ComPact;
 using ComPact.Helpers;
 using ComPact.ViewModel;
 using GalaSoft.MvvmLight.Ioc;
@@ -12,15 +13,27 @@ namespace ComPact
 		 * Set a key for each page => App.cs
 		 */
 		public const string LoginPageKey = "LoginPage";
+		public const string LoginQrPageKey = "LoginQrPage";
 		public const string RegisterPageKey = "RegisterPage";
 		public const string PasswordRetrievalPageKey = "PasswordRetrievalPage";
 		public const string HomePageKey = "HomePagekey";
+		public const string HelpPageKey = "HelpPageKey";
+		public const string SettingsPageKey = "SettingsPageKey";
+
+		public const string TasksPageKey = "TasksPageKey";
 
 		public LoginViewModel LoginViewModel
 		{
 			get
 			{
 				return ServiceLocator.Current.GetInstance<LoginViewModel>();
+			}
+		}
+		public LoginQrViewModel LoginQrViewModel
+		{
+			get
+			{
+				return ServiceLocator.Current.GetInstance<LoginQrViewModel>();
 			}
 		}
 
@@ -47,6 +60,27 @@ namespace ComPact
 				return ServiceLocator.Current.GetInstance<HomeViewModel>();
 			}
 		}
+		public HelpViewModel HelpViewModel
+		{
+			get
+			{
+				return ServiceLocator.Current.GetInstance<HelpViewModel>();
+			}
+		}
+		public SettingsViewModel SettingsViewModel
+		{
+			get
+			{
+				return ServiceLocator.Current.GetInstance<SettingsViewModel>();
+			}
+		}
+		public TasksViewModel TasksViewModel
+		{
+			get
+			{
+				return ServiceLocator.Current.GetInstance<TasksViewModel>();
+			}
+		}
 
 		/**
 		 * Register every ViewModel to the IOC container
@@ -59,15 +93,18 @@ namespace ComPact
 			RegisterRepositories();
 			RegisterWebServices();
 			RegisterServices();
-			//RegisterHelpers();
 		}
 
 		void RegisterViewModels() 
 		{
 			SimpleIoc.Default.Register<LoginViewModel>();
+			SimpleIoc.Default.Register<LoginQrViewModel>();
 			SimpleIoc.Default.Register<RegisterViewModel>();
 			SimpleIoc.Default.Register<PasswordRetrievalViewModel>();
 			SimpleIoc.Default.Register<HomeViewModel>();
+			SimpleIoc.Default.Register<HelpViewModel>();
+			SimpleIoc.Default.Register<SettingsViewModel>();
+			SimpleIoc.Default.Register<TasksViewModel>();
 		}
 
 		void RegisterServices()
@@ -80,7 +117,7 @@ namespace ComPact
 		}
 		void RegisterRepositories()
 		{
-			//SimpleIoc.Default.Register<IUserRepository, UserRepository>();
+			SimpleIoc.Default.Register<IUserRepository, UserRepository>();
 		}
 	}
 }

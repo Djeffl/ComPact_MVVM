@@ -4,18 +4,30 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using SQLite.Net.Async;
+using SQLite.Net;
+using SQLite.Net.Interop;
+using ComPact.Helpers;
+using SQLite;
 
 namespace ComPact
 {
 	public abstract class BaseRepository<TEntity, TKey> where TEntity : class, new()
 	{
-		private readonly SQLiteAsyncConnection _connection;
+		//sqlite.net.async-pcl
+		//sqlite.net.core-pcl
+		//sqlite.net-pcl
+		private readonly SQLite.Net.Async.SQLiteAsyncConnection _connection;
+		private SQLiteCommand sql_cmd;
 
-		protected BaseRepository()
+		protected BaseRepository(ISQLite con)
 		{
-			//_connection = //Initialize your connection here
+			//var connectionFactory = new Func<SQLiteConnectionWithLock>(
+			//	() => new SQLiteConnectionWithLock(platform, new SQLiteConnectionString(path, true))
+			//);
+			_connection = con.GetConnection();
+			//_connection = new SQLiteAsyncConnection(connectionFactory); //Initialize your connection here
 
-			//_connection.CreateTableAsync<TEntity>().Wait();
+			_connection.CreateTableAsync<TEntity>().Wait();
 		}
 
 		public virtual IEnumerable<TEntity> All()
@@ -96,6 +108,11 @@ namespace ComPact
 		{
 			await _connection.DropTableAsync<TEntity>();
 			await _connection.CreateTableAsync<TEntity>();
+		}
+
+		public SQLiteAsyncConnection GetConnection()
+		{
+			throw new NotImplementedException();
 		}
 	}
 }

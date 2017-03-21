@@ -1,15 +1,33 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using ComPact;
+using ComPact.Helpers;
+using SQLite;
+using SQLite.Net;
+using SQLite.Net.Async;
+using SQLite.Net.Interop;
+
 namespace ComPact
 {
-	public class UserRepository: IUserRepository//: BaseRepository<TEntity, TKey>, IUserRepository
+	public class UserRepository: BaseRepository<User, string>, IUserRepository
 	{
-		//public UserRepository()
-		//{
-		//	static string _path;
-		//public UserRepository(string path)
-		//{
-		//	_path = path;
-		//}
+		private SQLiteAsyncConnection database;
+		//ISQLitePlatform platform; 
+		public UserRepository(ISQLite connection)
+			:base(connection)
+		{
+		}
+
+		public async Task SaveUser(User user)
+		{
+			await Insert(user);
+		}
+		public IEnumerable<User> GetUser()
+		{
+			return All();
+		}
+
 		//private string createDatabase()
 		//{
 		//	try
@@ -31,8 +49,7 @@ namespace ComPact
 		//{
 		//	try
 		//	{
-		//		var db = new SQLiteAsyncConnection(_path);
-		//		int response = await db.InsertAsync(data);
+		//		int response = await GetConnection().InsertAsync(data);
 		//		if (response != 0)
 		//		{
 		//			await db.UpdateAsync(data);
@@ -81,6 +98,10 @@ namespace ComPact
 		//		return -1;
 		//	}
 		//}
+
+		//public SQLiteConnection GetConnection()
+		//{
+		//	throw new NotImplementedException();
 		//}
 	}
 }

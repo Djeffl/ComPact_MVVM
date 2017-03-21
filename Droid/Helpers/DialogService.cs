@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Android.App;
+
 using Android.Content;
 using Android.OS;
+using Android.Support.V7.App;
 using Plugin.CurrentActivity;
 
 namespace ComPact.Droid
@@ -13,22 +14,6 @@ namespace ComPact.Droid
 		public DialogService()
 		{
 		}
-
-		//public async Task DisplayAlertAsync(string title, string message, string acceptButton, string cancelButton, Action afterHideCallback)
-		//{
-		//	// AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(_context)
-		//	//	.SetTitle(title)
-		//	//	.SetMessage(message)
-		//	//	.SetPositiveButton(Android.Resource.String.Yes, (senderAlert, args) =>
-		//	//	{
-
-		//	//});
-		//	if(afterHideCallback != null)
-
-		//	{
-		//		afterHideCallback();
-		//	}
-		//}
 
 		public void ShowMessage(string message)
 		{

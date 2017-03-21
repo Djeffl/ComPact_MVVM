@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace ComPact
@@ -22,10 +23,10 @@ namespace ComPact
 		/**
 		 * return ResponseCode, IdUser
 		 */
-		public async Task<Tuple<int, Object>> LoginUserAsync(string email, string password)
+		public async Task<HttpResponseMessage> LoginUserAsync(string email, string password)
 		{
 			User loginObj = new User(null, null, null, email, password, null);
-			var response = await PostRequestAsync<User, Object>("users/login", loginObj);
+			HttpResponseMessage response = await PostRequestAsync<User>("users/login", loginObj);
 			return response;
 		}
 

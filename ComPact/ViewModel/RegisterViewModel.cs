@@ -161,8 +161,6 @@ namespace ComPact
 			_backService = backService;
 			_popUpService = popUpService;
 
-
-
 			Init();
 
 		}
@@ -213,8 +211,7 @@ namespace ComPact
 							Tuple<int, User> tupleResponse = await CreateUserAsync(newUser);
 							//Item1 = responsecode
 							int responseCode = tupleResponse.Item1;
-							//Item2 = User Object
-							User user = tupleResponse.Item2;
+
 
 							if (responseCode == 400)
 							{
@@ -222,6 +219,8 @@ namespace ComPact
 							}
 							else
 							{
+								//Item2 = User Object
+								User user = tupleResponse.Item2;
 								_popUpService.Show("Account created!", "long");
 								return user;
 							}

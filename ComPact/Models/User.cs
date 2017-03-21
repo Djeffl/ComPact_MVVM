@@ -56,9 +56,13 @@ namespace ComPact
 		{
 			return FirstName + " " + LastName;
 		}
+		//public override string ToString()
+		//{
+		//	return fullName();
+		//}
 		public override string ToString()
 		{
-			return fullName();
+			return string.Format("[User: UserId={0}, FirstName={1}, LastName={2}, Email={3}, Password={4}, Admin={5}, QrCode={6}]", UserId, FirstName, LastName, Email, Password, Admin, QrCode);
 		}
 	}
 }

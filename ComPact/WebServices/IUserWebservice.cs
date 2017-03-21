@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace ComPact
@@ -7,8 +8,8 @@ namespace ComPact
 	{
 		Task<Tuple<int,User>> CreateUserAsync(User user);
 		/**
-		 * return ResponseCode, IdUser
+		 * return Response of Post
 		 */
-		Task<Tuple<int, Object>> LoginUserAsync(string email, string password);
+		Task<HttpResponseMessage> LoginUserAsync(string email, string password);
 	}
 }
