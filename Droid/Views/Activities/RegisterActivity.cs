@@ -40,9 +40,6 @@ namespace ComPact.Droid
 		private TextView _titleTextView;
 		private ImageView _optionsImageView;
 
-
-
-
 		//Bind Viewmodel to activity
 		private RegisterViewModel ViewModel
 		{
@@ -107,18 +104,10 @@ namespace ComPact.Droid
 		 */
 		void SetCommands()
 		{
-			//_registerButton.SetCommand<Registration>("Click", ViewModel.RegisterUserAsyncCommand, GetRegistrationObject());
 			_registerButton.SetCommand("Click", ViewModel.RegisterUserAsyncCommand);
 			_backImageView.SetCommand("Click", ViewModel.BackRedirectCommand);
 
 		}
-		/**
-		 * Get the value of the TextViews
-		 */
-		//Registration GetRegistrationObject()
-		//{
-		//	return new Registration(_firstNameTextView.Text, _lastNameTextView.Text, _emailTextView.Text, _passwordTextView.Text, _confirmTextView.Text, true);
-		//}
 	}
 
 }

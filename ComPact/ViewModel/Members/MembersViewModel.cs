@@ -1,17 +1,16 @@
 ﻿using System;
-using ComPact.Helpers;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Views;
 
-namespace ComPact.ViewModel
+namespace ComPact.ViewModel.Members
 {
-	public class HomeViewModel: ViewModelBase
+	public class MembersViewModel: ViewModelBase
 	{
 		/**
-		 * Delcare Services
+		 * Declare Services
 		 */
-		private readonly INavigationService _navigationService;
+		readonly INavigationService _navigationService;
 		//private readonly IUserDataService _userDataService;
 		//private readonly IDialogService _dialogService;
 		#region Parameters
@@ -32,14 +31,15 @@ namespace ComPact.ViewModel
 		}
 		#endregion
 		#region Commands
-		public RelayCommand HelpRedirectCommand { get; set; }
-		public RelayCommand SettingsRedirectCommand { get; set; }
+		public RelayCommand BackRedirectCommand { get; set; }
+		public RelayCommand AddMembersRedirectCommand { get; set; }
+
 		#endregion
 		#region Constructor
 		/**
 		 * Init services & Init() & RegisterCommands();
 		 */
-		public HomeViewModel(INavigationService navigationService, IUserDataService userDataService)
+		public MembersViewModel(INavigationService navigationService)
 		{
 			//Init Services
 			_navigationService = navigationService;
@@ -56,19 +56,19 @@ namespace ComPact.ViewModel
 		}
 		void RegisterCommands()
 		{
-			HelpRedirectCommand = new RelayCommand(HelpPageRedirect);
-			SettingsRedirectCommand = new RelayCommand(SettingsPageRedirect);
+			BackRedirectCommand = new RelayCommand(BackRedirect);
+			AddMembersRedirectCommand = new RelayCommand(AddMembersRedirect);
 		}
 		#endregion
 
 		#region Methods
-		void HelpPageRedirect()
+		void BackRedirect()
 		{
-			_navigationService.NavigateTo(LocatorViewModel.HelpPageKey);
+			_navigationService.GoBack();
 		}
-		void SettingsPageRedirect()
+		void AddMembersRedirect()
 		{
-			_navigationService.NavigateTo(LocatorViewModel.SettingsPageKey);
+			_navigationService.NavigateTo(LocatorViewModel.AddMembersPageKey);
 		}
 		#endregion
 	}

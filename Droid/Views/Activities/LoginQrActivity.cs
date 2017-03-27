@@ -12,6 +12,7 @@ using Android.Views;
 using Android.Widget;
 using ComPact.ViewModel;
 using GalaSoft.MvvmLight.Helpers;
+using ZXing.Mobile;
 
 namespace ComPact.Droid
 {
@@ -26,8 +27,7 @@ namespace ComPact.Droid
 		private ImageView _backImageView;
 		private TextView _titleTextView;
 		private ImageView _optionsImageView;
-		string _emailstr;
-		string _passStr;
+
 		//Bind Viewmodel to activity
 		LoginQrViewModel ViewModel
 		{
@@ -52,7 +52,7 @@ namespace ComPact.Droid
 
 			//Use Commands
 			SetCommands();
-			scanner();
+			Scan();
 		}
 		/**
 		 * Init Views
@@ -83,22 +83,28 @@ namespace ComPact.Droid
 		}
 
 
-		async void scanner()
+		async void Scan()
 		{
 			try
 			{
 				string[] separators = { "..." };
-				var scanner = new ZXing.Mobile.MobileBarcodeScanner(this);
+				var scanner = new MobileBarcodeScanner(this);
 				var result = await scanner.Scan();
 
 				//Console.WriteLine(result.Text);
 				string value = result.Text;
 				//0 email  1 password
 				string[] emailAndPassword = value.Split(separators, StringSplitOptions.RemoveEmptyEntries);
-				_emailstr = emailAndPassword[0];
-				_passStr = emailAndPassword[1];
-				ViewModel.Email = _emailstr;
-				ViewModel.Password = _passStr;
+				string _emailstr = emailAndPassword[0];
+				string _passStr = emailAndPassword[1];
+
+				ViewModel.ScanningFinishedCommand?.Execute(new User
+				{
+					Email = _emailstr,
+					Password = _passStr
+					
+				});
+
 				Toast.MakeText(this, ViewModel.Email + " " + ViewModel.Password, ToastLength.Long).Show();
 			}
 			catch (Exception ex)
@@ -110,28 +116,6 @@ namespace ComPact.Droid
 			{
 				Console.WriteLine("okey we going to start");
 				await ViewModel.LoginUserAsync();
-			}
-		}
-		async void scan()
-		{
-			try
-			{
-				ZXing.Mobile.MobileBarcodeScanner scanner = new ZXing.Mobile.MobileBarcodeScanner(this);
-				scanner.FlashButtonText = "Flash";
-				scanner.TopText = "";
-				scanner.BottomText = "";
-				var result = await scanner.Scan();
-
-				Toast.MakeText(this, result.Text, ToastLength.Long).Show();
-
-			}
-			catch (Exception ex)
-
-			{
-				Toast.MakeText(this, "Scanner cancelled!", ToastLength.Long).Show();
-			}
-			finally
-			{
 			}
 		}
 		#endregion

@@ -1,15 +1,13 @@
 ﻿using System;
-using ComPact.Helpers;
 using GalaSoft.MvvmLight;
-using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Views;
 
-namespace ComPact.ViewModel
+namespace ComPact.Members
 {
-	public class HomeViewModel: ViewModelBase
+	public class AddTaskViewModel : ViewModelBase
 	{
 		/**
-		 * Delcare Services
+		 * Declare Services
 		 */
 		private readonly INavigationService _navigationService;
 		//private readonly IUserDataService _userDataService;
@@ -32,14 +30,13 @@ namespace ComPact.ViewModel
 		}
 		#endregion
 		#region Commands
-		public RelayCommand HelpRedirectCommand { get; set; }
-		public RelayCommand SettingsRedirectCommand { get; set; }
+
 		#endregion
 		#region Constructor
 		/**
 		 * Init services & Init() & RegisterCommands();
 		 */
-		public HomeViewModel(INavigationService navigationService, IUserDataService userDataService)
+		public AddTaskViewModel(INavigationService navigationService)
 		{
 			//Init Services
 			_navigationService = navigationService;
@@ -56,20 +53,11 @@ namespace ComPact.ViewModel
 		}
 		void RegisterCommands()
 		{
-			HelpRedirectCommand = new RelayCommand(HelpPageRedirect);
-			SettingsRedirectCommand = new RelayCommand(SettingsPageRedirect);
 		}
 		#endregion
 
 		#region Methods
-		void HelpPageRedirect()
-		{
-			_navigationService.NavigateTo(LocatorViewModel.HelpPageKey);
-		}
-		void SettingsPageRedirect()
-		{
-			_navigationService.NavigateTo(LocatorViewModel.SettingsPageKey);
-		}
+
 		#endregion
 	}
 }

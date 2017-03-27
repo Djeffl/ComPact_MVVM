@@ -78,15 +78,13 @@ namespace ComPact
 
 			RegisterCommands();
 			Init();
+
+
 		}
 		void Init()
 		{
 			//Register values
 			//Register commands
-			//if (_userDataService.HasUser())
-			//{
-			//	HomeRedirect();
-			//}
 		}
 		void RegisterCommands()
 		{
@@ -122,10 +120,15 @@ namespace ComPact
 			{
 				try
 				{
-					bool positiveResponseCode = await _userDataService.LoginUserAsync(email, password);
+					User user = new User
+					{
+						Email = email,
+						Password = password
+					};
+					bool response = await _userDataService.Login(user);
 
 
-					if (positiveResponseCode)
+					if (response)
 					{
 						HomeRedirect();
 						//_dialogService.ShowMessage("okey!");

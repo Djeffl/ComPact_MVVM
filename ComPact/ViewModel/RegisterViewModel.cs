@@ -136,20 +136,6 @@ namespace ComPact
 				return _backRedirectCommand;
 			}
 		}
-
-		//private RelayCommand<Registration> _registerUserAsyncCommand3;
-		//public RelayCommand<Registration> RegisterUserAsyncCommand3
-		//{
-		//	get
-		//	{
-		//		return _registerUserAsyncCommand3
-		//			?? (_registerUserAsyncCommand3 = new RelayCommand<Registration>(
-		//				async registration =>
-		//				{
-		//					await RegisterUserAsync3(registration);
-		//				}));
-		//	}
-		//}
 		#endregion
 
 		#region Constructor
@@ -169,16 +155,13 @@ namespace ComPact
 		{	
 			//Register values
 			//Register commands
-			//RegisterCommands();
+			RegisterCommands();
 		}
 
-		//void RegisterCommands()
-		//{
-		//	RegisterUserAsyncCommand = new RelayCommand<Registration>(async registration =>
-		//	{
-		//		await RegisterUserAsync();
-		//	});
-		//}
+		void RegisterCommands()
+		{
+
+		}
 		#endregion
 
 		#region Methods
@@ -187,7 +170,7 @@ namespace ComPact
 		 * Dit blijkt niet mogelijk te zijn aangezien enkel een binding dynamisch zijn waarden aanpast in een setCommand 
 		 * Een binding is enkel mogelijk door visuals te koppelen aan waarden imo
 		 */
-		async Task<User> RegisterUserAsync()
+		async Task RegisterUserAsync()
 		{
 			Admin = true;
 			_registration = new Registration(FirstName, LastName, Email, Password, ConfirmPassword, Admin);
@@ -205,29 +188,32 @@ namespace ComPact
 
 					if (password == confirmPassword)
 					{
+
 						try
 						{
-							var newUser = new User(null, firstName, lastName, email, password, admin);
-							Tuple<int, User> tupleResponse = await CreateUserAsync(newUser);
-							//Item1 = responsecode
-							int responseCode = tupleResponse.Item1;
-
-
-							if (responseCode == 400)
-							{
-								_dialogService.ShowMessage("Email is already taken!");
-							}
-							else
-							{
-								//Item2 = User Object
-								User user = tupleResponse.Item2;
-								_popUpService.Show("Account created!", "long");
-								return user;
-							}
+							User user = await _userDataService.Get(email);
+							_dialogService.ShowMessage("Email already taken!");
 						}
-						catch (Exception err)
+						catch (Exception)
 						{
-							_dialogService.ShowMessage("Oops! Something went wrong, please try again later");
+							try
+							{
+								var newUser = new User
+								{
+									Id = null,
+									FirstName = firstName,
+									LastName = lastName,
+									Email = email,
+									Password = password,
+									Admin = admin,
+								};
+								//User response = await _userDataService.Create(newUser);
+								_popUpService.Show("Account created!", "long");
+							}
+							catch (Exception)
+							{
+								_dialogService.ShowMessage("Oops! Something went wrong, please try again later");
+							}
 						}
 					}
 					else
@@ -244,10 +230,11 @@ namespace ComPact
 			{
 				_dialogService.ShowMessage("Fill all fields in please");
 			}
-			return null;
 		}
+
 		void BackRedirect()
 		{
+			//_navigationService.
 			_backService.GoBack();
 		}
 
@@ -256,10 +243,10 @@ namespace ComPact
 			_navigationService.NavigateTo(LocatorViewModel.LoginPageKey);
 		}
 
-		async Task<Tuple<int, User>> CreateUserAsync(User user)
+		async Task<User> CreateUserAsync(User user)
 		{
 			//1)Responsecode 2)UserObject
-			Tuple<int, User> response = await _userDataService.CreateUserAsync(user);
+			User response = await _userDataService.Create(user);
 
 			return response;
 		}

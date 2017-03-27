@@ -3,31 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using SQLite.Net.Async;
-using SQLite.Net;
-using SQLite.Net.Interop;
 using ComPact.Helpers;
 using SQLite;
+using ComPact.Repositories;
 
 namespace ComPact
 {
-	public abstract class BaseRepository<TEntity, TKey> where TEntity : class, new()
+	public abstract class BaseRepository<TEntity, TKey>: IBaseRepository<TEntity, TKey> where TEntity : class, new()
 	{
-		//sqlite.net.async-pcl
-		//sqlite.net.core-pcl
-		//sqlite.net-pcl
-		private readonly SQLite.Net.Async.SQLiteAsyncConnection _connection;
-		private SQLiteCommand sql_cmd;
+		readonly SQLiteAsyncConnection _connection;
 
-		protected BaseRepository(ISQLite con)
+		protected BaseRepository(IDatabase database)
 		{
-			//var connectionFactory = new Func<SQLiteConnectionWithLock>(
-			//	() => new SQLiteConnectionWithLock(platform, new SQLiteConnectionString(path, true))
-			//);
-			_connection = con.GetConnection();
-			//_connection = new SQLiteAsyncConnection(connectionFactory); //Initialize your connection here
-
-			_connection.CreateTableAsync<TEntity>().Wait();
+			database.CreateTable<TEntity>();
+			_connection = database.Connection;
 		}
 
 		public virtual IEnumerable<TEntity> All()
@@ -57,7 +46,7 @@ namespace ComPact
 
 		public virtual async Task InsertOrReplace(IEnumerable<TEntity> entities)
 		{
-			await _connection.InsertOrReplaceAllAsync(entities);
+			await _connection.InsertOrReplaceAsync(entities);
 		}
 
 		public virtual async Task<TEntity> Insert(TEntity entity)
@@ -99,20 +88,10 @@ namespace ComPact
 			await _connection.DeleteAsync(await Get(key));
 		}
 
-		public virtual async Task Clear()
-		{
-			await _connection.DeleteAllAsync<TEntity>();
-		}
-
 		public virtual async Task Truncate()
 		{
 			await _connection.DropTableAsync<TEntity>();
 			await _connection.CreateTableAsync<TEntity>();
-		}
-
-		public SQLiteAsyncConnection GetConnection()
-		{
-			throw new NotImplementedException();
 		}
 	}
 }

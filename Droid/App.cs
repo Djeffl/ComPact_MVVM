@@ -9,6 +9,9 @@ using Android.Content;
 using ComPact.Helpers;
 using ComPact.Droid.Helpers;
 using ComPact.Droid.Activities;
+using Onboarding.Droid.Helpers;
+using ComPact.Droid.Members;
+using ComPact.Droid.Tasks;
 
 namespace ComPact.Droid
 {
@@ -27,11 +30,9 @@ namespace ComPact.Droid
 
 					// Configure and register the MVVM Light NavigationService
 					var nav = new NavigationService();
-					//var dpAlrt = new DialogService();
 
 					SimpleIoc.Default.Register<INavigationService>(() => nav);
-					//SimpleIoc.Default.Register<IDialogService>(() => dpAlrt);
-
+	
 					RegisterViews(nav);
 
 					RegisterIoc();
@@ -47,6 +48,7 @@ namespace ComPact.Droid
 		 */
 		private static void RegisterViews(NavigationService nav)
 		{
+			//nav.Configure(LocatorViewModel.SplashPageKey, typeof(SplashActivity));
 			nav.Configure(LocatorViewModel.LoginPageKey, typeof(LoginActivity));
 			nav.Configure(LocatorViewModel.LoginQrPageKey, typeof(LoginQrActivity));
 			nav.Configure(LocatorViewModel.RegisterPageKey, typeof(RegisterActivity));
@@ -54,7 +56,10 @@ namespace ComPact.Droid
 			nav.Configure(LocatorViewModel.HomePageKey, typeof(HomeActivity));
 			nav.Configure(LocatorViewModel.HelpPageKey, typeof(HelpActivity));
 			nav.Configure(LocatorViewModel.SettingsPageKey, typeof(SettingsActivity));
-			//nav.Configure(LocatorViewModel.TasksPageKey, typeof(Fragments.TasksFragment));
+			nav.Configure(LocatorViewModel.TasksPageKey, typeof(Fragments.TasksFragment));
+			nav.Configure(LocatorViewModel.AddTaskPageKey, typeof(AddTaskActivity));
+			nav.Configure(LocatorViewModel.MembersPageKey, typeof(MembersActivity));
+			nav.Configure(LocatorViewModel.AddMembersPageKey, typeof(AddMembersActivity));
 		}
 
 		private static void RegisterIoc()
@@ -62,8 +67,8 @@ namespace ComPact.Droid
 			SimpleIoc.Default.Register<IDialogService, DialogService>();
 			SimpleIoc.Default.Register<IBackService, BackService>();
 			SimpleIoc.Default.Register<IPopUpService, PopUpService>();
-			SimpleIoc.Default.Register<ISQLite, SQLite_Android>();
-			//SimpleIoc.Default.Register<IMenuDialogService, MenuDialogService>();
+			SimpleIoc.Default.Register<IDatabase, Database>();
+			SimpleIoc.Default.Register<IMenuDialogService, MenuDialogService>();
 		}
 	}
 }

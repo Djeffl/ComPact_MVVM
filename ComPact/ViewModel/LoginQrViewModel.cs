@@ -47,6 +47,8 @@ namespace ComPact.ViewModel
 		#endregion
 		#region Commands
 		public RelayCommand BackRedirectCommand { get; set; }
+
+		public RelayCommand<User> ScanningFinishedCommand { get; set;}
 		#endregion
 		#region Constructor
 		/**
@@ -54,6 +56,8 @@ namespace ComPact.ViewModel
 		 */
 		public LoginQrViewModel(INavigationService navigationService, IDialogService dialogService, IBackService backService, IUserDataService userDataService)
 		{
+
+			//TODO iqsuugdqkshdqskldh
 			//Init Services
 			_navigationService = navigationService;
 			_userDataService = userDataService;
@@ -79,14 +83,17 @@ namespace ComPact.ViewModel
 		{
 			try
 			{
-				_dialogService.ShowMessage(Email + " " + Password);
-				bool positiveResponseCode = await _userDataService.LoginUserAsync(Email, Password);
+				User user = new User
+				{
+					Email = Email,
+					Password = Password
+				};
+				bool positiveResponseCode = await _userDataService.Login(user);
 
 
 				if (positiveResponseCode)
 				{
 					HomeRedirect();
-					_dialogService.ShowMessage("okey!");
 				}
 
 				else

@@ -1,7 +1,10 @@
 ﻿using System;
 using ComPact;
 using ComPact.Helpers;
+using ComPact.Members;
+using ComPact.Repositories;
 using ComPact.ViewModel;
+using ComPact.ViewModel.Members;
 using GalaSoft.MvvmLight.Ioc;
 using Microsoft.Practices.ServiceLocation;
 
@@ -12,6 +15,7 @@ namespace ComPact
 		/**
 		 * Set a key for each page => App.cs
 		 */
+		public const string SplashPageKey = "SplashPageKey";
 		public const string LoginPageKey = "LoginPage";
 		public const string LoginQrPageKey = "LoginQrPage";
 		public const string RegisterPageKey = "RegisterPage";
@@ -19,8 +23,10 @@ namespace ComPact
 		public const string HomePageKey = "HomePagekey";
 		public const string HelpPageKey = "HelpPageKey";
 		public const string SettingsPageKey = "SettingsPageKey";
-
 		public const string TasksPageKey = "TasksPageKey";
+		public const string AddTaskPageKey = "AddTaskPageKey";
+		public const string MembersPageKey = "MembersPageKey";
+		public const string AddMembersPageKey = "AddMembersPagekey";
 
 		public LoginViewModel LoginViewModel
 		{
@@ -29,6 +35,7 @@ namespace ComPact
 				return ServiceLocator.Current.GetInstance<LoginViewModel>();
 			}
 		}
+
 		public LoginQrViewModel LoginQrViewModel
 		{
 			get
@@ -60,6 +67,7 @@ namespace ComPact
 				return ServiceLocator.Current.GetInstance<HomeViewModel>();
 			}
 		}
+
 		public HelpViewModel HelpViewModel
 		{
 			get
@@ -67,6 +75,7 @@ namespace ComPact
 				return ServiceLocator.Current.GetInstance<HelpViewModel>();
 			}
 		}
+
 		public SettingsViewModel SettingsViewModel
 		{
 			get
@@ -74,6 +83,7 @@ namespace ComPact
 				return ServiceLocator.Current.GetInstance<SettingsViewModel>();
 			}
 		}
+
 		public TasksViewModel TasksViewModel
 		{
 			get
@@ -81,7 +91,35 @@ namespace ComPact
 				return ServiceLocator.Current.GetInstance<TasksViewModel>();
 			}
 		}
+		public AddTaskViewModel AddTaskViewModel
+		{
+			get
+			{
+				return ServiceLocator.Current.GetInstance<AddTaskViewModel>();
+			}
+		}
 
+		public SplashViewModel SplashViewModel
+		{
+			get
+			{
+				return ServiceLocator.Current.GetInstance<SplashViewModel>();
+			}
+		}
+		public MembersViewModel MembersViewModel
+		{
+			get
+			{
+				return ServiceLocator.Current.GetInstance<MembersViewModel>();
+			}
+		}
+		public AddMembersViewModel AddMembersViewModel
+		{
+			get
+			{
+				return ServiceLocator.Current.GetInstance<AddMembersViewModel>();
+			}
+		}
 		/**
 		 * Register every ViewModel to the IOC container
 		 */
@@ -97,6 +135,7 @@ namespace ComPact
 
 		void RegisterViewModels() 
 		{
+			SimpleIoc.Default.Register<SplashViewModel>();
 			SimpleIoc.Default.Register<LoginViewModel>();
 			SimpleIoc.Default.Register<LoginQrViewModel>();
 			SimpleIoc.Default.Register<RegisterViewModel>();
@@ -105,6 +144,10 @@ namespace ComPact
 			SimpleIoc.Default.Register<HelpViewModel>();
 			SimpleIoc.Default.Register<SettingsViewModel>();
 			SimpleIoc.Default.Register<TasksViewModel>();
+			SimpleIoc.Default.Register<AddTaskViewModel>();
+			SimpleIoc.Default.Register<MembersViewModel>();
+			SimpleIoc.Default.Register<AddMembersViewModel>();
+
 		}
 
 		void RegisterServices()

@@ -10,13 +10,15 @@ namespace ComPact
 		/**
 		 * Declare Services
 		 */
-		private readonly INavigationService _navigationService;
-		private readonly IBackService _backService;
+		readonly INavigationService _navigationService;
+		readonly IBackService _backService;
+		readonly IUserDataService _userDataService;
+
 		#region Parameters
 		/**
 		 * Parameters
 		 */
-		private string _example;
+		string _example;
 		public string Example
 		{
 			get
@@ -31,16 +33,20 @@ namespace ComPact
 		#endregion
 		#region Commands
 		public RelayCommand BackRedirectCommand { get; set; }
+		public RelayCommand LogOutCommand { get; private set; }
+		public RelayCommand MembersRedirectCommand { get; set; }
+
 		#endregion
 		#region Constructor
 		/**
 		 * Init services & Init() & RegisterCommands();
 		 */
-		public SettingsViewModel(INavigationService navigationService, IBackService backService)
+		public SettingsViewModel(INavigationService navigationService, IBackService backService, IUserDataService userDataService)
 		{
 			//Init Services
 			_navigationService = navigationService;
 			_backService = backService;
+			_userDataService = userDataService;
 
 			Init();
 
@@ -53,6 +59,8 @@ namespace ComPact
 		void RegisterCommands()
 		{
 			BackRedirectCommand = new RelayCommand(BackRedirect);
+			LogOutCommand = new RelayCommand(LogOut);
+			MembersRedirectCommand = new RelayCommand(MembersPageRedirect);
 		}
 		#endregion
 
@@ -60,6 +68,15 @@ namespace ComPact
 		void BackRedirect()
 		{
 			_backService.GoBack();
+		}
+		void LogOut()
+		{
+			_userDataService.LogOut();
+			_navigationService.NavigateTo(LocatorViewModel.LoginPageKey);
+		}
+		void MembersPageRedirect()
+		{
+			_navigationService.NavigateTo(LocatorViewModel.MembersPageKey);
 		}
 		#endregion
 	}

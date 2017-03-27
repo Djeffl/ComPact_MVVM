@@ -1,23 +1,17 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
 using Android.App;
-using Android.Content;
-using Android.Graphics;
 using Android.OS;
-using Android.Runtime;
+using Android.Support.Design.Widget;
 using Android.Views;
 using Android.Widget;
+using ComPact.ViewModel.Members;
 using GalaSoft.MvvmLight.Helpers;
-using ZXing;
 
-namespace ComPact.Droid.Activities
+namespace ComPact.Droid.Members
 {
-	[Activity(Label = "SettingsActivity")]
-	public class SettingsActivity : BaseActivity
+	[Activity(Label = "MembersActivity")]
+	public class MembersActivity : BaseActivity
 	{
 		//Local variables
 
@@ -27,30 +21,28 @@ namespace ComPact.Droid.Activities
 		ImageView _backImageView;
 		ImageView _OptionsImageView;
 		TextView _titleTextView;
-		ImageView _qrCodeViewImageView;
-		Button _logOutButton;
-		Button _membersRedirectButton;
+		FloatingActionButton _addMemberFloatingActionButton;
 
 		//Bind Viewmodel to activity
-		SettingsViewModel ViewModel
+		MembersViewModel ViewModel
 		{
 			get
 			{
-				return App.Locator.SettingsViewModel;
+				return App.Locator.MembersViewModel;
 			}
 		}
 		#region OnCreate
 		protected override void OnCreate(Bundle savedInstanceState)
 		{
 			base.OnCreate(savedInstanceState);
-
 			//Set Lay out
-			SetContentView(Resource.Layout.ActivitySettings);
+			SetContentView(Resource.Layout.ActivityMembers);
 
 			//Init elements
 			Init();
 			_OptionsImageView.Visibility = ViewStates.Gone;
-			_titleTextView.Text = "Settings";
+			_titleTextView.Text = "Members";
+
 			//bindings
 			SetBindings();
 
@@ -65,10 +57,6 @@ namespace ComPact.Droid.Activities
 			_backImageView = FindViewById<ImageView>(Resource.Id.customToolbarBackImageView);
 			_OptionsImageView = FindViewById<ImageView>(Resource.Id.customToolbarOptionsImageView);
 			_titleTextView = FindViewById<TextView>(Resource.Id.customToolbarTitleTextView);
-			_qrCodeViewImageView = FindViewById<ImageView>(Resource.Id.qrCodeViewImageView);
-			_qrCodeViewImageView.SetImageBitmap(GetQRCode());
-			_logOutButton = FindViewById<Button>(Resource.Id.activitySettingsLogOutButton);
-			_membersRedirectButton = FindViewById<Button>(Resource.Id.activitySettingsMembersRedirectButton);
 		}
 
 		/**
@@ -76,6 +64,8 @@ namespace ComPact.Droid.Activities
 		 */
 		void SetBindings()
 		{
+			_backImageView = FindViewById<ImageView>(Resource.Id.customToolbarBackImageView);
+			_addMemberFloatingActionButton = FindViewById<FloatingActionButton>(Resource.Id.activityMembersAddMemberFloatingActionButton);
 		}
 
 		/**
@@ -84,23 +74,8 @@ namespace ComPact.Droid.Activities
 		void SetCommands()
 		{
 			_backImageView.SetCommand("Click", ViewModel.BackRedirectCommand);
-			_logOutButton.SetCommand("Click", ViewModel.LogOutCommand);
-			_membersRedirectButton.SetCommand("Click", ViewModel.MembersRedirectCommand);
+			_addMemberFloatingActionButton.SetCommand("Click", ViewModel.AddMembersRedirectCommand);
 		}
 		#endregion
-		Bitmap GetQRCode()
-		{
-			var writer = new BarcodeWriter
-			{
-				Format = BarcodeFormat.QR_CODE,
-				Options = new ZXing.Common.EncodingOptions
-				{
-					Height = 200,
-					Width = 200
-				}
-			};
-			string text = "jeffliekens7@hotmail.com...test";
-			return writer.Write(text);
-		}
 	}
 }

@@ -13,7 +13,7 @@ using Android.App;
 
 namespace ComPact.Droid
 {
-	[Activity(Label = "ComPact", Icon = "@mipmap/icon", MainLauncher = true)]
+	[Activity(Label = "ComPact", Icon = "@mipmap/icon")]
 	public class LoginActivity : BaseActivity
 	{
 		// Keep track of bindings to avoid premature garbage collection
@@ -62,7 +62,6 @@ namespace ComPact.Droid
 
 			_passwordRetrievalRedirectTextView = FindViewById<TextView>(Resource.Id.activityLoginPasswordRedirectTextView);
 			_registerRedirectTextView = FindViewById<TextView>(Resource.Id.activityLoginRegisterRedirectTextView);
-
 		}
 
 		/**

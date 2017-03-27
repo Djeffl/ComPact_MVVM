@@ -15,7 +15,7 @@ using GalaSoft.MvvmLight.Helpers;
 
 namespace ComPact.Droid.Activities
 {
-	[Activity(Label = "HomeActivity")]
+	[Activity(Label = "HomeActivity", MainLauncher = true)]
 	public class HomeActivity : BaseActivity
 	{
 		//Local variables
@@ -79,28 +79,36 @@ namespace ComPact.Droid.Activities
 			//-----
 			//Ask Bruno
 			menu = new MenuDialogService();
-			_optionsImageView.Click += new EventHandler(PopupMenu);
+			_optionsImageView.Click += PopupMenu;
 		}
 
 		void PopupMenu(Object sender, EventArgs e)
 		{
 			var popup = new PopupMenu(this, _optionsImageView);
 			popup.Inflate(Resource.Menu.header);
+
+
 			//popup. SetCommand("MenuItemClick", ViewModel.HelpRedirectCommand);
 			popup.MenuItemClick += (s1, arg1) =>
 			{
 				if (arg1.Item.ItemId == Resource.Id.menu_help)
 				{
-					ViewModel.HelpRedirectCommand.Execute(true);
+					ViewModel.HelpRedirectCommand.Execute(null);
 				}
 				else if(arg1.Item.ItemId == Resource.Id.menu_settings)
 				{
-					ViewModel.SettingsRedirectCommand.Execute(true);
+					ViewModel.SettingsRedirectCommand.Execute(null);
 				}
 			};
 
 			popup.Show();
 		}
+
+		public override void OnCreateContextMenu(IContextMenu menu, View v, IContextMenuContextMenuInfo menuInfo)
+		{
+			base.OnCreateContextMenu(menu, v, menuInfo);
+		}
+
 		/**
 		 * Init Views
 		 */
@@ -119,12 +127,12 @@ namespace ComPact.Droid.Activities
 
 			_colorFilter = new Color(ContextCompat.GetColor(this, Resource.Color.yellow_accent_color));
 
-			_tasksImageView.Click += new EventHandler((sender, e) =>
+			_tasksImageView.Click += (sender, e) =>
 			{
 				ResetColors();
 				_tasksImageView.SetColorFilter(_colorFilter);
 				ChangeFragment(sender, e, typeof(TasksFragment), _tasksFragment);
-			});
+			};
 			_locationsImageView.Click += new EventHandler((sender, e) => 
 			{
 				ResetColors();
@@ -182,7 +190,7 @@ namespace ComPact.Droid.Activities
 			//}
 			//else
 			//{
-				if (type == typeof(TasksFragment))
+			if (type == typeof(TasksFragment))
 				{
 					fragment = new TasksFragment();
 					return fragment;

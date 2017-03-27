@@ -6,11 +6,11 @@ namespace ComPact
 {
 	public interface IUserDataService
 	{
-		Task<Tuple<int, User>> CreateUserAsync(User user);
-		/**
-		 * return ResponseCode, IdUser
-		 */
-		Task<bool> LoginUserAsync(string email, string password);
-		bool HasUser();
+		Task<User> Create(User user);
+		Task<bool> Login(User user);
+		Task<User> Get(string email);
+		void LogOut();
+		Task<bool> ControlToken();
+		void GetDataLocalStorage();
 	}
 }

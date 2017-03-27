@@ -1,9 +1,10 @@
 ﻿using System;
-using SQLite.Net.Attributes;
+using Newtonsoft.Json;
+using SQLite;
 
 namespace ComPact
 {
-	public class User: BaseModel
+	public class User
 	{
 
 		///// <summary>
@@ -15,44 +16,30 @@ namespace ComPact
 		//[Newtonsoft.Json.JsonProperty("approved")]
 		//public int Approved { get; set; }
 
-		[PrimaryKey]
-		[Newtonsoft.Json.JsonProperty("_id")]
-		public string UserId { get; set; }
 		[Ignore]
-		[Newtonsoft.Json.JsonProperty("firstName")]
+		[PrimaryKey]
+		[JsonProperty("_id")]
+		public string Id { get; set; }
+		[Ignore]
+		[JsonProperty("firstName")]
 		public string FirstName { get; set; }
 		[Ignore]
-		[Newtonsoft.Json.JsonProperty("lastName")]
+		[JsonProperty("lastName")]
 		public string LastName { get; set; }
 		[Ignore]
-		[Newtonsoft.Json.JsonProperty("email")]
+		[JsonProperty("email")]
 		public string Email { get; set; }
-		[Ignore]
-		[Newtonsoft.Json.JsonProperty("password")]
+		[JsonProperty("password")]
 		public string Password { get; set; }
+		[JsonProperty("admin")]
+		public bool Admin { get; set; }
 		[Ignore]
-		[Newtonsoft.Json.JsonProperty("admin")]
-		public bool? Admin { get; set; }
-		[Ignore]
-		[Newtonsoft.Json.JsonProperty("qrCode")]
+		[JsonProperty("qrCode")]
 		public byte[] QrCode { get; set; }
+		[JsonProperty("loginToken")]
+		public string LoginToken { get; set; }
 
-		/**
-		 * Params id, firstname, lastname, email, password
-		 */
-		public User(string id, string firstName, string lastName, string email, string password, bool? admin)
-		{
-			UserId = id;
-			FirstName = firstName;
-			LastName = lastName;
-			Email = email;
-			Password = password;
-			Admin = admin;
-		}
-		public User()
-		{
-		}
-		private string fullName()
+		private string FullName()
 		{
 			return FirstName + " " + LastName;
 		}
@@ -62,7 +49,7 @@ namespace ComPact
 		//}
 		public override string ToString()
 		{
-			return string.Format("[User: UserId={0}, FirstName={1}, LastName={2}, Email={3}, Password={4}, Admin={5}, QrCode={6}]", UserId, FirstName, LastName, Email, Password, Admin, QrCode);
+			return string.Format("[User: Id={0}, FirstName={1}, LastName={2}, Email={3}, Password={4}, Admin={5}, QrCode={6}, LoginToken={7}]", Id, FirstName, LastName, Email, Password, Admin, QrCode, LoginToken);
 		}
 	}
 }

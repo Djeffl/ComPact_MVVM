@@ -30,21 +30,24 @@ namespace ComPact.ViewModel
 				Set(ref _itemName, value);
 			}
 		}
-		private string _describtion;
-		public string Descrition
+		private string _description;
+		public string Description
 		{
 			get
 			{
-				return _describtion;
+				return _description;
 			}
 			set
 			{
-				Set(ref _describtion, value);
+				Set(ref _description, value);
 			}
 		}
+
 		#endregion
 		#region Commands
 		public RelayCommand CreateTaskAsyncCommand { get; set; }
+		public RelayCommand AddTaskRedirectCommand { get; set; }
+
 		#endregion
 		#region Constructor
 		/**
@@ -67,6 +70,7 @@ namespace ComPact.ViewModel
 		void RegisterCommands()
 		{
 			CreateTaskAsyncCommand = new RelayCommand(CreateTaskAsync);
+			AddTaskRedirectCommand = new RelayCommand(AddTaskRedirect);
 		}
 		#endregion
 
@@ -74,8 +78,16 @@ namespace ComPact.ViewModel
 		void CreateTaskAsync()
 		{
 			//Do other stuff send to db and stuff
-			Task newTask = new Task(ItemName, Descrition);
+			Task newTask = new Task
+			{
+				ItemName = ItemName,
+				Description = Description
+			};
 			_dialogService.ShowMessage(ItemName);
+		}
+		void AddTaskRedirect()
+		{
+			_navigationService.NavigateTo(LocatorViewModel.AddTaskPageKey);
 		}
 		#endregion
 	}

@@ -17,15 +17,13 @@
         android:id="@+id/activityLoginEmailInputLoginEditText"
         android:textAllCaps="false"
         android:autoText="false"
-        android:hint="Email"
-        android:text="jeffliekens7@hotmail.com" />
+        android:hint="Email" />
     <EditText
         android:inputType="textPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/activityLoginPasswordInputLoginEditText"
-        android:hint="Password"
-        android:text="test" />
+        android:hint="Password" />
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
