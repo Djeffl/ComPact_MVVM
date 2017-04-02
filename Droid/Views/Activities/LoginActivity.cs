@@ -13,7 +13,7 @@ using Android.App;
 
 namespace ComPact.Droid
 {
-	[Activity(Label = "ComPact", Icon = "@mipmap/icon")]
+	[Activity(Label = "ComPact", Icon = "@mipmap/icon", MainLauncher = true)]
 	public class LoginActivity : BaseActivity
 	{
 		// Keep track of bindings to avoid premature garbage collection
@@ -80,7 +80,7 @@ namespace ComPact.Droid
 		{
 			_passwordRetrievalRedirectTextView.SetCommand("Click", ViewModel.PasswordRetrievalRedirectCommand);
 			_registerRedirectTextView.SetCommand("Click", ViewModel.RegisterRedirectCommand);
-			_loginButton.SetCommand("Click", ViewModel.LoginUserAsyncCommand);
+			_loginButton.SetCommand("Click", ViewModel.LoginCommand);
 			_qrCodeLoginButton.SetCommand("Click", ViewModel.QrLoginRedirectCommand);
 		}
 	}

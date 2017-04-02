@@ -48,7 +48,7 @@ namespace ComPact.Droid
 		 */
 		private static void RegisterViews(NavigationService nav)
 		{
-			//nav.Configure(LocatorViewModel.SplashPageKey, typeof(SplashActivity));
+			nav.Configure(LocatorViewModel.SplashPageKey, typeof(SplashActivity));
 			nav.Configure(LocatorViewModel.LoginPageKey, typeof(LoginActivity));
 			nav.Configure(LocatorViewModel.LoginQrPageKey, typeof(LoginQrActivity));
 			nav.Configure(LocatorViewModel.RegisterPageKey, typeof(RegisterActivity));

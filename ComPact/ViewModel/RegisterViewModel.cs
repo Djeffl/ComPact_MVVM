@@ -191,7 +191,7 @@ namespace ComPact
 
 						try
 						{
-							User user = await _userDataService.Get(email);
+							//User user = await _userDataService.Get(email);
 							_dialogService.ShowMessage("Email already taken!");
 						}
 						catch (Exception)
@@ -201,14 +201,15 @@ namespace ComPact
 								var newUser = new User
 								{
 									Id = null,
-									FirstName = firstName,
-									LastName = lastName,
+									FirstName = FirstName,
+									LastName = LastName,
 									Email = email,
 									Password = password,
 									Admin = admin,
 								};
 								//User response = await _userDataService.Create(newUser);
 								_popUpService.Show("Account created!", "long");
+								//LoginAsync.LoginUserAsync(email, password, _userDataService, _dialogService, _navigationService);
 							}
 							catch (Exception)
 							{
@@ -234,8 +235,7 @@ namespace ComPact
 
 		void BackRedirect()
 		{
-			//_navigationService.
-			_backService.GoBack();
+			_navigationService.GoBack();
 		}
 
 		void LoginRedirect()
@@ -245,7 +245,6 @@ namespace ComPact
 
 		async Task<User> CreateUserAsync(User user)
 		{
-			//1)Responsecode 2)UserObject
 			User response = await _userDataService.Create(user);
 
 			return response;

@@ -45,7 +45,6 @@ namespace ComPact.ViewModel
 
 		#endregion
 		#region Commands
-		public RelayCommand CreateTaskAsyncCommand { get; set; }
 		public RelayCommand AddTaskRedirectCommand { get; set; }
 
 		#endregion
@@ -58,6 +57,7 @@ namespace ComPact.ViewModel
 			//Init Services
 			_navigationService = navigationService;
 			_dialogService = dialogService;
+			//_userDataService = userDataService;
 
 			Init();
 
@@ -69,22 +69,21 @@ namespace ComPact.ViewModel
 		}
 		void RegisterCommands()
 		{
-			CreateTaskAsyncCommand = new RelayCommand(CreateTaskAsync);
 			AddTaskRedirectCommand = new RelayCommand(AddTaskRedirect);
 		}
 		#endregion
 
 		#region Methods
-		void CreateTaskAsync()
-		{
-			//Do other stuff send to db and stuff
-			Task newTask = new Task
-			{
-				ItemName = ItemName,
-				Description = Description
-			};
-			_dialogService.ShowMessage(ItemName);
-		}
+		//void CreateTaskAsync()
+		//{
+		//	//Do other stuff send to db and stuff
+		//	Task newTask = new Task
+		//	{
+		//		ItemName = ItemName,
+		//		Description = Description
+		//	};
+		//	_dialogService.ShowMessage(ItemName);
+		//}
 		void AddTaskRedirect()
 		{
 			_navigationService.NavigateTo(LocatorViewModel.AddTaskPageKey);

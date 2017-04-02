@@ -115,7 +115,7 @@ namespace ComPact.Droid
 			finally
 			{
 				Console.WriteLine("okey we going to start");
-				await ViewModel.LoginUserAsync();
+				//await ViewModel.Login();
 			}
 		}
 		#endregion

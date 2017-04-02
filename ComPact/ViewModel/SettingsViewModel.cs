@@ -1,4 +1,6 @@
-﻿using ComPact.Helpers;
+﻿using System.Diagnostics;
+using ComPact.Helpers;
+using ComPact.Services;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Views;
@@ -13,6 +15,7 @@ namespace ComPact
 		readonly INavigationService _navigationService;
 		readonly IBackService _backService;
 		readonly IUserDataService _userDataService;
+		readonly IAuthenticationService _authenticationService;
 
 		#region Parameters
 		/**
@@ -33,7 +36,7 @@ namespace ComPact
 		#endregion
 		#region Commands
 		public RelayCommand BackRedirectCommand { get; set; }
-		public RelayCommand LogOutCommand { get; private set; }
+		public RelayCommand LogOutCommand { get; set; }
 		public RelayCommand MembersRedirectCommand { get; set; }
 
 		#endregion
@@ -41,13 +44,13 @@ namespace ComPact
 		/**
 		 * Init services & Init() & RegisterCommands();
 		 */
-		public SettingsViewModel(INavigationService navigationService, IBackService backService, IUserDataService userDataService)
+		public SettingsViewModel(INavigationService navigationService, IBackService backService, IUserDataService userDataService, IAuthenticationService authenticationService)
 		{
 			//Init Services
 			_navigationService = navigationService;
 			_backService = backService;
 			_userDataService = userDataService;
-
+			_authenticationService = authenticationService;
 			Init();
 
 			RegisterCommands();
@@ -71,8 +74,13 @@ namespace ComPact
 		}
 		void LogOut()
 		{
-			_userDataService.LogOut();
-			_navigationService.NavigateTo(LocatorViewModel.LoginPageKey);
+			bool valid = _authenticationService.LogOut();
+			if (valid)
+			{
+				Debug.WriteLine("Log: " + Settings.LoginToken);
+				_navigationService.NavigateTo(LocatorViewModel.LoginPageKey);
+			}
+
 		}
 		void MembersPageRedirect()
 		{

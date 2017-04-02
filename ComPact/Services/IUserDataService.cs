@@ -7,10 +7,7 @@ namespace ComPact
 	public interface IUserDataService
 	{
 		Task<User> Create(User user);
-		Task<bool> Login(User user);
 		Task<User> Get(string email);
-		void LogOut();
-		Task<bool> ControlToken();
-		void GetDataLocalStorage();
+		void Forgot(User user);
 	}
 }

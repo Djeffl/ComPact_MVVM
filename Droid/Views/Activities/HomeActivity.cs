@@ -15,7 +15,7 @@ using GalaSoft.MvvmLight.Helpers;
 
 namespace ComPact.Droid.Activities
 {
-	[Activity(Label = "HomeActivity", MainLauncher = true)]
+	[Activity(Label = "HomeActivity")]
 	public class HomeActivity : BaseActivity
 	{
 		//Local variables
@@ -67,7 +67,7 @@ namespace ComPact.Droid.Activities
 			//Init elements
 			Init();
 			_backImageView.Visibility = ViewStates.Gone;
-			_titleTextView.Text = "Home";
+			_titleTextView.Text = "Tasks";
 			//bindings
 			SetBindings();
 
@@ -132,24 +132,29 @@ namespace ComPact.Droid.Activities
 				ResetColors();
 				_tasksImageView.SetColorFilter(_colorFilter);
 				ChangeFragment(sender, e, typeof(TasksFragment), _tasksFragment);
+				_titleTextView.Text = "Tasks";
 			};
 			_locationsImageView.Click += new EventHandler((sender, e) => 
 			{
 				ResetColors();
 				_locationsImageView.SetColorFilter(_colorFilter);
 				ChangeFragment(sender, e, typeof(LocationFragment) , _locationsFragment); 
+				_titleTextView.Text = "Locations";
+
 			});
 			_messagesImageView.Click += new EventHandler((sender, e) =>
 			{
 				ResetColors();
 				_messagesImageView.SetColorFilter(_colorFilter);
 				ChangeFragment(sender, e, typeof(MessagesFragment), _messagesFragment);
+				_titleTextView.Text = "Messages";
 			});
 			_paymentsImageView.Click += new EventHandler((sender, e) =>
 			{
 				ResetColors();
 				_paymentsImageView.SetColorFilter(_colorFilter);
 				ChangeFragment(sender, e, typeof(PaymentFragments), _paymentsFragment);
+				_titleTextView.Text = "Payments";
 			});
 		}
 		/**

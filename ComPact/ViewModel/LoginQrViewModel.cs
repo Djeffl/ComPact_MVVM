@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Threading.Tasks;
 using ComPact.Helpers;
+using ComPact.Services;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Views;
 
 namespace ComPact.ViewModel
 {
-	public class LoginQrViewModel: ViewModelBase
+	public class LoginQrViewModel : ViewModelBase
 	{
 		/**
 		 * Declare Services
@@ -15,7 +16,7 @@ namespace ComPact.ViewModel
 		readonly INavigationService _navigationService;
 		readonly IBackService _backService;
 		readonly IDialogService _dialogService;
-		private readonly IUserDataService _userDataService;
+		private readonly IAuthenticationService _authenticationService;
 		#region Parameters
 		/**
 		 * Parameters
@@ -48,19 +49,17 @@ namespace ComPact.ViewModel
 		#region Commands
 		public RelayCommand BackRedirectCommand { get; set; }
 
-		public RelayCommand<User> ScanningFinishedCommand { get; set;}
+		public RelayCommand<User> ScanningFinishedCommand { get; set; }
 		#endregion
 		#region Constructor
 		/**
 		 * Init services & Init() & RegisterCommands();
 		 */
-		public LoginQrViewModel(INavigationService navigationService, IDialogService dialogService, IBackService backService, IUserDataService userDataService)
+		public LoginQrViewModel(INavigationService navigationService, IDialogService dialogService, IBackService backService, IAuthenticationService authenticationService)
 		{
-
-			//TODO iqsuugdqkshdqskldh
 			//Init Services
 			_navigationService = navigationService;
-			_userDataService = userDataService;
+			_authenticationService = authenticationService;
 			_dialogService = dialogService;
 			_backService = backService;
 
@@ -75,37 +74,23 @@ namespace ComPact.ViewModel
 		void RegisterCommands()
 		{
 			BackRedirectCommand = new RelayCommand(BackRedirect);
+			ScanningFinishedCommand = new RelayCommand<User>(async (obj) => await Login(obj));
+
 		}
 		#endregion
 
 		#region Methods
-		public async Task LoginUserAsync()
+		public async Task Login(User user)
 		{
 			try
 			{
-				User user = new User
-				{
-					Email = Email,
-					Password = Password
-				};
-				bool positiveResponseCode = await _userDataService.Login(user);
-
-
-				if (positiveResponseCode)
-				{
-					HomeRedirect();
-				}
-
-				else
-				{
-					_dialogService.ShowMessage("Invalid QR code");
-					BackRedirect();
-				}
+				await _authenticationService.AuthenticateEmailAndPassword(user.Email, user.Password);
 			}
 			catch (Exception err)
 			{
-				//comment me
+#if DEBUG
 				_dialogService.ShowMessage(err.ToString());
+#endif
 
 				_dialogService.ShowMessage("Oops something went wrong");
 			}

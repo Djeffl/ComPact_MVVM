@@ -6,6 +6,9 @@ using Android.Widget;
 using ComPact.ViewModel;
 using GalaSoft.MvvmLight.Helpers;
 using Android.Views;
+using ComPact.Droid.Models;
+using System.Collections.Generic;
+using ComPact.Models;
 
 namespace ComPact.Droid.Fragments
 {
@@ -17,6 +20,8 @@ namespace ComPact.Droid.Fragments
 		FloatingActionButton _addTaskFloatingActionButton;
 		ListView _tasksListView;
 
+		//data
+		List<Task> items;
 
 		TasksViewModel ViewModel
 		{
@@ -44,29 +49,12 @@ namespace ComPact.Droid.Fragments
 			SetBindings();
 			SetCommands();
 
+			items = new List<Task>();
+			items.Add(new Task() { ItemName = "item 1" });
+			items.Add(new Task() { ItemName = "item 2" });
+			items.Add(new Task() { ItemName = "item 3" });
 
-
-			// Defined Array values to show in ListView
-			string[] values = new string[] { "Android List View",
-											 "Adapter implementation",
-											 "Simple List View In Android",
-											 "Create List View Android",
-											 "Android Example",
-											 "List View Source Code",
-											 "List View Array Adapter",
-											 "Android Example List View"
-											};
-
-			// Define a new Adapter
-			// First parameter - Context
-			// Second parameter - Layout for the row
-			// Third parameter - ID of the TextView to which the data is written
-			// Forth - the Array of data
-
-			ArrayAdapter<string> adapter =
-				new ArrayAdapter<string>(Application.Context, Android.Resource.Layout.SimpleListItem1, Android.Resource.Id.Text1, values);
-
-
+			var adapter = new AdapterTask(Application.Context, items);
 			// Assign adapter to ListView
 			_tasksListView.Adapter = adapter;
 
@@ -79,6 +67,7 @@ namespace ComPact.Droid.Fragments
 				Toast.MakeText(Application.Context, selectedFromList, ToastLength.Long).Show();
 			};
 		}
+	
 
 
 
@@ -139,3 +128,25 @@ namespace ComPact.Droid.Fragments
 
 	}
 }
+
+
+
+// Defined Array values to show in ListView
+			//string[] values = new string[] { "Android List View",
+			//								 "Adapter implementation",
+			//								 "Simple List View In Android",
+			//								 "Create List View Android",
+			//								 "Android Example",
+			//								 "List View Source Code",
+			//								 "List View Array Adapter",
+			//								 "Android Example List View"
+			//								};
+
+			// Define a new Adapter
+			// First parameter - Context
+			// Second parameter - Layout for the row
+			// Third parameter - ID of the TextView to which the data is written
+			// Forth - the Array of data
+
+			//ArrayAdapter<string> adapter =
+			//	new ArrayAdapter<string>(Application.Context, Android.Resource.Layout.SimpleListItem1, Android.Resource.Id.Text1, values);

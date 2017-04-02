@@ -6,13 +6,16 @@ using ComPact.WebServices;
 using ModernHttpClient;
 using Newtonsoft.Json;
 using System.Collections.Generic;
+using System.Diagnostics;
+using Refit;
+using ComPact.Exceptions;
 
 namespace ComPact
 {
 	public class BaseWebservice<T>: IBaseWebservice<T>
 	{
-		private static HttpClient _instance;
-		private static string _baseUri = "http://192.168.56.1:8080/"; //"http://10.99.9.93:8080/"; 
+		static HttpClient _instance;
+		static string _baseUri = "http://192.168.56.1:8080/"; //"http://10.99.9.93:8080/"; 
 
 		/**
 		 * 
@@ -26,7 +29,7 @@ namespace ComPact
 		/**
 		 * 
 		 */
-		HttpClient GetHttpClient()
+		protected HttpClient GetHttpClient()
 		{
 			if (_instance == null)
 				CreateHttpClient();
@@ -42,13 +45,22 @@ namespace ComPact
 
 			var data = JsonConvert.SerializeObject(obj);
 			var postContent = new StringContent(data, Encoding.UTF8, "application/json");
-			HttpResponseMessage response = await client.PostAsync(urlExtend, postContent);
-			response.EnsureSuccessStatusCode();
-			var te = await response.Content.ReadAsStringAsync();
-			//System.Diagnostics.Debug.WriteLine(te);
-			var result = JsonConvert.DeserializeObject<T>(await response.Content.ReadAsStringAsync());
-			System.Diagnostics.Debug.WriteLine(result);
-			return result;		
+			try
+			{
+				HttpResponseMessage response = await client.PostAsync(urlExtend, postContent);
+				response.EnsureSuccessStatusCode();
+				Debug.WriteLine(response.EnsureSuccessStatusCode());
+				var result = JsonConvert.DeserializeObject<T>(await response.Content.ReadAsStringAsync());
+				return result;
+			}
+			//EXCeptions andere namen
+			//catch (TaskCanceledException taskEx) { 
+				
+			//}
+			catch (Exception ex)
+			{
+				throw new WebException("Create failed", ex);
+			}
 		}
 		public async Task<T> Create(string urlExtend, IEnumerable<T> obj)
 		{
@@ -73,7 +85,6 @@ namespace ComPact
 				var result = await Task.Run(() => JsonConvert.DeserializeObject<T>(getResponseString));
 				return result;
 			}
-
 			return default(T);
 		}
 

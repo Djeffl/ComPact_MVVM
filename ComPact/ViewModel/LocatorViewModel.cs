@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Diagnostics;
 using ComPact;
 using ComPact.Helpers;
 using ComPact.Members;
 using ComPact.Repositories;
+using ComPact.Services;
 using ComPact.ViewModel;
 using ComPact.ViewModel.Members;
+using ComPact.WebServices;
 using GalaSoft.MvvmLight.Ioc;
 using Microsoft.Practices.ServiceLocation;
 
@@ -126,10 +129,9 @@ namespace ComPact
 		public LocatorViewModel()
 		{
 			ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
-
-			RegisterViewModels();
 			RegisterRepositories();
 			RegisterWebServices();
+			RegisterViewModels();
 			RegisterServices();
 		}
 
@@ -143,24 +145,30 @@ namespace ComPact
 			SimpleIoc.Default.Register<HomeViewModel>();
 			SimpleIoc.Default.Register<HelpViewModel>();
 			SimpleIoc.Default.Register<SettingsViewModel>();
+
 			SimpleIoc.Default.Register<TasksViewModel>();
 			SimpleIoc.Default.Register<AddTaskViewModel>();
+
 			SimpleIoc.Default.Register<MembersViewModel>();
 			SimpleIoc.Default.Register<AddMembersViewModel>();
-
 		}
 
 		void RegisterServices()
 		{
 			SimpleIoc.Default.Register<IUserDataService, UserDataService>();
+			SimpleIoc.Default.Register<ITaskDataService, TaskDataService>();
+			SimpleIoc.Default.Register<IAuthenticationService, AuthenticationService>();
 		}
 		void RegisterWebServices()
 		{
 			SimpleIoc.Default.Register<IUserWebservice, UserWebservice>();
+			SimpleIoc.Default.Register<ITaskWebService, TaskWebService>();
+			SimpleIoc.Default.Register<IPersonalUserWebService, PersonalUserWebService>();
 		}
 		void RegisterRepositories()
 		{
 			SimpleIoc.Default.Register<IUserRepository, UserRepository>();
+			SimpleIoc.Default.Register<IPersonalRepository, PersonalRepository>();
 		}
 	}
 }

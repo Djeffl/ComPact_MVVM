@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Android.App;
 using Android.OS;
+using Android.Widget;
 using GalaSoft.MvvmLight.Helpers;
 
 namespace ComPact.Droid.Members
@@ -12,15 +13,25 @@ namespace ComPact.Droid.Members
 		//Local variables
 
 		//Keep track of bindings to avoid premature garbage collection
-		private readonly List<Binding> bindings = new List<Binding>();
-		//Elements
+		readonly List<Binding> bindings = new List<Binding>();
 
+		//Elements
+		EditText _firstNameEditText;
+		EditText _lastNameEditText;
+		EditText _emailEditText;
+		EditText _passwordEditText;
+		EditText _confirmEditText;
+		Button _registerButton;
+
+		ImageView _backImageView;
+		TextView _titleTextView;
+		ImageView _optionsImageView;
 		//Bind Viewmodel to activity
-		//ViewModel ViewModel
+		//AddMembersActivity ViewModel
 		//{
 		//	get
 		//	{
-		//		return App.Locator.ViewModel;
+		//		return App.Locator.AddMembersViewModel;
 		//	}
 		//}
 		#region OnCreate

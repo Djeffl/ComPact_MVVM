@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using ComPact.Models;
 using Newtonsoft.Json;
 using SQLite;
 
@@ -17,18 +19,17 @@ namespace ComPact
 		//public int Approved { get; set; }
 
 		[Ignore]
-		[PrimaryKey]
 		[JsonProperty("_id")]
 		public string Id { get; set; }
 		[Ignore]
 		[JsonProperty("firstName")]
 		public string FirstName { get; set; }
-		[Ignore]
 		[JsonProperty("lastName")]
 		public string LastName { get; set; }
-		[Ignore]
+		[PrimaryKey]
 		[JsonProperty("email")]
 		public string Email { get; set; }
+		[Ignore]
 		[JsonProperty("password")]
 		public string Password { get; set; }
 		[JsonProperty("admin")]
@@ -36,20 +37,16 @@ namespace ComPact
 		[Ignore]
 		[JsonProperty("qrCode")]
 		public byte[] QrCode { get; set; }
-		[JsonProperty("loginToken")]
-		public string LoginToken { get; set; }
-
-		private string FullName()
+		[Ignore]
+		public List<Task> Tasks { get; set; }
+		public string FullName()
 		{
 			return FirstName + " " + LastName;
 		}
-		//public override string ToString()
-		//{
-		//	return fullName();
-		//}
+
 		public override string ToString()
 		{
-			return string.Format("[User: Id={0}, FirstName={1}, LastName={2}, Email={3}, Password={4}, Admin={5}, QrCode={6}, LoginToken={7}]", Id, FirstName, LastName, Email, Password, Admin, QrCode, LoginToken);
+			return FullName();
 		}
 	}
 }

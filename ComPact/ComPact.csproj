@@ -55,7 +55,6 @@
     <Compile Include="ViewModel\SettingsViewModel.cs" />
     <Compile Include="Models\Task.cs" />
     <Compile Include="ViewModel\LoginQrViewModel.cs" />
-    <Compile Include="Helpers\ISQLitePlatform.cs" />
     <Compile Include="Helpers\IDatabase.cs" />
     <Compile Include="Repositories\IBaseRepository.cs" />
     <Compile Include="WebServices\IBaseWebservice.cs" />
@@ -66,6 +65,22 @@
     <Compile Include="ViewModel\Tasks\TasksViewModel.cs" />
     <Compile Include="ViewModel\Members\AddMembersViewModel.cs" />
     <Compile Include="ViewModel\Tasks\AddTaskViewModel.cs" />
+    <Compile Include="Services\ITaskDataService.cs" />
+    <Compile Include="Services\TaskDataService.cs" />
+    <Compile Include="WebServices\ITaskWebService.cs" />
+    <Compile Include="WebServices\TaskWebService.cs" />
+    <Compile Include="Helpers\IConnectionException.cs" />
+    <Compile Include="WebServices\Exceptions\WebException.cs" />
+    <Compile Include="Helpers\Settings.cs" />
+    <Compile Include="Services\AuthenticationService.cs" />
+    <Compile Include="Services\IAuthenticationService.cs" />
+    <Compile Include="WebServices\Data\APICalls.cs" />
+    <Compile Include="Models\TaskEnum.cs" />
+    <Compile Include="Repositories\IPersonalRepository.cs" />
+    <Compile Include="Repositories\PersonalRepository.cs" />
+    <Compile Include="Models\PersonalUser.cs" />
+    <Compile Include="WebServices\IPersonalUserWebService.cs" />
+    <Compile Include="WebServices\PersonalUserWebService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Contracts\" />
@@ -84,6 +99,8 @@
     <Folder Include="WebServices\models\" />
     <Folder Include="ViewModel\Members\" />
     <Folder Include="ViewModel\Tasks\" />
+    <Folder Include="WebServices\Exceptions\" />
+    <Folder Include="WebServices\Data\" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json">
@@ -112,6 +129,12 @@
     </Reference>
     <Reference Include="Refit">
       <HintPath>..\packages\refit.2.4.1\lib\Portable-Net45+NetCore45+WP8+WPA81\Refit.dll</HintPath>
+    </Reference>
+    <Reference Include="Plugin.Settings.Abstractions">
+      <HintPath>..\packages\Xam.Plugins.Settings.2.5.4\lib\portable-net45+wp80+win8+wpa81\Plugin.Settings.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Plugin.Settings">
+      <HintPath>..\packages\Xam.Plugins.Settings.2.5.4\lib\portable-net45+wp80+win8+wpa81\Plugin.Settings.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

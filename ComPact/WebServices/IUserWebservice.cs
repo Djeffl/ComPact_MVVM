@@ -7,5 +7,6 @@ namespace ComPact
 {
 	public interface IUserWebservice: IBaseWebservice<User>
 	{
+		Task<User> Forgot(string urlExtend, User obj);
 	}
 }

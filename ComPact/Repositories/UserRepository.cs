@@ -15,5 +15,6 @@ namespace ComPact
 			:base(database)
 		{
 		}
+
 	}
 }

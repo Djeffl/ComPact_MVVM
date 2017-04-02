@@ -19,9 +19,13 @@ namespace ComPact
 			_connection = database.Connection;
 		}
 
-		public virtual IEnumerable<TEntity> All()
+		public virtual async Task<IEnumerable<TEntity>> All()
 		{
-			return _connection.Table<TEntity>().ToListAsync().Result;
+			return await _connection.Table<TEntity>().ToListAsync();
+		}
+		public virtual Task DropTable()
+		{
+			return _connection.DropTableAsync<TEntity>();
 		}
 
 		public virtual IQueryable<TEntity> Where(Expression<Func<TEntity, bool>> filter)
@@ -29,9 +33,9 @@ namespace ComPact
 			return _connection.Table<TEntity>().ToListAsync().Result.AsQueryable().Where((filter ?? (e => true)));
 		}
 
-		public virtual int Count()
+		public virtual async Task<int> Count()
 		{
-			return _connection.Table<TEntity>().CountAsync().Result;
+			return await _connection.Table<TEntity>().CountAsync();
 		}
 
 		public virtual async Task<TEntity> Get(TKey key)
@@ -52,7 +56,7 @@ namespace ComPact
 		public virtual async Task<TEntity> Insert(TEntity entity)
 		{
 			await _connection.InsertAsync(entity);
-			return All().LastOrDefault();
+			return (await All())?.LastOrDefault();
 		}
 
 		public virtual async Task Insert(IEnumerable<TEntity> entities)

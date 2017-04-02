@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Android.App;
 using Android.OS;
+using Android.Views;
 using ComPact.ViewModel;
 using GalaSoft.MvvmLight.Helpers;
 
@@ -31,6 +32,10 @@ namespace ComPact.Droid.Activities
 			//Set Lay out
 			SetContentView(Resource.Layout.ActivitySplash);
 
+			//View x;
+
+			//x.Post(() => { });
+
 			//Init elements
 			Init();
 
@@ -44,7 +49,7 @@ namespace ComPact.Droid.Activities
 		protected override void OnResume()
 		{
 			base.OnResume();
-			ViewModel.LoginStartCommand.Execute(null);
+			ViewModel.LoginCommand.Execute(null);
 		}
 		/**
 		 * Init Views
