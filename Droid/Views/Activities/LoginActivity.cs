@@ -13,7 +13,7 @@ using Android.App;
 
 namespace ComPact.Droid
 {
-	[Activity(Label = "ComPact", Icon = "@mipmap/icon", MainLauncher = true)]
+	[Activity(Label = "ComPact", Icon = "@mipmap/icon")]
 	public class LoginActivity : BaseActivity
 	{
 		// Keep track of bindings to avoid premature garbage collection

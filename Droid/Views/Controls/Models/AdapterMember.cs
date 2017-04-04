@@ -6,9 +6,9 @@ using Android.Widget;
 
 namespace ComPact.Droid.Models
 {
-	public class AdapterMember: AdapterBase<User>
+	public class AdapterMember: AdapterBase<Member>
 	{
-		public AdapterMember(Context context, List<User> items) : base(context, items)
+		public AdapterMember(Context context, List<Member> items) : base(context, items)
 		{
 		}
 

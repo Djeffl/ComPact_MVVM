@@ -39,7 +39,7 @@ namespace ComPact.ViewModel
 		/**
 		 * Init services & Init() & RegisterCommands();
 		 */
-		public HomeViewModel(INavigationService navigationService, IUserDataService userDataService)
+		public HomeViewModel(INavigationService navigationService, IMemberDataService userDataService)
 		{
 			//Init Services
 			_navigationService = navigationService;

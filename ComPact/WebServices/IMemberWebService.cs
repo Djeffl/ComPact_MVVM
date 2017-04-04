@@ -5,8 +5,8 @@ using ComPact.WebServices;
 
 namespace ComPact
 {
-	public interface IUserWebservice: IBaseWebservice<User>
+	public interface IMemberWebService: IBaseWebservice<Member>
 	{
-		Task<User> Forgot(string urlExtend, User obj);
+		Task<Member> Forgot(string urlExtend, Member obj);
 	}
 }

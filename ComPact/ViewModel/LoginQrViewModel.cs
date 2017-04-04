@@ -49,7 +49,7 @@ namespace ComPact.ViewModel
 		#region Commands
 		public RelayCommand BackRedirectCommand { get; set; }
 
-		public RelayCommand<User> ScanningFinishedCommand { get; set; }
+		public RelayCommand<Member> ScanningFinishedCommand { get; set; }
 		#endregion
 		#region Constructor
 		/**
@@ -74,17 +74,17 @@ namespace ComPact.ViewModel
 		void RegisterCommands()
 		{
 			BackRedirectCommand = new RelayCommand(BackRedirect);
-			ScanningFinishedCommand = new RelayCommand<User>(async (obj) => await Login(obj));
+			ScanningFinishedCommand = new RelayCommand<Member>(async (obj) => await Login(obj));
 
 		}
 		#endregion
 
 		#region Methods
-		public async Task Login(User user)
+		public async Task Login(Member user)
 		{
 			try
 			{
-				await _authenticationService.AuthenticateEmailAndPassword(user.Email, user.Password);
+				//await _authenticationService.AuthenticateEmailAndPassword(user.Email, user.Password);
 			}
 			catch (Exception err)
 			{

@@ -180,7 +180,7 @@
     <Compile Include="Views\Fragments\LocationFragment.cs" />
     <Compile Include="Views\Fragments\MessagesFragment.cs" />
     <Compile Include="Views\Fragments\PaymentsFragment.cs" />
-    <Compile Include="Views\Fragments\TasksFragment.cs" />
+    <Compile Include="Views\Fragments\AssignmentsFragment.cs" />
     <Compile Include="Views\Activities\LoginQrActivity.cs" />
     <Compile Include="Helpers\Database.cs" />
     <Compile Include="Views\Controls\CustTextView.cs" />
@@ -188,10 +188,10 @@
     <Compile Include="Views\Activities\SplashActivity.cs" />
     <Compile Include="Views\Activities\Members\AddMemberActivity.cs" />
     <Compile Include="Views\Activities\Members\MembersActivity.cs" />
-    <Compile Include="Views\Activities\Tasks\AddTaskActivity.cs" />
+    <Compile Include="Views\Activities\Assignments\AddAssignmentActivity.cs" />
     <Compile Include="Helpers\Settings.cs" />
     <Compile Include="Views\Controls\Models\AdapterBase.cs" />
-    <Compile Include="Views\Controls\Models\AdapterTask.cs" />
+    <Compile Include="Views\Controls\Models\AdapterAssignment.cs" />
     <Compile Include="Views\Controls\Models\AdapterTaskItemNameSpinner.cs" />
     <Compile Include="Views\Controls\Models\AdapterMember.cs" />
     <Compile Include="Helpers\CustomBinding.cs" />
@@ -284,7 +284,6 @@
     <AndroidResource Include="Resources\drawable-xxxhdpi\ic_add_white_24dp.png" />
     <AndroidResource Include="Resources\drawable-mdpi\ic_add_white_24dp.png" />
     <AndroidResource Include="Resources\layout\ActivityAddMember.axml" />
-    <AndroidResource Include="Resources\layout\ActivityAddTask.axml" />
     <AndroidResource Include="Resources\layout\ListViewTask.axml" />
     <AndroidResource Include="Resources\layout\ListViewItemOptions.axml" />
     <AndroidResource Include="Resources\layout\ListViewItemOtherOption.axml" />
@@ -295,6 +294,7 @@
     <AndroidResource Include="Resources\drawable-xxhdpi\ic_check_white_24dp.png" />
     <AndroidResource Include="Resources\drawable-xxxhdpi\ic_check_white_24dp.png" />
     <AndroidResource Include="Resources\drawable\Profile_placeholderImage.png" />
+    <AndroidResource Include="Resources\layout\ActivityAddAssignment.axml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\" />
@@ -308,7 +308,7 @@
     <Folder Include="Helpers\" />
     <Folder Include="menu\" />
     <Folder Include="Views\Activities\Members\" />
-    <Folder Include="Views\Activities\Tasks\" />
+    <Folder Include="Views\Activities\Assignments\" />
     <Folder Include="Views\Controls\Models\" />
   </ItemGroup>
   <ItemGroup>

@@ -7,9 +7,10 @@ using ComPact.Models;
 
 namespace ComPact.Droid.Models
 {
-	public class AdapterTask : AdapterBase<Task>
+	public class AdapterAssignment : AdapterBase<Assignment>, AdapterView.IOnItemClickListener
 	{
-		public AdapterTask(Context context, List<Task> items) : base(context, items)
+		
+		public AdapterAssignment(Context context, List<Assignment> items) : base(context, items)
 		{
 		}
 
@@ -37,6 +38,11 @@ namespace ComPact.Droid.Models
 			//	doneCheckBox.Checked = false;
 			//}
 			return row;
+		}
+
+		public void OnItemClick(AdapterView parent, View view, int position, long id)
+		{
+			Toast.MakeText(_context, position, ToastLength.Long).Show();
 		}
 	}
 }

@@ -7,9 +7,9 @@ using Newtonsoft.Json;
 
 namespace ComPact
 {
-	public class UserWebservice : BaseWebservice<User>, IUserWebservice
+	public class MemberWebService : BaseWebservice<Member>, IMemberWebService
 	{
-		public async Task<User> Forgot(string urlExtend, User obj)
+		public async Task<Member> Forgot(string urlExtend, Member obj)
 		{
 			var client = GetHttpClient();
 
@@ -19,7 +19,7 @@ namespace ComPact
 			response.EnsureSuccessStatusCode();
 			var te = await response.Content.ReadAsStringAsync();
 			//System.Diagnostics.Debug.WriteLine(te);
-			var result = JsonConvert.DeserializeObject<User>(await response.Content.ReadAsStringAsync());
+			var result = JsonConvert.DeserializeObject<Member>(await response.Content.ReadAsStringAsync());
 			System.Diagnostics.Debug.WriteLine(result);
 			return result;
 		}

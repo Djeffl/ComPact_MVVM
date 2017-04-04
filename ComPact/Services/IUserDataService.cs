@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Threading.Tasks;
-using ComPact;
+using ComPact.Models;
 
 namespace ComPact
 {
 	public interface IUserDataService
 	{
-		Task<User> Create(User user);
-		Task<User> Get(string email);
-		void Forgot(User user);
+		Task Create(User user);
+		Task<User> Login(User user);
+		Task LogOut();
 	}
 }

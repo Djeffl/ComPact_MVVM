@@ -1,9 +1,10 @@
 ﻿using System;
 using Newtonsoft.Json;
+using SQLite;
 
 namespace ComPact.Models
 {
-	public class Task
+	public class Assignment
 	{
 		[JsonProperty("_id")]
 		public string Id { get; set; }
@@ -12,8 +13,9 @@ namespace ComPact.Models
 		[JsonProperty("description")]
 		public string Description { get; set; }
 		[JsonProperty("member")]
-		public User Member { get; set; }
-		public byte[] Image { get; set; }
+		public string AdminId { get; set; }
+		//public Member Member { get; set; }
+		//public byte[] Image { get; set; }
 		public bool Done { get; set; }
 		public override string ToString()
 		{

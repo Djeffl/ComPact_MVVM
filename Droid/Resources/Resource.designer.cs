@@ -2291,26 +2291,26 @@ namespace ComPact.Droid
 			// aapt resource value: 0x7f0b00c1
 			public const int actions = 2131427521;
 			
-			// aapt resource value: 0x7f0b007c
-			public const int activityAddDescriptionEditText = 2131427452;
-			
-			// aapt resource value: 0x7f0b0076
-			public const int activityAddMemberEmailTextView = 2131427446;
-			
-			// aapt resource value: 0x7f0b0074
-			public const int activityAddMemberFirstNameTextView = 2131427444;
-			
 			// aapt resource value: 0x7f0b0075
-			public const int activityAddMemberLastNameTextView = 2131427445;
+			public const int activityAddDescriptionEditText = 2131427445;
 			
-			// aapt resource value: 0x7f0b0077
-			public const int activityAddMemberrPasswordTextView = 2131427447;
+			// aapt resource value: 0x7f0b007a
+			public const int activityAddMemberEmailTextView = 2131427450;
 			
-			// aapt resource value: 0x7f0b007d
-			public const int activityAddTaskListView = 2131427453;
+			// aapt resource value: 0x7f0b0078
+			public const int activityAddMemberFirstNameTextView = 2131427448;
+			
+			// aapt resource value: 0x7f0b0079
+			public const int activityAddMemberLastNameTextView = 2131427449;
 			
 			// aapt resource value: 0x7f0b007b
-			public const int activityAddWhatItemSpinner = 2131427451;
+			public const int activityAddMemberrPasswordTextView = 2131427451;
+			
+			// aapt resource value: 0x7f0b0076
+			public const int activityAddTaskListView = 2131427446;
+			
+			// aapt resource value: 0x7f0b0074
+			public const int activityAddWhatItemSpinner = 2131427444;
 			
 			// aapt resource value: 0x7f0b0087
 			public const int activityLoginEmailInputLoginEditText = 2131427463;
@@ -2333,8 +2333,8 @@ namespace ComPact.Droid
 			// aapt resource value: 0x7f0b0090
 			public const int activityMembersAddMemberFloatingActionButton = 2131427472;
 			
-			// aapt resource value: 0x7f0b0078
-			public const int activityRegisterAddMemberTextView = 2131427448;
+			// aapt resource value: 0x7f0b007c
+			public const int activityRegisterAddMemberTextView = 2131427452;
 			
 			// aapt resource value: 0x7f0b0097
 			public const int activityRegisterConfirmPasswordTextView = 2131427479;
@@ -2345,8 +2345,8 @@ namespace ComPact.Droid
 			// aapt resource value: 0x7f0b0093
 			public const int activityRegisterFirstNameTextView = 2131427475;
 			
-			// aapt resource value: 0x7f0b0079
-			public const int activityRegisterIsAdminCheckBox = 2131427449;
+			// aapt resource value: 0x7f0b007d
+			public const int activityRegisterIsAdminCheckBox = 2131427453;
 			
 			// aapt resource value: 0x7f0b0094
 			public const int activityRegisterLastNameTextView = 2131427476;
@@ -2354,8 +2354,8 @@ namespace ComPact.Droid
 			// aapt resource value: 0x7f0b0096
 			public const int activityRegisterPasswordTextView = 2131427478;
 			
-			// aapt resource value: 0x7f0b007a
-			public const int activityRegisterRegisterButton = 2131427450;
+			// aapt resource value: 0x7f0b007e
+			public const int activityRegisterRegisterButton = 2131427454;
 			
 			// aapt resource value: 0x7f0b009a
 			public const int activitySettingsLogOutButton = 2131427482;
@@ -2363,8 +2363,8 @@ namespace ComPact.Droid
 			// aapt resource value: 0x7f0b0099
 			public const int activitySettingsMembersRedirectButton = 2131427481;
 			
-			// aapt resource value: 0x7f0b007e
-			public const int activityTasksAddTaskFloatingActionButton = 2131427454;
+			// aapt resource value: 0x7f0b0077
+			public const int activityTasksAddTaskFloatingActionButton = 2131427447;
 			
 			// aapt resource value: 0x7f0b00a7
 			public const int activityTasksTasksListView = 2131427495;
@@ -2987,10 +2987,10 @@ namespace ComPact.Droid
 			public const int abc_select_dialog_material = 2130968602;
 			
 			// aapt resource value: 0x7f04001b
-			public const int ActivityAddMember = 2130968603;
+			public const int ActivityAddAssignment = 2130968603;
 			
 			// aapt resource value: 0x7f04001c
-			public const int ActivityAddTask = 2130968604;
+			public const int ActivityAddMember = 2130968604;
 			
 			// aapt resource value: 0x7f04001d
 			public const int ActivityHelp = 2130968605;

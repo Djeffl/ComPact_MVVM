@@ -12,18 +12,17 @@ using ComPact.Models;
 
 namespace ComPact.Droid.Fragments
 {
-	public class TasksFragment : BaseFragment
+	public class AssignmentsFragment : BaseFragment
 	{
 		//EditText _itemNameEditText;
 		//EditText _describtionEditText;
 		//Button _createTaskButton;
 		FloatingActionButton _addTaskFloatingActionButton;
 		ListView _tasksListView;
-
 		//data
-		List<Task> items;
+		List<Assignment> items;
 
-		TasksViewModel ViewModel
+		AssignmentsViewModel ViewModel
 		{
 			get
 			{
@@ -49,22 +48,23 @@ namespace ComPact.Droid.Fragments
 			SetBindings();
 			SetCommands();
 
-			items = new List<Task>();
-			items.Add(new Task() { ItemName = "item 1" });
-			items.Add(new Task() { ItemName = "item 2" });
-			items.Add(new Task() { ItemName = "item 3" });
+			items = new List<Assignment>();
+			items.Add(new Assignment() { ItemName = "item 1" });
+			items.Add(new Assignment() { ItemName = "item 2" });
+			items.Add(new Assignment() { ItemName = "item 3" });
 
-			var adapter = new AdapterTask(Application.Context, items);
+			var adapter = new AdapterAssignment(Application.Context, items);
 			// Assign adapter to ListView
 			_tasksListView.Adapter = adapter;
 
+		
 
 			// ListView Item Click Listener
 			_tasksListView.ItemClick += (object sender, AdapterView.ItemClickEventArgs e) =>
 			{
-				Console.WriteLine("okoko");
 				String selectedFromList = (string)_tasksListView.GetItemAtPosition(e.Position);
 				Toast.MakeText(Application.Context, selectedFromList, ToastLength.Long).Show();
+				ViewModel.AssignmentsPostionCommand?.Execute(e.Position);
 			};
 		}
 	
@@ -84,14 +84,17 @@ namespace ComPact.Droid.Fragments
 
 		void SetBindings()
 		{
+			//this.SetBindings(() => ViewModel.Done, () => _tasksListView, BindingMode.TwoWay);
 			//this.SetBinding(() => ViewModel.ItemName, () => _itemNameEditText.Text, BindingMode.TwoWay);
-			//this.SetBinding(() => ViewModel.Descrition, () => _describtionEditText.Text, BindingMode.TwoWay);
+			//Binding itemPosition = this.SetBinding(() => ViewModel., () => _describtionEditText.Text, BindingMode.TwoWay);
 		}
 		void SetCommands()
 		{
 			//_createTaskButton.SetCommand("Click", ViewModel.CreateTaskAsyncCommand);
 			//ViewModel.CreateTaskAsyncCommand
-			_addTaskFloatingActionButton.SetCommand("Click", ViewModel.AddTaskRedirectCommand);
+			_addTaskFloatingActionButton.SetCommand("Click", ViewModel.AddAssignmentRedirectCommand);
+			//_tasksListView.SetCommand("Click", ViewModel.AssignmentDetailRedirectCommand); // Bind nog met item, list 
+
 
 		}
 
@@ -104,9 +107,11 @@ namespace ComPact.Droid.Fragments
 		}
 
 
-            
-  //          // ListView Item Click Listener
-  //          listView.setOnItemClickListener(new OnItemClickListener()
+
+
+
+		//          // ListView Item Click Listener
+		//          listView.setOnItemClickListener(new OnItemClickListener()
 		//{
 
 		//	@Override

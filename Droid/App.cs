@@ -56,8 +56,8 @@ namespace ComPact.Droid
 			nav.Configure(LocatorViewModel.HomePageKey, typeof(HomeActivity));
 			nav.Configure(LocatorViewModel.HelpPageKey, typeof(HelpActivity));
 			nav.Configure(LocatorViewModel.SettingsPageKey, typeof(SettingsActivity));
-			nav.Configure(LocatorViewModel.TasksPageKey, typeof(Fragments.TasksFragment));
-			nav.Configure(LocatorViewModel.AddTaskPageKey, typeof(AddTaskActivity));
+			nav.Configure(LocatorViewModel.TasksPageKey, typeof(Fragments.AssignmentsFragment));
+			nav.Configure(LocatorViewModel.AddTaskPageKey, typeof(AddAssignmentActivity));
 			nav.Configure(LocatorViewModel.MembersPageKey, typeof(MembersActivity));
 			nav.Configure(LocatorViewModel.AddMembersPageKey, typeof(AddMembersActivity));
 		}
@@ -65,7 +65,6 @@ namespace ComPact.Droid
 		private static void RegisterIoc()
 		{
 			SimpleIoc.Default.Register<IDialogService, DialogService>();
-			SimpleIoc.Default.Register<IBackService, BackService>();
 			SimpleIoc.Default.Register<IPopUpService, PopUpService>();
 			SimpleIoc.Default.Register<IDatabase, Database>();
 			SimpleIoc.Default.Register<IMenuDialogService, MenuDialogService>();

@@ -14,7 +14,6 @@ namespace ComPact
 		 */
 		readonly INavigationService _navigationService;
 		readonly IBackService _backService;
-		readonly IUserDataService _userDataService;
 		readonly IAuthenticationService _authenticationService;
 
 		#region Parameters
@@ -44,13 +43,12 @@ namespace ComPact
 		/**
 		 * Init services & Init() & RegisterCommands();
 		 */
-		public SettingsViewModel(INavigationService navigationService, IBackService backService, IUserDataService userDataService, IAuthenticationService authenticationService)
+		public SettingsViewModel(INavigationService navigationService, IAuthenticationService authenticationService)
 		{
 			//Init Services
 			_navigationService = navigationService;
-			_backService = backService;
-			_userDataService = userDataService;
 			_authenticationService = authenticationService;
+
 			Init();
 
 			RegisterCommands();
@@ -70,14 +68,14 @@ namespace ComPact
 		#region Methods
 		void BackRedirect()
 		{
-			_backService.GoBack();
+			_navigationService.GoBack();
 		}
-		void LogOut()
+
+		async void LogOut()
 		{
-			bool valid = _authenticationService.LogOut();
-			if (valid)
+			bool isSuccessful = await _authenticationService.LogOut();
+			if (isSuccessful)
 			{
-				Debug.WriteLine("Log: " + Settings.LoginToken);
 				_navigationService.NavigateTo(LocatorViewModel.LoginPageKey);
 			}
 

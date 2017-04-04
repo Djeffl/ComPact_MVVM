@@ -13,7 +13,7 @@ namespace ComPact
 		 */
 		private readonly INavigationService _navigationService;
 		private readonly IBackService _backService;
-		readonly IUserDataService _userDataService;
+		readonly IMemberDataService _userDataService;
 		readonly IPopUpService _popUpService;
 		#region Parameters
 		/**
@@ -40,7 +40,7 @@ namespace ComPact
 		/**
 		 * Init services & Init() & RegisterCommands();
 		 */
-		public PasswordRetrievalViewModel(INavigationService navigationService, IBackService backService, IUserDataService userDataService, IPopUpService popUpService)
+		public PasswordRetrievalViewModel(INavigationService navigationService, IBackService backService, IMemberDataService userDataService, IPopUpService popUpService)
 		{
 			//Init Services
 			_navigationService = navigationService;
@@ -70,7 +70,7 @@ namespace ComPact
 		}
 		void PasswordReset()
 		{
-			var user = new User
+			var user = new Member
 			{
 				Email = Email
 			};

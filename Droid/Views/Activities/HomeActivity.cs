@@ -15,7 +15,7 @@ using GalaSoft.MvvmLight.Helpers;
 
 namespace ComPact.Droid.Activities
 {
-	[Activity(Label = "HomeActivity")]
+	[Activity(Label = "HomeActivity", MainLauncher = true)]
 	public class HomeActivity : BaseActivity
 	{
 		//Local variables
@@ -51,7 +51,7 @@ namespace ComPact.Droid.Activities
 				return App.Locator.HomeViewModel;
 			}
 		}
-		TasksViewModel TasksViewModel
+		AssignmentsViewModel TasksViewModel
 		{
 			get
 			{
@@ -75,7 +75,7 @@ namespace ComPact.Droid.Activities
 			SetCommands();
 			//Start Fragment
 			_tasksImageView.SetColorFilter(_colorFilter);
-			ChangeFragment(null, null, typeof(TasksFragment), _tasksFragment);
+			ChangeFragment(null, null, typeof(AssignmentsFragment), _tasksFragment);
 			//-----
 			//Ask Bruno
 			menu = new MenuDialogService();
@@ -131,7 +131,7 @@ namespace ComPact.Droid.Activities
 			{
 				ResetColors();
 				_tasksImageView.SetColorFilter(_colorFilter);
-				ChangeFragment(sender, e, typeof(TasksFragment), _tasksFragment);
+				ChangeFragment(sender, e, typeof(AssignmentsFragment), _tasksFragment);
 				_titleTextView.Text = "Tasks";
 			};
 			_locationsImageView.Click += new EventHandler((sender, e) => 
@@ -195,9 +195,9 @@ namespace ComPact.Droid.Activities
 			//}
 			//else
 			//{
-			if (type == typeof(TasksFragment))
+			if (type == typeof(AssignmentsFragment))
 				{
-					fragment = new TasksFragment();
+					fragment = new AssignmentsFragment();
 					return fragment;
 				}
 				else if (type == typeof(MessagesFragment))

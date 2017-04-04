@@ -113,15 +113,17 @@ namespace ComPact
 
 		async void Login()
 		{
-			bool validAttempt= await _authenticationService.AuthenticateEmailAndPassword(Email, Password);
-			if (validAttempt)
+			bool isSuccessful= await _authenticationService.Login(Email, Password);
+			ClearFields();
+			if (isSuccessful)
 			{
 				_navigationService.NavigateTo(LocatorViewModel.HomePageKey);
 			}
-			else
-			{
-				_dialogService.ShowMessage("WRONG COMBINATION");
-			}
+		}
+		void ClearFields()
+		{
+			Email = "";
+			Password = "";
 		}
 		#endregion
 	}

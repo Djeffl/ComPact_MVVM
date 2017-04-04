@@ -98,7 +98,7 @@ namespace ComPact.Droid
 				string _emailstr = emailAndPassword[0];
 				string _passStr = emailAndPassword[1];
 
-				ViewModel.ScanningFinishedCommand?.Execute(new User
+				ViewModel.ScanningFinishedCommand?.Execute(new Member
 				{
 					Email = _emailstr,
 					Password = _passStr

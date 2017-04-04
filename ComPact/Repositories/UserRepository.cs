@@ -1,20 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using ComPact;
 using ComPact.Helpers;
-using SQLite;
+using ComPact.Models;
 
-namespace ComPact
+namespace ComPact.Repositories
 {
 	public class UserRepository: BaseRepository<User, string>, IUserRepository
 	{
-		//private SQLiteAsyncConnection database;
 
 		public UserRepository(IDatabase database)
 			:base(database)
 		{
 		}
-
 	}
 }

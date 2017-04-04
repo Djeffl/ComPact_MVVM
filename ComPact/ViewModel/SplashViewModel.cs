@@ -46,15 +46,15 @@ namespace ComPact.ViewModel
 		#region Methods
 		async void Login()
 		{
-			bool LoggedIn = await _authenticationService.AuthenticateToken();
-			if (LoggedIn)
-			{
-				HomeRedirect();
-			}
-			else
-			{
-				LoginRedirect();
-			}
+			//bool LoggedIn = await _authenticationService.AuthenticateToken();
+			//if (LoggedIn)
+			//{
+			//	HomeRedirect();
+			//}
+			//else
+			//{
+			//	LoginRedirect();
+			//}
 		}
 		void HomeRedirect()
 		{

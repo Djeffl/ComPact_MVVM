@@ -3,8 +3,7 @@ using ComPact.Models;
 
 namespace ComPact.WebServices
 {
-	public interface IPersonalUserWebService: IBaseWebservice<PersonalUser>
+	public interface IAssignmentWebService : IBaseWebservice<Assignment>
 	{
-		
 	}
 }

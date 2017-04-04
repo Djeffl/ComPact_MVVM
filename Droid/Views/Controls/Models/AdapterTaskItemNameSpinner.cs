@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Android.Content;
 using Android.Views;
 using Android.Widget;
+using ComPact.Models;
 using Java.Util;
 
 namespace ComPact.Droid.Models
@@ -19,32 +20,10 @@ namespace ComPact.Droid.Models
 
 			if (row == null)
 			{
-				if (Items.Count != position)
-				{
-					row = LayoutInflater.From(_context).Inflate(Resource.Layout.ListViewItemOptions, null, false);
-				}
-				else
-				{
-					row = LayoutInflater.From(_context).Inflate(Resource.Layout.ListViewItemOtherOption, null, false);
-					Button btn = row.FindViewById<Button>(Resource.Id.listViewItemOtherOptionOtherButton);
-					btn.Text = "Other";
-
-
-				}
+				row = LayoutInflater.From(_context).Inflate(Resource.Layout.ListViewItemOptions, null, false);
 			}
-			if (Items.Count != position-1)
-			{
-				TextView nameTextView = row.FindViewById<TextView>(Resource.Id.listViewItemOptionsItemName);
-				nameTextView.Text = Items[position];
-			}
-			else
-			{
-				row = LayoutInflater.From(_context).Inflate(Resource.Layout.ListViewItemOtherOption, null, false);
-				Button btn = row.FindViewById<Button>(Resource.Id.listViewItemOtherOptionOtherButton);
-				btn.Text = "Other";
-
-
-			}
+			TextView itemNameTextView = row.FindViewById<TextView>(Resource.Id.listViewItemOptionsItemName);
+			itemNameTextView.Text = Items[position];
 
 			return row;
 		}

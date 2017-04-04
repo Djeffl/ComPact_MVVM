@@ -1,53 +1,66 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Linq;
-using System.Net.Http;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using ComPact;
 using ComPact.Data;
-using ComPact.Helpers;
-using Newtonsoft.Json;
+using ComPact.Models;
+using ComPact.Repositories;
+using ComPact.WebServices;
 
 namespace ComPact
 {
 	public class UserDataService: IUserDataService
 	{
-		private readonly IUserWebservice _userWebservice;
-		private readonly IUserRepository _userRepository;
+		readonly IUserRepository _userRepository;
+		readonly IUserWebService _userWebService;
 
-		public UserDataService(IUserWebservice userWebservice, IUserRepository userRepository)
+		public UserDataService(IUserRepository userRepository, IUserWebService userWebService)
 		{
-			_userWebservice = userWebservice;
 			_userRepository = userRepository;
+			_userWebService = userWebService;
 		}
 
-		/**
-		 * Create User
-		 */
-		public async Task<User> Create(User user)
+		public async Task Create(User user)
 		{
-			return await _userWebservice.Create(APICalls.CreateUserPath, user);
-		}
-		public async Task<User> Get(string email)
-		{
-			string getUserPathEmailPassword = "/api/users?email=\"" + email + "\"";
 			try
 			{
-				User user = await _userWebservice.Read(getUserPathEmailPassword);
-				return user;
+				user = await _userWebService.Create(APICalls.CreateAuthPath, user);
+				user = await _userRepository.Insert(user);
 			}
 			catch (Exception)
 			{
-				throw new Exception("Can't connect to server. Please check your network.");
+				throw;
 			}
 		}
 
-		public void Forgot(User user)
+		public async Task<User> Login(User user)
 		{
-			_userWebservice.Forgot("/api/users/forgot", user);
+			try
+			{
+				var responseUser = await _userWebService.Login(APICalls.LoginAuthPath, user);
+				await _userRepository.InsertOrReplace(responseUser);
+				return responseUser;
+			}
+			catch (Exception)
+			{
+				throw;
+			}
+		}
+		public async Task LogOut()
+		{
+			try
+			{
+				User user = await GetUser();
+				await _userRepository.Delete(user);
+			}
+			catch (Exception)
+			{
+				throw;
+			}
+		}
+		public async Task<User> GetUser()
+		{
+			var user = (await _userRepository.All())?.FirstOrDefault();
+			return user;
 		}
 	}
 }
-	
-		

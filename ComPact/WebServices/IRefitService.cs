@@ -8,10 +8,10 @@ namespace ComPact.WebServices
 	public interface IRefitService
 	{
 		[Get("/api/users?email={email}")]
-		Task<User> GetUserByEmail(string email);
+		Task<Member> GetUserByEmail(string email);
 		[Get("/api/users?id={id}")]
-		Task<User> GetUserById(string id);
+		Task<Member> GetUserById(string id);
 		[Get("/api/users")]
-		Task<User> GetAllUsers();
+		Task<Member> GetAllUsers();
 	}
 }

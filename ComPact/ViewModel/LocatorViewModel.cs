@@ -87,18 +87,18 @@ namespace ComPact
 			}
 		}
 
-		public TasksViewModel TasksViewModel
+		public AssignmentsViewModel TasksViewModel
 		{
 			get
 			{
-				return ServiceLocator.Current.GetInstance<TasksViewModel>();
+				return ServiceLocator.Current.GetInstance<AssignmentsViewModel>();
 			}
 		}
-		public AddTaskViewModel AddTaskViewModel
+		public AddAssignmentViewModel AddTaskViewModel
 		{
 			get
 			{
-				return ServiceLocator.Current.GetInstance<AddTaskViewModel>();
+				return ServiceLocator.Current.GetInstance<AddAssignmentViewModel>();
 			}
 		}
 
@@ -131,8 +131,8 @@ namespace ComPact
 			ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
 			RegisterRepositories();
 			RegisterWebServices();
-			RegisterViewModels();
 			RegisterServices();
+			RegisterViewModels();
 		}
 
 		void RegisterViewModels() 
@@ -146,8 +146,8 @@ namespace ComPact
 			SimpleIoc.Default.Register<HelpViewModel>();
 			SimpleIoc.Default.Register<SettingsViewModel>();
 
-			SimpleIoc.Default.Register<TasksViewModel>();
-			SimpleIoc.Default.Register<AddTaskViewModel>();
+			SimpleIoc.Default.Register<AssignmentsViewModel>();
+			SimpleIoc.Default.Register<AddAssignmentViewModel>();
 
 			SimpleIoc.Default.Register<MembersViewModel>();
 			SimpleIoc.Default.Register<AddMembersViewModel>();
@@ -155,20 +155,23 @@ namespace ComPact
 
 		void RegisterServices()
 		{
+			SimpleIoc.Default.Register<IMemberDataService, MemberDataService>();
+			SimpleIoc.Default.Register<IAssignmentDataService, AssignmentDataService>();
 			SimpleIoc.Default.Register<IUserDataService, UserDataService>();
-			SimpleIoc.Default.Register<ITaskDataService, TaskDataService>();
 			SimpleIoc.Default.Register<IAuthenticationService, AuthenticationService>();
+
 		}
 		void RegisterWebServices()
 		{
-			SimpleIoc.Default.Register<IUserWebservice, UserWebservice>();
-			SimpleIoc.Default.Register<ITaskWebService, TaskWebService>();
-			SimpleIoc.Default.Register<IPersonalUserWebService, PersonalUserWebService>();
+			SimpleIoc.Default.Register<IMemberWebService, MemberWebService>();
+			SimpleIoc.Default.Register<IAssignmentWebService, TaskWebService>();
+			SimpleIoc.Default.Register<IUserWebService, UserWebService>();
 		}
 		void RegisterRepositories()
 		{
 			SimpleIoc.Default.Register<IUserRepository, UserRepository>();
-			SimpleIoc.Default.Register<IPersonalRepository, PersonalRepository>();
+			SimpleIoc.Default.Register<IMemberRepository, MemberRepository>();
+			SimpleIoc.Default.Register<IAssignmentRepository, AssignmentRepository>();
 		}
 	}
 }

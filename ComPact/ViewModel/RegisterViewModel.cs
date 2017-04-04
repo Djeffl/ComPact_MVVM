@@ -3,6 +3,8 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using ComPact.Helpers;
+using ComPact.Models;
+using ComPact.Services;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Views;
@@ -12,7 +14,7 @@ namespace ComPact
 	public class RegisterViewModel : ViewModelBase
 	{
 		private readonly INavigationService _navigationService;
-		private readonly IUserDataService _userDataService;
+		private readonly IAuthenticationService _authenticationService;
 		private readonly IDialogService _dialogService;
 		private readonly IBackService _backService;
 		private readonly IPopUpService _popUpService;
@@ -139,16 +141,13 @@ namespace ComPact
 		#endregion
 
 		#region Constructor
-		public RegisterViewModel(INavigationService navigationService, IUserDataService userDataService, IDialogService dialogService, IBackService backService, IPopUpService popUpService)
+		public RegisterViewModel(INavigationService navigationService, IAuthenticationService authenticationService, IDialogService dialogService)
 		{
-			_userDataService = userDataService;
+			_authenticationService = authenticationService;
 			_navigationService = navigationService;
 			_dialogService = dialogService;
-			_backService = backService;
-			_popUpService = popUpService;
 
 			Init();
-
 		}
 
 		void Init()
@@ -172,50 +171,36 @@ namespace ComPact
 		 */
 		async Task RegisterUserAsync()
 		{
-			Admin = true;
-			_registration = new Registration(FirstName, LastName, Email, Password, ConfirmPassword, Admin);
-			string firstName = _registration.FirstName;
-			string lastName = _registration.LastName;
-			string email = _registration.Email;
-			string password = _registration.Password;
-			string confirmPassword = _registration.ConfirmPassword;
-			bool admin = _registration.Admin;
-			if (firstName != null && lastName != null && email != null && password != null && confirmPassword != null && admin != null)
+			_registration = new Registration()
 			{
-
-				if (EmailIsValid(email))
+				FirstName = FirstName,
+				LastName = LastName,
+				Email = Email,
+				Password = Password,
+				ConfirmPassword = Password,
+				Admin = true
+			};
+			if (_registration.Email != null && _registration.FirstName != null && _registration.LastName != null && _registration.Password != null && _registration.ConfirmPassword != null) // && admin != null)
+			{
+				if (EmailIsValid(_registration.Email))
 				{
 
-					if (password == confirmPassword)
+					if (_registration.Password == _registration.ConfirmPassword)
 					{
 
 						try
 						{
-							//User user = await _userDataService.Get(email);
-							_dialogService.ShowMessage("Email already taken!");
+							bool isSuccessful = await _authenticationService.Register(_registration.FirstName, _registration.LastName, _registration.Email, _registration.Password, _registration.Admin);
+							if (isSuccessful)
+							{
+								_navigationService.NavigateTo(LocatorViewModel.HomePageKey);
+							}
 						}
 						catch (Exception)
 						{
-							try
-							{
-								var newUser = new User
-								{
-									Id = null,
-									FirstName = FirstName,
-									LastName = LastName,
-									Email = email,
-									Password = password,
-									Admin = admin,
-								};
-								//User response = await _userDataService.Create(newUser);
-								_popUpService.Show("Account created!", "long");
-								//LoginAsync.LoginUserAsync(email, password, _userDataService, _dialogService, _navigationService);
-							}
-							catch (Exception)
-							{
-								_dialogService.ShowMessage("Oops! Something went wrong, please try again later");
-							}
+							_dialogService.ShowMessage("Email already taken!");
 						}
+
 					}
 					else
 					{
@@ -236,18 +221,6 @@ namespace ComPact
 		void BackRedirect()
 		{
 			_navigationService.GoBack();
-		}
-
-		void LoginRedirect()
-		{
-			_navigationService.NavigateTo(LocatorViewModel.LoginPageKey);
-		}
-
-		async Task<User> CreateUserAsync(User user)
-		{
-			User response = await _userDataService.Create(user);
-
-			return response;
 		}
 
 		bool EmailIsValid(string email)
