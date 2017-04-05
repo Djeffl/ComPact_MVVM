@@ -28,9 +28,9 @@ namespace ComPact.Services
 		{
 			try
 			{
-
-				Assignment response = await _assignmentWebService.Create(CreateTaskPath, assignment);
-				return await _assignmentRepository.Insert(response);
+				return await _assignmentWebService.Create(CreateTaskPath, assignment);
+				//Assignment response = await _assignmentWebService.Create(CreateTaskPath, assignment);
+				//return await _assignmentRepository.Insert(response);
 
 			}
 			catch (Exception ex)
@@ -46,8 +46,16 @@ namespace ComPact.Services
 		{
 			string apiUrlCall = APICalls.BaseAssignemntPath + "?loginToken=" + loginToken;
 			var assignments = await _assignmentWebService.ReadAll(apiUrlCall);
-			await _assignmentRepository.Insert(assignments);
+			//await _assignmentRepository.Insert(assignments);
 			return assignments;
+		}
+		public async Task<IEnumerable<Assignment>> GetAll()
+		{
+			return await _assignmentRepository.All();
+		}
+		public async Task<Assignment> Update(Assignment assignment)
+		{
+			return await _assignmentWebService.Update(APICalls.UpdateAssignmentPath, assignment);
 		}
 	}
 }

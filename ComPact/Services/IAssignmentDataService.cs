@@ -10,5 +10,7 @@ namespace ComPact
 		Task<Assignment> Create(Assignment assignment);
 		Task<IEnumerable<Assignment>> GetAssignments();
 		Task<IEnumerable<Assignment>> GetAssignments(string adminId);
+		Task<IEnumerable<Assignment>> GetAll();
+		Task<Assignment> Update(Assignment assignment);
 	}
 }

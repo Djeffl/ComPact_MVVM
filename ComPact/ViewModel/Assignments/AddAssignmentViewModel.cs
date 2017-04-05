@@ -22,6 +22,7 @@ namespace ComPact.Members
 		readonly INavigationService _navigationService;
 		readonly IAssignmentDataService _assignmentDataService;
 		readonly IMemberDataService _memberDataService;
+		readonly IUserDataService _userDataService;
 		readonly IPopUpService _popUpService;
 		readonly IDialogService _dialogService;
 
@@ -92,28 +93,28 @@ namespace ComPact.Members
 
 				_members = value;
 				RaisePropertyChanged(nameof(Members));
-				Debug.WriteLine(_members[0]);
 				//Set(ref _members, value);
 			}
 		}
-
+		private string memberEmail;
+		private string item;
 
 
 		#endregion
 		#region Commands
 		public RelayCommand CreateTaskCommand { get; set; }
 		public RelayCommand BackRedirectCommand { get; set; }
-		public RelayCommand<Member> MemberCommand { get; set; }
-		//public RelayCommand GetAssignmentsCommand { get; set; }
+		public RelayCommand<Member> MemberSelectedCommand { get; set; } 
+		public RelayCommand<int> AssignmentsOptionsCommand { get; set; }
 		public RelayCommand GetMembersCommand { get; set; }
-		public RelayCommand<int> ItemNameCommand { get; set; }
+
 
 		#endregion
 		#region Constructor
 		/**
 		 * Init services & Init() & RegisterCommands();
 		 */
-		public AddAssignmentViewModel(INavigationService navigationService, IAssignmentDataService assignmentDataService, IMemberDataService memberDataService, IDialogService dialogService, IPopUpService popUpService)
+		public AddAssignmentViewModel(INavigationService navigationService, IAssignmentDataService assignmentDataService, IMemberDataService memberDataService, IDialogService dialogService, IPopUpService popUpService, IUserDataService userDataService)
 		{
 			//Init Services
 			_navigationService = navigationService;
@@ -121,6 +122,7 @@ namespace ComPact.Members
 			_memberDataService = memberDataService;
 			_dialogService = dialogService;
 			_popUpService = popUpService;
+			_userDataService = userDataService;
 
 			Init();
 
@@ -133,27 +135,30 @@ namespace ComPact.Members
 		void RegisterCommands()
 		{
 			CreateTaskCommand = new RelayCommand(CreateTask);
-			ItemNameCommand = new RelayCommand<int>(pos => 
-			{
-				System.Diagnostics.Debug.WriteLine(pos);
-			});
-			MemberCommand = new RelayCommand<Member>(user =>
-			{
-				System.Diagnostics.Debug.WriteLine(user);
-			});
 			BackRedirectCommand = new RelayCommand(_navigationService.GoBack);
-			//AssignmentsOptionsCommand = new RelayCommand<int>(pos =>
-			//{
-			//	Debug.WriteLine(AssignmentsOptions[pos]);
-			//});
+
+			MemberSelectedCommand = new RelayCommand<Member>(user =>
+			{
+				System.Diagnostics.Debug.WriteLine(user.Email);
+				memberEmail = user.Email;
+			});
+
+			//Returns position itemSelected
+			AssignmentsOptionsCommand = new RelayCommand<int>(pos =>
+			{
+				Debug.WriteLine(AssignmentsOptions[pos]);
+				item = AssignmentsOptions[pos];
+			});
+
 			GetMembersCommand = new RelayCommand(async () =>
 			{
 				await GetMembers();
 			});
-			//GetAssignmentsCommand = new RelayCommand(() =>
-		 //  {
-		 //  });
+
+
 		}
+
+		async
 		#endregion
 
 		#region Methods
@@ -162,15 +167,19 @@ namespace ComPact.Members
 			//TODO Create dataService that 
 			//_userDataService
 
+			User user = await _userDataService.GetUser();
+
 			var newTask = new Assignment
 			{
-				ItemName = ItemName,
+				LoginToken = user.LoginToken,
+				MemberEmail = memberEmail,
+				ItemName = item,
 				Description = Description,
-				//Implement id's
+
 			};
 			//try
 			//{
-				_assignmentDataService.Create(newTask);
+			await _assignmentDataService.Create(newTask);
 			//}
 			//catch (Exception ex)
 			//{
@@ -180,7 +189,7 @@ namespace ComPact.Members
 
 		public async Task GetMembers()
 		{
-			IEnumerable<Member> list = await _memberDataService.GetAll();
+			IEnumerable<Member> list = await _memberDataService?.GetAll();
 			Members = Convert<Member>(list);
 		}
 

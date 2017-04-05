@@ -10,5 +10,6 @@ namespace ComPact.Data
 		public const string CreateAuthPath = "/api/auth/create";
 		public const string LoginAuthPath = "/api/auth/login";
 		public const string LoginTokenPath = "/api/users/login";
+		public const string UpdateAssignmentPath = "/api/assignments/update";
 	}
 }

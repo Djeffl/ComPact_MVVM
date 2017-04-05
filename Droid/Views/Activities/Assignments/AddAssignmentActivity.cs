@@ -22,11 +22,11 @@ using Java.Util;
 
 namespace ComPact.Droid.Tasks
 {
-	[Activity(Label = "AddTaskActivity")]
+	[Activity(Label = "AddTaskActivity", MainLauncher = true)]
 	public class AddAssignmentActivity : BaseActivity
 	{
 		//Local variables
-
+		List<CheckBox> checkboxes = new List<CheckBox>();
 
 		ObservableCollection<Member> _members;
 		public ObservableCollection<Member> Members
@@ -61,7 +61,7 @@ namespace ComPact.Droid.Tasks
 		TextView _titleTextView;
 		ImageView _optionsImageView;
 
-		Spinner _itemNameSpinner;
+		EditText _itemNameEditText;
 		EditText _descriptionEditText;
 		ListView _membersListView;
 		FloatingActionButton _addTaskFloatingActionButton;
@@ -101,61 +101,33 @@ namespace ComPact.Droid.Tasks
 			_optionsImageView = FindViewById<ImageView>(Resource.Id.customToolbarOptionsImageView);
 			_titleTextView = FindViewById<TextView>(Resource.Id.customToolbarTitleTextView);
 
-			_itemNameSpinner = FindViewById<Spinner>(Resource.Id.activityAddWhatItemSpinner);
-			_descriptionEditText = FindViewById<EditText>(Resource.Id.activityAddDescriptionEditText);
+
+
+			_descriptionEditText = FindViewById<EditText>(Resource.Id.activityAddAssignmentItemNameEditText);
 			_membersListView = FindViewById<ListView>(Resource.Id.activityAddTaskListView);
 			_addTaskFloatingActionButton = FindViewById<FloatingActionButton>(Resource.Id.activityTasksAddTaskFloatingActionButton);
-			//SET MEMBERS & ASSIGNMENTS
+
+			//FILL UP 
+			//SET MEMBERS & ASSIGNMENTS ITEMS
+			/**
+			 * this will execute an async method
+			 * when async finished, create+set listadapter
+			 */
 			ViewModel.GetMembersCommand?.Execute(null);
 			Assignments = ViewModel.AssignmentsOptions;
 
-			//FILL UP 
-			//var taskOptions = new List<string>() { "Choose an option...", "Take out trash", "Groceries", "Feed pet", "other" };
-
-			//items = new List<Member>();
-			//Member user1 = new Member
-			//{
-			//	Email = "jeffliekens7@hotmail.com",
-			//	FirstName = "Jeff",
-			//	LastName = "Liekens",
-			//	Tasks = new List<Assignment>()
-			//};
-			//Member user2 = new Member
-			//{
-			//	Email = "liekensjeff@gmail.com",
-			//	FirstName = "Nathan",
-			//	LastName = "Liekens",
-			//	Tasks = new List<Assignment>()
-			//};
-			//Member user3 = new Member
-			//{
-			//	Email = "jeffliekens17@hotmail.com",
-			//	FirstName = "Thomas",
-			//	LastName = "Liekens",
-			//	Tasks = new List<Assignment>()
-			//};
-
-			//items.Add(user1);
-			//items.Add(user2);
-			//items.Add(user3);
-
-			//Create custom adapter and assign to spinner
-			//new AdapterTaskItemNameSpinner(Application.Context, ViewModel.AssignmentsOptions);
-			//_itemNameSpinner.Adapter = adapter;
-			//_itemNameSpinner.ItemSelected += (sender, e) => 
-			//{
-			//	ViewModel.AssignmentsOptionsCommand?.Execute(e.Position);
-			//};
+			_membersListView.ItemSelected += (sender, e) =>
+			{
+				Console.WriteLine("clicked");
+				var checkbox = e.View.FindViewById<CheckBox>(Resource.Id.listViewTaskDoneCheckBox);
+			};
 
 			//Create custom adapter and assign to listview
-			//var listAdapter = new AdapterMember(Application.Context, Members.ToList());
-			//_membersListView.Adapter = listAdapter;
 			//_membersListView.ItemSelected += (sender, e) =>
 			//{
 			//	//ViewModel.ItemNameCommand?.Execute(e.Position);
 
 			//};
-
 
 			// ListView Item Click Listener
 			//_membersListView.ItemClick += (object sender, AdapterView.ItemClickEventArgs e) =>
@@ -168,16 +140,17 @@ namespace ComPact.Droid.Tasks
 
 
 
-				/**
-				 * Set the bindings of this activity
-				 */
+		/**
+		 * Set the bindings of this activity
+		 */
 		void SetBindings()
 		{
+			bindings.Add(this.SetBinding(() => ViewModel.ItemName, () => _itemNameEditText.Text, BindingMode.TwoWay));
+			bindings.Add(this.SetBinding(() => ViewModel.Description, () => _descriptionEditText.Text, BindingMode.TwoWay));
 			bindings.Add(this.SetBinding(() => ViewModel.Members, () => Members));
+			//bindings.Add(this.SetBinding(() => ViewModel.Icons, () => Icons));
 			bindings.Add(this.SetBinding(() => ViewModel.AssignmentsOptions,() => Assignments));
-			//this.SetBinding(() => ViewModel.Description, () => _descriptionEditText.Text, BindingMode.TwoWay);
 
-			//ViewModel.ItemName
 			//binding = this.SetBinding(() => ViewModel.User, () => items[_membersListView.SelectedItemPosition], BindingMode.TwoWay);
 		}
 
@@ -186,7 +159,13 @@ namespace ComPact.Droid.Tasks
 		 */
 		void SetCommands()
 		{
-			_addTaskFloatingActionButton.SetCommand("Click", ViewModel.CreateTaskCommand);
+			//_addTaskFloatingActionButton.SetCommand("Click", ViewModel.CreateTaskCommand);
+			_addTaskFloatingActionButton.Click += (sender, e) =>
+			{
+				ViewModel.CreateTaskCommand.Execute(null);
+				ClearFields();
+
+			};
 			_backImageView.SetCommand("Click", ViewModel.BackRedirectCommand);
 			//_membersListView.SetCommand("Click", ViewModel.CreateUserCommand, binding);
 			//_itemNameSpinner.SetCommand("OnItemSelectedListener", ViewModel.Test?.Execute(
@@ -197,15 +176,52 @@ namespace ComPact.Droid.Tasks
 
 		void SetMemberListView()
 		{
-			//AdapterMember adapterMember = new AdapterMember(Application.Context, Members.ToList());
-			_membersListView.Adapter = new AdapterMember(Application.Context, Members.ToList());
+			//AdapterMember adapterMember = new AdapterMember(this, Members.ToList());
+			//adapterMember.GetView(0, LayoutInflater.From(Application.Context).Inflate(Resource.Layout.ListViewPerson, null, false), );
+
+			_membersListView.Adapter = ViewModel.Members.GetAdapter(GetMemberAdapter); //adapterMember;//new AdapterMember(Application.Context, Members.ToList());
+
 		}
 		void SetAssignmentsItemsListView()
 		{
 			//AdapterTaskItemNameSpinner atns = new AdapterTaskItemNameSpinner(Application.Context, Assignments.ToList());
-			_itemNameSpinner.Adapter = new AdapterTaskItemNameSpinner(Application.Context, Assignments.ToList());
 		}
+		private View GetMemberAdapter(int position, Member members, View convertView)
+		{
+			// Not reusing views here
+			convertView = LayoutInflater.Inflate(Resource.Layout.ListViewPerson, null);
 
+			TextView nameTextView = convertView.FindViewById<TextView>(Resource.Id.listViewPersonNameTextView);
+			nameTextView.Text = members.FullName();
+
+			TextView emailTextView = convertView.FindViewById<TextView>(Resource.Id.listViewPersonEmailTextView);
+			emailTextView.Text = members.Email;
+
+			CheckBox checkBox = convertView.FindViewById<CheckBox>(Resource.Id.listViewPersonAddCheckBox);
+			checkboxes.Add(checkBox);
+			//TODO how to pass data onClick? can't conver to lambda
+			//checkBox.SetCommand("Click", ViewModel.MemberSelectedCommand, convertView);
+			checkBox.Click += (sender, e) =>
+			{
+				System.Diagnostics.Debug.WriteLine("clicked");
+				ViewModel.MemberSelectedCommand?.Execute(members);
+			};
+			//convertView.Click += (sender, e) =>
+			//{
+			//	System.Diagnostics.Debug.WriteLine("clicked");
+			//};
+
+			return convertView;
+		}
+		void ClearFields()
+		{
+			_descriptionEditText.Text = "";
+			foreach (CheckBox checkBox in checkboxes)
+			{
+				checkBox.Checked = false;
+			}
+
+		}
 		//void Test()
 		//{
 		//	ViewModel.ItemNameCommand?.Execute(

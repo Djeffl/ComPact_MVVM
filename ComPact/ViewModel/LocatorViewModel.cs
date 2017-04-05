@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using ComPact;
+using ComPact.Assignments;
 using ComPact.Helpers;
 using ComPact.Members;
 using ComPact.Repositories;
@@ -28,6 +29,8 @@ namespace ComPact
 		public const string SettingsPageKey = "SettingsPageKey";
 		public const string TasksPageKey = "TasksPageKey";
 		public const string AddTaskPageKey = "AddTaskPageKey";
+		public const string DetailAssignmentPageKey = "DetailAssignmentPageKey";
+		public const string EditAssignmentPageKey = "EditAssignmentPageKey";
 		public const string MembersPageKey = "MembersPageKey";
 		public const string AddMembersPageKey = "AddMembersPagekey";
 
@@ -102,6 +105,22 @@ namespace ComPact
 			}
 		}
 
+		public DetailAssignmentViewModel DetailAssignmentViewModel
+		{
+			get
+			{
+				return ServiceLocator.Current.GetInstance<DetailAssignmentViewModel>();
+			}
+		}
+
+		public EditAssignmentViewModel EditAssignmentViewModel
+		{
+			get
+			{
+				return ServiceLocator.Current.GetInstance<EditAssignmentViewModel>();
+			}
+		}
+
 		public SplashViewModel SplashViewModel
 		{
 			get
@@ -148,6 +167,8 @@ namespace ComPact
 
 			SimpleIoc.Default.Register<AssignmentsViewModel>();
 			SimpleIoc.Default.Register<AddAssignmentViewModel>();
+			SimpleIoc.Default.Register<DetailAssignmentViewModel>();
+			SimpleIoc.Default.Register<EditAssignmentViewModel>();
 
 			SimpleIoc.Default.Register<MembersViewModel>();
 			SimpleIoc.Default.Register<AddMembersViewModel>();

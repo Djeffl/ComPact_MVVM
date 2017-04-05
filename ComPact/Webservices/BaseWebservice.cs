@@ -99,6 +99,17 @@ namespace ComPact
 			}
 			return default(IEnumerable<T>);
 		}
+		public virtual async Task<T> Update(string urlExtend, T obj)
+		{
+			HttpClient client = GetHttpClient();
+			var data = JsonConvert.SerializeObject(obj);
+			var putContent = new StringContent(data, Encoding.UTF8, "application/json");
+			HttpResponseMessage response = await client.PutAsync(urlExtend, putContent);
+			response.EnsureSuccessStatusCode();
+			var result = JsonConvert.DeserializeObject<T>(await response.Content.ReadAsStringAsync());
+
+			return result;
+		}
 
 	}
 }

@@ -1,8 +1,12 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using ComPact.Models;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
@@ -18,6 +22,7 @@ namespace ComPact.ViewModel
 		readonly INavigationService _navigationService;
 		readonly IAssignmentDataService _assignmentDataService;
 		readonly IDialogService _dialogService;
+		readonly IUserDataService _userDataService;
 
 		#region Parameters
 		/**
@@ -61,11 +66,10 @@ namespace ComPact.ViewModel
 				//NotifyPropertyChanged(() => IsSelected);
 
 				Set(ref _done, value);
-				_done = value; OnPropertyChanged();
 			}
 		}
-		public List<Assignment> _assignments;
-		public List<Assignment> Assignments
+		ObservableCollection<Assignment> _assignments;
+		public ObservableCollection<Assignment> Assignments
 		{
 			get
 			{
@@ -77,24 +81,54 @@ namespace ComPact.ViewModel
 			}
 		}
 
+		User _user = new User();
+		public User User
+		{
+			get
+			{
+				return _user;
+			}
+			set
+			{
+				Set(ref _user, value);
+			}
+		}
+		Assignment _assignment;
+		public Assignment Assignment
+		{
+			get
+			{
+				return _assignment;
+			}
+			set
+			{
+				_assignment = value;
+			}
+		}
 
 		#endregion
 		#region Commands
 		public RelayCommand AddAssignmentRedirectCommand { get; set; }
-		public RelayCommand AssignmentDetailRedirectCommand { get; set; }
+		public RelayCommand<Assignment> DetailAssignmentRedirectCommand { get; set; }
 		public RelayCommand<int> AssignmentsPostionCommand { get; set; }
+
+		public RelayCommand GetAssignmentsCommand { get; set; }
+
+		public RelayCommand GetUserCommand { get; private set; }
+
 
 		#endregion
 		#region Constructor
 		/**
 		 * Init services & Init() & RegisterCommands();
 		 */
-		public AssignmentsViewModel(INavigationService navigationService, IAssignmentDataService assignmentDataService, IDialogService dialogService)
+		public AssignmentsViewModel(INavigationService navigationService, IAssignmentDataService assignmentDataService, IDialogService dialogService, IUserDataService userDataService)
 		{
 			//Init Services
 			_navigationService = navigationService;
 			_dialogService = dialogService;
 			_assignmentDataService = assignmentDataService;
+			_userDataService = userDataService;
 
 			Init();
 
@@ -107,12 +141,23 @@ namespace ComPact.ViewModel
 		void RegisterCommands()
 		{
 			AddAssignmentRedirectCommand = new RelayCommand(AddTaskRedirect);
-
+			DetailAssignmentRedirectCommand = new RelayCommand<Assignment>(DetailAssignmentRedirect);
 			AssignmentsPostionCommand = new RelayCommand<int>(pos =>
 			{
 				Debug.WriteLine(pos);//Assignments[pos]);
 			});
+
+			GetAssignmentsCommand = new RelayCommand(async () =>
+			{
+				await GetAssignments();
+			});
+			GetUserCommand = new RelayCommand(async () =>
+			{
+				await GetUser();
+			});
 		}
+
+
 		#endregion
 
 		#region Methods
@@ -130,11 +175,36 @@ namespace ComPact.ViewModel
 		{
 			_navigationService.NavigateTo(LocatorViewModel.AddTaskPageKey);
 		}
-
-		public event PropertyChangedEventHandler PropertyChanged;
-		protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
+		void DetailAssignmentRedirect(Assignment assignment)
 		{
-			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+			_navigationService.NavigateTo(LocatorViewModel.DetailAssignmentPageKey, assignment);
+		}
+
+		public async Task GetAssignments()
+		{
+			User responseUser = await _userDataService.GetUser();
+			IEnumerable<Assignment> list = await _assignmentDataService?.GetAssignments(responseUser.LoginToken);
+			Assignments = Convert<Assignment>(list);
+		}
+		public async Task GetUser()
+		{
+			User = await _userDataService.GetUser();
+		}
+
+		//If you're working with non-generic IEnumerable you can do it this way:
+		ObservableCollection<object> Convert(IEnumerable original)
+		{
+			return new ObservableCollection<object>(original.Cast<object>());
+		}
+		//If you're working with generic IEnumerable<T> you can do it this way:
+		ObservableCollection<T> Convert<T>(IEnumerable<T> original)
+		{
+			return new ObservableCollection<T>(original);
+		}
+		//If you're working with non-generic IEnumerable but know the type of elements, you can do it this way:
+		ObservableCollection<T> Convert<T>(IEnumerable original)
+		{
+			return new ObservableCollection<T>(original.Cast<T>());
 		}
 		//void 
 		#endregion

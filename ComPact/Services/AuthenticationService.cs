@@ -99,8 +99,8 @@ namespace ComPact.Services
 			try
 			{
 				User responseUser = await _userDataService.Login(user);
-				IEnumerable<Member> members = await _memberDataService.Save(responseUser.members);
-				IEnumerable<Assignment> assignments = await _assignmentDataService.GetAssignments(responseUser.LoginToken);
+				IEnumerable<Member> members = await _memberDataService?.Save(responseUser.members);
+				IEnumerable<Assignment> assignments = await _assignmentDataService?.GetAssignments(responseUser.LoginToken);
 
 				isSuccessful = true;
 			}

@@ -7,7 +7,8 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical">
+        android:gravity="center_vertical"
+        android:layout_marginLeft="20dp">
         <ImageView
             android:id="@+id/listViewPersonImageImageView"
             android:layout_width="48dp"
@@ -27,11 +28,12 @@
                 android:textSize="14dip"
                 android:text="Name" />
             <TextView
+                android:layout_marginLeft="3dp"
+                android:textColor="@color/accent_email_color"
                 android:id="@+id/listViewPersonEmailTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/black_color"
-                android:textSize="14dip"
+                android:textSize="11dip"
                 android:text="email" />
         </LinearLayout>
     </LinearLayout>
@@ -42,5 +44,8 @@
         android:layout_centerVertical="true"
         android:layout_alignParentRight="true"
         android:layout_gravity="center_vertical"
-        android:buttonTint="@color/blue_main_color" />
+        android:buttonTint="@color/blue_main_color"
+        android:layout_marginRight="20dp"
+        android:scaleX="1.20"
+        android:scaleY="1.20" />
 </RelativeLayout>

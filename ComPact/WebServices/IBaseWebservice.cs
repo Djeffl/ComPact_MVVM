@@ -10,5 +10,6 @@ namespace ComPact.WebServices
 		Task<T> Create(string urlExtend, IEnumerable<T> obj);
 		Task<T> Read(string urlExtend);
 		Task<IEnumerable<T>> ReadAll(string urlExtend);
+		Task<T> Update(string urlExtend, T obj);
 	}
 }

@@ -9,5 +9,6 @@ namespace ComPact
 		Task Create(User user);
 		Task<User> Login(User user);
 		Task LogOut();
+		Task<User> GetUser();
 	}
 }

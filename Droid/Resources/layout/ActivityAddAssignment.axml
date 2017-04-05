@@ -11,22 +11,29 @@
         <include
             android:id="@+id/toolbarHeader"
             layout="@layout/ToolbarHeader" />
-        <Spinner
-            android:id="@+id/activityAddWhatItemSpinner"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
         <EditText
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="20dp"
+            android:hint="Title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/activityAddAssignmentItemNameEditText" />
+        <EditText
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:layout_marginTop="20dp"
             android:hint="Description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/activityAddDescriptionEditText" />
+            android:id="@+id/activityAddAssignmentDescriptionEditText" />
         <View
             android:layout_marginTop="20dp"
             android:layout_width="match_parent"
             android:layout_height="2dp"
             android:background="@color/blue_main_color" />
         <TextView
+            android:layout_marginLeft="10dp"
             android:layout_marginTop="5dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -34,7 +41,165 @@
         <ListView
             android:layout_height="match_parent"
             android:layout_width="match_parent"
-            android:id="@+id/activityAddTaskListView" />
+            android:id="@+id/activityAddTaskListView"
+            android:choiceMode="singleChoice" />
+        <TableLayout
+            android:layout_margin="20dp"
+            android:background="@drawable/border"
+            android:id="@+id/tableLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+            <TableRow
+                android:layout_marginTop="10dp"
+                android:weightSum="5"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_horizontal">
+                <ImageView
+                    android:tint="@color/blue_main_color"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_more_vert_white_24dp" />
+                <ImageView
+                    android:tint="@color/blue_main_color"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_camera_roll_white_24dp" />
+                <ImageView
+                    android:tint="@color/blue_main_color"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_color_lens_white_24dp" />
+                <ImageView
+                    android:tint="@color/blue_main_color"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_priority_high_white_24dp" />
+                <ImageView
+                    android:tint="@color/blue_main_color"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_store_white_24dp" />
+            </TableRow>
+            <TableRow
+                android:layout_marginTop="10dp"
+                android:weightSum="5"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_horizontal">
+                <ImageView
+                    android:tint="@color/blue_main_color"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_more_vert_white_24dp" />
+                <ImageView
+                    android:tint="@color/blue_main_color"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_camera_roll_white_24dp" />
+                <ImageView
+                    android:tint="@color/blue_main_color"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_color_lens_white_24dp" />
+                <ImageView
+                    android:tint="@color/blue_main_color"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_priority_high_white_24dp" />
+                <ImageView
+                    android:tint="@color/blue_main_color"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_store_white_24dp" />
+            </TableRow>
+            <TableRow
+                android:layout_marginTop="10dp"
+                android:weightSum="5"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_horizontal">
+                <ImageView
+                    android:tint="@color/blue_main_color"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_more_vert_white_24dp" />
+                <ImageView
+                    android:tint="@color/blue_main_color"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_camera_roll_white_24dp" />
+                <ImageView
+                    android:tint="@color/blue_main_color"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_color_lens_white_24dp" />
+                <ImageView
+                    android:tint="@color/blue_main_color"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_priority_high_white_24dp" />
+                <ImageView
+                    android:tint="@color/blue_main_color"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_store_white_24dp" />
+            </TableRow>
+            <TableRow
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:weightSum="5"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_horizontal">
+                <ImageView
+                    android:tint="@color/blue_main_color"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_more_vert_white_24dp" />
+                <ImageView
+                    android:tint="@color/blue_main_color"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_camera_roll_white_24dp" />
+                <ImageView
+                    android:tint="@color/blue_main_color"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_color_lens_white_24dp" />
+                <ImageView
+                    android:tint="@color/yellow_accent_color"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_priority_high_white_24dp" />
+                <ImageView
+                    android:tint="@color/blue_main_color"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_store_white_24dp" />
+            </TableRow>
+        </TableLayout>
     </LinearLayout>
     <android.support.design.widget.FloatingActionButton
         android:layout_width="wrap_content"

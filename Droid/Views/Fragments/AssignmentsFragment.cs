@@ -9,18 +9,55 @@ using Android.Views;
 using ComPact.Droid.Models;
 using System.Collections.Generic;
 using ComPact.Models;
+using System.Collections.ObjectModel;
 
 namespace ComPact.Droid.Fragments
 {
 	public class AssignmentsFragment : BaseFragment
 	{
-		//EditText _itemNameEditText;
-		//EditText _describtionEditText;
-		//Button _createTaskButton;
+		//Keep track of bindings to avoid premature garbage collection
+		readonly List<Binding> bindings = new List<Binding>();
+		//Elements
 		FloatingActionButton _addTaskFloatingActionButton;
 		ListView _tasksListView;
 		//data
-		List<Assignment> items;
+		ObservableCollection<Assignment> _assignments;
+		public ObservableCollection<Assignment> Assignments
+		{
+			get
+			{
+				return _assignments;
+			}
+			set
+			{
+				_assignments = value;
+				SetMemberListView();
+
+			}
+		}
+
+		User _user;
+		public User User
+		{
+			get
+			{
+				return _user;
+			}
+			set
+			{
+				_user = value;
+				if (!_user.Admin)
+				{
+					_addTaskFloatingActionButton.Visibility = ViewStates.Gone;
+				}
+				else
+				{
+					_addTaskFloatingActionButton.Visibility = ViewStates.Visible;
+
+				}
+			}
+		}
+
 
 		AssignmentsViewModel ViewModel
 		{
@@ -48,14 +85,14 @@ namespace ComPact.Droid.Fragments
 			SetBindings();
 			SetCommands();
 
-			items = new List<Assignment>();
-			items.Add(new Assignment() { ItemName = "item 1" });
-			items.Add(new Assignment() { ItemName = "item 2" });
-			items.Add(new Assignment() { ItemName = "item 3" });
+			//items = new List<Assignment>();
+			//items.Add(new Assignment() { ItemName = "item 1" });
+			//items.Add(new Assignment() { ItemName = "item 2" });
+			//items.Add(new Assignment() { ItemName = "item 3" });
 
-			var adapter = new AdapterAssignment(Application.Context, items);
+			//var adapter = new AdapterAssignment(Application.Context, items);
 			// Assign adapter to ListView
-			_tasksListView.Adapter = adapter;
+			//_tasksListView.Adapter = adapter;
 
 		
 
@@ -69,7 +106,11 @@ namespace ComPact.Droid.Fragments
 		}
 	
 
-
+		public override void OnResume()
+		{
+			base.OnResume();
+			ViewModel.GetAssignmentsCommand?.Execute(null);
+		}
 
 
 
@@ -80,10 +121,21 @@ namespace ComPact.Droid.Fragments
 			//_createTaskButton = View.FindViewById<Button>(Resource.Id.FragmentTasksCreateTaskButton);
 			_addTaskFloatingActionButton = View.FindViewById<FloatingActionButton>(Resource.Id.activityTasksAddTaskFloatingActionButton);
 			_tasksListView = View.FindViewById<ListView>(Resource.Id.activityTasksTasksListView);
+
+			//FILL UP 
+			//SET MEMBERS & ASSIGNMENTS ITEMS
+			/**
+			 * this will execute an async method
+			 * when async finished, create+set listadapter
+			 */
+			ViewModel.GetAssignmentsCommand?.Execute(null);
+			ViewModel.GetUserCommand?.Execute(null);
 		}
 
 		void SetBindings()
 		{
+			bindings.Add(this.SetBinding(() => ViewModel.User, () => User));
+			bindings.Add(this.SetBinding(() => ViewModel.Assignments, () => Assignments));
 			//this.SetBindings(() => ViewModel.Done, () => _tasksListView, BindingMode.TwoWay);
 			//this.SetBinding(() => ViewModel.ItemName, () => _itemNameEditText.Text, BindingMode.TwoWay);
 			//Binding itemPosition = this.SetBinding(() => ViewModel., () => _describtionEditText.Text, BindingMode.TwoWay);
@@ -107,6 +159,36 @@ namespace ComPact.Droid.Fragments
 		}
 
 
+		private View GetAssignmentsAdapter(int position, Assignment assignment, View convertView)
+		{
+			// Not reusing views here
+			LayoutInflater inflater = LayoutInflater.From(Application.Context);
+			convertView = inflater.Inflate(Resource.Layout.ListViewTask, null);
+
+			TextView nameTextView = convertView.FindViewById<TextView>(Resource.Id.listViewTaskNameTextView);
+			nameTextView.Text = assignment.ItemName;
+
+			//TextView emailTextView = convertView.FindViewById<TextView>(Resource.Id.listViewTaskDoneCheckBox);
+			//emailTextView.Text = members.Email;
+
+			CheckBox checkBox = convertView.FindViewById<CheckBox>(Resource.Id.listViewTaskDoneCheckBox);
+			checkBox.Click += (sender, e) =>
+			{
+				//System.Diagnostics.Debug.WriteLine("cliclofkfiajked");
+
+			};
+			convertView.Click += (sender, e) =>
+			{
+				ViewModel.DetailAssignmentRedirectCommand.Execute(assignment);
+				System.Diagnostics.Debug.WriteLine("clicked");
+			};
+
+			return convertView;
+		}
+		void SetMemberListView()
+		{
+			_tasksListView.Adapter = ViewModel.Assignments.GetAdapter(GetAssignmentsAdapter);
+		}
 
 
 

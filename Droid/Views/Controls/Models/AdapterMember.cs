@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using Android.Content;
 using Android.Views;
 using Android.Widget;
+using GalaSoft.MvvmLight.Helpers;
 
 namespace ComPact.Droid.Models
 {
-	public class AdapterMember: AdapterBase<Member>
+	public class AdapterMember : AdapterBase<Member>
 	{
+
+
 		public AdapterMember(Context context, List<Member> items) : base(context, items)
 		{
 		}
@@ -26,19 +29,28 @@ namespace ComPact.Droid.Models
 			TextView emailTextView = row.FindViewById<TextView>(Resource.Id.listViewPersonEmailTextView);
 			emailTextView.Text = Items[position].Email;
 
+			row.Click += (sender, e) => {
+				System.Diagnostics.Debug.WriteLine("");
+			};
+
+
+
+
 			//ImageView imageImageView = row.FindViewById<ImageView>(Resource.Id.listViewTaskImageImageView);
 			//imageImageView = (ImageView)Items[position].Image;
 
 			//CheckBox doneCheckBox = row.FindViewById<CheckBox>(Resource.Id.listViewTaskDoneCheckBox);
-			//if (Items[position].Done == true)
-			//{
-			//	doneCheckBox.Checked = true;
-			//}
-			//else
+			//if (Items[position].Tasks[position].Done == false || false)
 			//{
 			//	doneCheckBox.Checked = false;
 			//}
+			//else
+			//{
+			//	doneCheckBox.Checked = true;
+			//}
 			return row;
 		}
+
+
 	}
 }

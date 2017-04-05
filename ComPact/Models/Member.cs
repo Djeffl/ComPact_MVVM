@@ -31,7 +31,6 @@ namespace ComPact
 		[Ignore]
 		[JsonProperty("password")]
 		public string Password { get; set; }
-		[Ignore]
 		[JsonProperty("admin")]
 		public bool Admin { get; set; }
 		[Ignore]

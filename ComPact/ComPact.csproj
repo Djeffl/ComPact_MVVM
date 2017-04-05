@@ -85,6 +85,8 @@
     <Compile Include="Repositories\IAssignmentRepository.cs" />
     <Compile Include="Repositories\AssignmentRepository.cs" />
     <Compile Include="Services\IAssignmentDataService.cs" />
+    <Compile Include="ViewModel\Assignments\DetailAssignmentViewModel.cs" />
+    <Compile Include="ViewModel\Assignments\EditAssignmentViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Contracts\" />

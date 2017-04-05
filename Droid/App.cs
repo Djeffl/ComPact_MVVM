@@ -12,6 +12,7 @@ using ComPact.Droid.Activities;
 using Onboarding.Droid.Helpers;
 using ComPact.Droid.Members;
 using ComPact.Droid.Tasks;
+using ComPact.Droid.Assignments;
 
 namespace ComPact.Droid
 {
@@ -56,8 +57,12 @@ namespace ComPact.Droid
 			nav.Configure(LocatorViewModel.HomePageKey, typeof(HomeActivity));
 			nav.Configure(LocatorViewModel.HelpPageKey, typeof(HelpActivity));
 			nav.Configure(LocatorViewModel.SettingsPageKey, typeof(SettingsActivity));
+
 			nav.Configure(LocatorViewModel.TasksPageKey, typeof(Fragments.AssignmentsFragment));
 			nav.Configure(LocatorViewModel.AddTaskPageKey, typeof(AddAssignmentActivity));
+			nav.Configure(LocatorViewModel.DetailAssignmentPageKey, typeof(DetailAssignmentActivity));
+			nav.Configure(LocatorViewModel.EditAssignmentPageKey, typeof(EditAssignmentActivity));
+
 			nav.Configure(LocatorViewModel.MembersPageKey, typeof(MembersActivity));
 			nav.Configure(LocatorViewModel.AddMembersPageKey, typeof(AddMembersActivity));
 		}
