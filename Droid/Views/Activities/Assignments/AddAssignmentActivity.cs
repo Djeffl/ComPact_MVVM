@@ -27,6 +27,7 @@ namespace ComPact.Droid.Tasks
 	{
 		//Local variables
 		List<CheckBox> checkboxes = new List<CheckBox>();
+		RadioGroup radiog = new RadioGroup(Application.Context);
 
 		ObservableCollection<Member> _members;
 		public ObservableCollection<Member> Members
@@ -186,6 +187,9 @@ namespace ComPact.Droid.Tasks
 		{
 			//AdapterTaskItemNameSpinner atns = new AdapterTaskItemNameSpinner(Application.Context, Assignments.ToList());
 		}
+
+		List<RadioButton> radioButtons = new List<RadioButton>();
+
 		private View GetMemberAdapter(int position, Member members, View convertView)
 		{
 			// Not reusing views here
@@ -197,15 +201,28 @@ namespace ComPact.Droid.Tasks
 			TextView emailTextView = convertView.FindViewById<TextView>(Resource.Id.listViewPersonEmailTextView);
 			emailTextView.Text = members.Email;
 
-			CheckBox checkBox = convertView.FindViewById<CheckBox>(Resource.Id.listViewPersonAddCheckBox);
-			checkboxes.Add(checkBox);
+			RadioButton isSelectedRadioButton = convertView.FindViewById<RadioButton>(Resource.Id.listViewPersonRadioButton);
+			//EVENT OP ROW CLICK ZETTEN ALS ROW SELECTED DAN TOON JE IMAGE VIEW WAAR HET ITEM IS GEDISPLAYED
+
+			radioButtons.Add(isSelectedRadioButton);
+			isSelectedRadioButton.Click += (sender, e) =>
+			{
+				foreach (RadioButton radioButton in radioButtons)
+				{
+					radioButton.Checked = false;
+				}
+				isSelectedRadioButton.Checked = true;
+			};
+
+			//CheckBox checkBox = convertView.FindViewById<CheckBox>(Resource.Id.listViewPersonAddCheckBox);
+			//checkboxes.Add(checkBox);
 			//TODO how to pass data onClick? can't conver to lambda
 			//checkBox.SetCommand("Click", ViewModel.MemberSelectedCommand, convertView);
-			checkBox.Click += (sender, e) =>
-			{
-				System.Diagnostics.Debug.WriteLine("clicked");
-				ViewModel.MemberSelectedCommand?.Execute(members);
-			};
+			//checkBox.Click += (sender, e) =>
+			//{
+			//	System.Diagnostics.Debug.WriteLine("clicked");
+			//	ViewModel.MemberSelectedCommand?.Execute(members);
+			//};
 			//convertView.Click += (sender, e) =>
 			//{
 			//	System.Diagnostics.Debug.WriteLine("clicked");

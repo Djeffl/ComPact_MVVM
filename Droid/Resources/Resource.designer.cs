@@ -2654,9 +2654,6 @@ namespace ComPact.Droid
 			// aapt resource value: 0x7f0b00b0
 			public const int listViewItemOtherOptionOtherButton = 2131427504;
 			
-			// aapt resource value: 0x7f0b00b1
-			public const int listViewPersonAddCheckBox = 2131427505;
-			
 			// aapt resource value: 0x7f0b0084
 			public const int listViewPersonEmailTextView = 2131427460;
 			
@@ -2665,6 +2662,9 @@ namespace ComPact.Droid
 			
 			// aapt resource value: 0x7f0b0083
 			public const int listViewPersonNameTextView = 2131427459;
+			
+			// aapt resource value: 0x7f0b00b1
+			public const int listViewPersonRadioButton = 2131427505;
 			
 			// aapt resource value: 0x7f0b00b4
 			public const int listViewTaskDoneCheckBox = 2131427508;

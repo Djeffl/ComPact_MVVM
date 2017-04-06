@@ -225,15 +225,15 @@ namespace ComPact.Droid.Assignments
 			TextView emailTextView = convertView.FindViewById<TextView>(Resource.Id.listViewPersonEmailTextView);
 			emailTextView.Text = members.Email;
 
-			CheckBox checkBox = convertView.FindViewById<CheckBox>(Resource.Id.listViewPersonAddCheckBox);
-			checkboxes.Add(checkBox);
+			//CheckBox checkBox = convertView.FindViewById<CheckBox>(Resource.Id.listViewPersonAddCheckBox);
+			//checkboxes.Add(checkBox);
 			//TODO how to pass data onClick? can't conver to lambda
 			//checkBox.SetCommand("Click", ViewModel.MemberSelectedCommand, convertView);
-			checkBox.Click += (sender, e) =>
-			{
-				System.Diagnostics.Debug.WriteLine("clicked");
-				ViewModel.MemberSelectedCommand?.Execute(members);
-			};
+			//checkBox.Click += (sender, e) =>
+			//{
+			//	System.Diagnostics.Debug.WriteLine("clicked");
+			//	ViewModel.MemberSelectedCommand?.Execute(members);
+			//};
 			//convertView.Click += (sender, e) =>
 			//{
 			//	System.Diagnostics.Debug.WriteLine("clicked");
