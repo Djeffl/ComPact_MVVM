@@ -15,7 +15,7 @@ using GalaSoft.MvvmLight.Helpers;
 
 namespace ComPact.Droid.Activities
 {
-	[Activity(Label = "HomeActivity")]
+	[Activity(Label = "HomeActivity", MainLauncher = true)]
 	public class HomeActivity : BaseActivity
 	{
 		//Local variables

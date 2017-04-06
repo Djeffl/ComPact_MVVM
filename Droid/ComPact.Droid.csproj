@@ -199,6 +199,8 @@
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="Views\Activities\Assignments\DetailAssignmentActivity.cs" />
     <Compile Include="Views\Activities\Assignments\EditAssignmentActivity.cs" />
+    <Compile Include="Views\Controls\CustomRecyclerViewAdapter.cs" />
+    <Compile Include="Views\Controls\Models\Icon.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
@@ -394,6 +396,7 @@
     <AndroidResource Include="Resources\drawable-xxxhdpi\ic_school_white_24dp.png" />
     <AndroidResource Include="Resources\drawable-xxxhdpi\ic_store_white_24dp.png" />
     <AndroidResource Include="Resources\drawable-xxxhdpi\ic_time_to_leave_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable\Recyclerview_item.xml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\" />

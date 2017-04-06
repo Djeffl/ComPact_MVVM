@@ -41,165 +41,19 @@
         <ListView
             android:layout_height="match_parent"
             android:layout_width="match_parent"
-            android:id="@+id/activityAddTaskListView"
-            android:choiceMode="singleChoice" />
-        <TableLayout
-            android:layout_margin="20dp"
-            android:background="@drawable/border"
-            android:id="@+id/tableLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center">
-            <TableRow
-                android:layout_marginTop="10dp"
-                android:weightSum="5"
+            android:id="@+id/activityAddTaskListView" />
+        <LinearLayout
+            android:layout_height="match_parent"
+            android:layout_width="match_parent">
+            <android.support.v7.widget.RecyclerView
+                android:background="@drawable/border"
+                android:id="@+id/recyclerView"
+                android:gravity="center_horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center_horizontal">
-                <ImageView
-                    android:tint="@color/blue_main_color"
-                    android:layout_weight="1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_more_vert_white_24dp" />
-                <ImageView
-                    android:tint="@color/blue_main_color"
-                    android:layout_weight="1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_camera_roll_white_24dp" />
-                <ImageView
-                    android:tint="@color/blue_main_color"
-                    android:layout_weight="1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_color_lens_white_24dp" />
-                <ImageView
-                    android:tint="@color/blue_main_color"
-                    android:layout_weight="1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_priority_high_white_24dp" />
-                <ImageView
-                    android:tint="@color/blue_main_color"
-                    android:layout_weight="1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_store_white_24dp" />
-            </TableRow>
-            <TableRow
-                android:layout_marginTop="10dp"
-                android:weightSum="5"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center_horizontal">
-                <ImageView
-                    android:tint="@color/blue_main_color"
-                    android:layout_weight="1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_more_vert_white_24dp" />
-                <ImageView
-                    android:tint="@color/blue_main_color"
-                    android:layout_weight="1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_camera_roll_white_24dp" />
-                <ImageView
-                    android:tint="@color/blue_main_color"
-                    android:layout_weight="1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_color_lens_white_24dp" />
-                <ImageView
-                    android:tint="@color/blue_main_color"
-                    android:layout_weight="1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_priority_high_white_24dp" />
-                <ImageView
-                    android:tint="@color/blue_main_color"
-                    android:layout_weight="1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_store_white_24dp" />
-            </TableRow>
-            <TableRow
-                android:layout_marginTop="10dp"
-                android:weightSum="5"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center_horizontal">
-                <ImageView
-                    android:tint="@color/blue_main_color"
-                    android:layout_weight="1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_more_vert_white_24dp" />
-                <ImageView
-                    android:tint="@color/blue_main_color"
-                    android:layout_weight="1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_camera_roll_white_24dp" />
-                <ImageView
-                    android:tint="@color/blue_main_color"
-                    android:layout_weight="1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_color_lens_white_24dp" />
-                <ImageView
-                    android:tint="@color/blue_main_color"
-                    android:layout_weight="1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_priority_high_white_24dp" />
-                <ImageView
-                    android:tint="@color/blue_main_color"
-                    android:layout_weight="1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_store_white_24dp" />
-            </TableRow>
-            <TableRow
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="10dp"
-                android:weightSum="5"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center_horizontal">
-                <ImageView
-                    android:tint="@color/blue_main_color"
-                    android:layout_weight="1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_more_vert_white_24dp" />
-                <ImageView
-                    android:tint="@color/blue_main_color"
-                    android:layout_weight="1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_camera_roll_white_24dp" />
-                <ImageView
-                    android:tint="@color/blue_main_color"
-                    android:layout_weight="1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_color_lens_white_24dp" />
-                <ImageView
-                    android:tint="@color/yellow_accent_color"
-                    android:layout_weight="1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_priority_high_white_24dp" />
-                <ImageView
-                    android:tint="@color/blue_main_color"
-                    android:layout_weight="1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_store_white_24dp" />
-            </TableRow>
-        </TableLayout>
+                android:layout_height="wrap_content"
+                android:layout_marginRight="50dp"
+                android:layout_marginLeft="50dp" />
+        </LinearLayout>
     </LinearLayout>
     <android.support.design.widget.FloatingActionButton
         android:layout_width="wrap_content"

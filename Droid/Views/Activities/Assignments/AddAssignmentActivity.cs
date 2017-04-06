@@ -8,11 +8,15 @@ using System.Threading;
 using System.Threading.Tasks;
 using Android.App;
 using Android.Content;
+using Android.Graphics;
 using Android.OS;
 using Android.Runtime;
 using Android.Support.Design.Widget;
+using Android.Support.V4.Content;
+using Android.Support.V7.Widget;
 using Android.Views;
 using Android.Widget;
+using ComPact.Droid.Controls;
 using ComPact.Droid.Helpers;
 using ComPact.Droid.Models;
 using ComPact.Members;
@@ -22,12 +26,15 @@ using Java.Util;
 
 namespace ComPact.Droid.Tasks
 {
-	[Activity(Label = "AddTaskActivity", MainLauncher = true)]
+	[Activity(Label = "AddTaskActivity")]
 	public class AddAssignmentActivity : BaseActivity
 	{
 		//Local variables
 		List<CheckBox> checkboxes = new List<CheckBox>();
-		RadioGroup radiog = new RadioGroup(Application.Context);
+		Color _colorFilter;
+		Color _resetColorFilter;
+		IconList iconList;
+
 
 		ObservableCollection<Member> _members;
 		public ObservableCollection<Member> Members
@@ -66,6 +73,7 @@ namespace ComPact.Droid.Tasks
 		EditText _descriptionEditText;
 		ListView _membersListView;
 		FloatingActionButton _addTaskFloatingActionButton;
+		RecyclerView _recyclerView;
 		//Bind Viewmodel to activity
 		AddAssignmentViewModel ViewModel
 		{
@@ -98,6 +106,9 @@ namespace ComPact.Droid.Tasks
 		 */
 		void Init()
 		{
+			_colorFilter = new Color(ContextCompat.GetColor(this, Resource.Color.yellow_accent_color));
+			_resetColorFilter = new Color(ContextCompat.GetColor(this, Resource.Color.accent_color));
+
 			_backImageView = FindViewById<ImageView>(Resource.Id.customToolbarBackImageView);
 			_optionsImageView = FindViewById<ImageView>(Resource.Id.customToolbarOptionsImageView);
 			_titleTextView = FindViewById<TextView>(Resource.Id.customToolbarTitleTextView);
@@ -123,19 +134,31 @@ namespace ComPact.Droid.Tasks
 				var checkbox = e.View.FindViewById<CheckBox>(Resource.Id.listViewTaskDoneCheckBox);
 			};
 
-			//Create custom adapter and assign to listview
-			//_membersListView.ItemSelected += (sender, e) =>
-			//{
-			//	//ViewModel.ItemNameCommand?.Execute(e.Position);
 
-			//};
 
-			// ListView Item Click Listener
-			//_membersListView.ItemClick += (object sender, AdapterView.ItemClickEventArgs e) =>
-			//{
-			//	String selectedFromList = (string)_membersListView.GetItemAtPosition(e.Position);
-			//	Toast.MakeText(Application.Context, selectedFromList, ToastLength.Long).Show();
-			//};
+
+
+			iconList = new IconList();
+			_recyclerView = FindViewById<RecyclerView>(Resource.Id.recyclerView);
+			RecyclerView.LayoutManager _layoutManager = new GridLayoutManager(this, 4);//new LinearLayoutManager(this)
+			_recyclerView.SetLayoutManager(_layoutManager);
+
+			CustomRecyclerViewAdapter iconAdapter = new CustomRecyclerViewAdapter(iconList);
+			iconAdapter.ItemClick += OnIconClick;
+			_recyclerView.SetAdapter(iconAdapter);
+
+		}
+		void OnIconClick(object sender, int position)
+		{
+			// Display a toast that briefly shows the enumeration of the selected photo:
+			int photoNum = position + 1;
+			Toast.MakeText(this, "This is photo number " + photoNum, ToastLength.Short).Show();
+
+			for (int iconPlace = 0; iconPlace < iconList.Count; iconPlace++)
+			{
+				((ImageView)((LinearLayout)_recyclerView.GetChildAt(iconPlace)).GetChildAt(0)).SetColorFilter(_resetColorFilter);
+			}
+			((ImageView)((LinearLayout)_recyclerView.GetChildAt(position)).GetChildAt(0)).SetColorFilter(_colorFilter);
 
 		}
 
@@ -201,7 +224,7 @@ namespace ComPact.Droid.Tasks
 			TextView emailTextView = convertView.FindViewById<TextView>(Resource.Id.listViewPersonEmailTextView);
 			emailTextView.Text = members.Email;
 
-			RadioButton isSelectedRadioButton = convertView.FindViewById<RadioButton>(Resource.Id.listViewPersonRadioButton);
+			var isSelectedRadioButton = convertView.FindViewById<RadioButton>(Resource.Id.listViewPersonRadioButton);
 			//EVENT OP ROW CLICK ZETTEN ALS ROW SELECTED DAN TOON JE IMAGE VIEW WAAR HET ITEM IS GEDISPLAYED
 
 			radioButtons.Add(isSelectedRadioButton);

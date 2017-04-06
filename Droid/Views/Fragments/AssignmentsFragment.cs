@@ -174,7 +174,9 @@ namespace ComPact.Droid.Fragments
 			CheckBox checkBox = convertView.FindViewById<CheckBox>(Resource.Id.listViewTaskDoneCheckBox);
 			checkBox.Click += (sender, e) =>
 			{
-				//System.Diagnostics.Debug.WriteLine("cliclofkfiajked");
+				convertView.Visibility = ViewStates.Gone;
+				int positiono = (int)convertView.Tag;
+				// your remaining code
 
 			};
 			convertView.Click += (sender, e) =>
@@ -188,6 +190,7 @@ namespace ComPact.Droid.Fragments
 		void SetMemberListView()
 		{
 			_tasksListView.Adapter = ViewModel.Assignments.GetAdapter(GetAssignmentsAdapter);
+
 		}
 
 
@@ -215,25 +218,3 @@ namespace ComPact.Droid.Fragments
 
 	}
 }
-
-
-
-// Defined Array values to show in ListView
-			//string[] values = new string[] { "Android List View",
-			//								 "Adapter implementation",
-			//								 "Simple List View In Android",
-			//								 "Create List View Android",
-			//								 "Android Example",
-			//								 "List View Source Code",
-			//								 "List View Array Adapter",
-			//								 "Android Example List View"
-			//								};
-
-			// Define a new Adapter
-			// First parameter - Context
-			// Second parameter - Layout for the row
-			// Third parameter - ID of the TextView to which the data is written
-			// Forth - the Array of data
-
-			//ArrayAdapter<string> adapter =
-			//	new ArrayAdapter<string>(Application.Context, Android.Resource.Layout.SimpleListItem1, Android.Resource.Id.Text1, values);
