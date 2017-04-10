@@ -1,12 +1,11 @@
-﻿using System;
-using ComPact.Helpers;
-using GalaSoft.MvvmLight;
+﻿using ComPact.Helpers;
+using ComPact.ViewModel;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Views;
 
 namespace ComPact
 {
-	public class PasswordRetrievalViewModel: ViewModelBase
+	public class PasswordRetrievalViewModel: BaseViewModel
 	{
 		/**
 		 * Declare Services
@@ -40,12 +39,12 @@ namespace ComPact
 		/**
 		 * Init services & Init() & RegisterCommands();
 		 */
-		public PasswordRetrievalViewModel(INavigationService navigationService, IBackService backService, IMemberDataService userDataService, IPopUpService popUpService)
+		public PasswordRetrievalViewModel(INavigationService navigationService, IUserDataService userDataService, IBackService backService, IMemberDataService memberDataService, IPopUpService popUpService)
+			:base(userDataService)
 		{
 			//Init Services
 			_navigationService = navigationService;
 			_backService = backService;
-			_userDataService = userDataService;
 			_popUpService = popUpService;
 
 			Init();
@@ -74,7 +73,7 @@ namespace ComPact
 			{
 				Email = Email
 			};
-			_userDataService.Forgot(user);
+			//_userDataService.Forgot(user);
 			_popUpService.Show("Please check your mail", "long");
 			_backService.GoBack();
 		}

@@ -1,13 +1,10 @@
-﻿using System;
-using System.Threading.Tasks;
-using ComPact.Services;
-using GalaSoft.MvvmLight;
+﻿using ComPact.Services;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Views;
 
 namespace ComPact.ViewModel
 {
-	public class SplashViewModel : ViewModelBase
+	public class SplashViewModel : BaseViewModel
 	{
 		/**
 		 * Declare Services
@@ -21,7 +18,8 @@ namespace ComPact.ViewModel
 		/**
 		 * Init services & Init() & RegisterCommands();
 		 */
-		public SplashViewModel(INavigationService navigationService, IAuthenticationService authenticationService)
+		public SplashViewModel(INavigationService navigationService, IUserDataService userDataService, IAuthenticationService authenticationService)
+			:base(userDataService)
 		{
 			//Init Services
 			_navigationService = navigationService;

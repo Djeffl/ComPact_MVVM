@@ -8,7 +8,7 @@ using GalaSoft.MvvmLight.Views;
 
 namespace ComPact.ViewModel
 {
-	public class LoginQrViewModel : ViewModelBase
+	public class LoginQrViewModel : BaseViewModel
 	{
 		/**
 		 * Declare Services
@@ -55,7 +55,8 @@ namespace ComPact.ViewModel
 		/**
 		 * Init services & Init() & RegisterCommands();
 		 */
-		public LoginQrViewModel(INavigationService navigationService, IDialogService dialogService, IBackService backService, IAuthenticationService authenticationService)
+		public LoginQrViewModel(INavigationService navigationService, IUserDataService userDataService, IDialogService dialogService, IBackService backService, IAuthenticationService authenticationService)
+			:base(userDataService)
 		{
 			//Init Services
 			_navigationService = navigationService;

@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Net.Http;
 using System.Threading.Tasks;
+using ComPact.Models;
 using ComPact.WebServices;
 
 namespace ComPact
 {
-	public interface IMemberWebService: IBaseWebservice<Member>
+	public interface IMemberWebService: IBaseWebservice<WebMember>
 	{
-		Task<Member> Forgot(string urlExtend, Member obj);
+		Task<WebMember> Forgot(string urlExtend, WebMember obj);
 	}
 }

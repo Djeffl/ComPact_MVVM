@@ -18,26 +18,14 @@ namespace ComPact
 		//[Newtonsoft.Json.JsonProperty("approved")]
 		//public int Approved { get; set; }
 
-		[Ignore]
-		[JsonProperty("_id")]
 		public string Id { get; set; }
-		[JsonProperty("firstName")]
 		public string FirstName { get; set; }
-		[JsonProperty("lastName")]
 		public string LastName { get; set; }
-		[PrimaryKey]
-		[JsonProperty("email")]
 		public string Email { get; set; }
-		[Ignore]
-		[JsonProperty("password")]
 		public string Password { get; set; }
-		[JsonProperty("admin")]
-		public bool Admin { get; set; }
-		[Ignore]
-		[JsonProperty("qrCode")]
+		public string AdminId { get; set; }
 		public byte[] QrCode { get; set; }
-		[Ignore]
-		public List<Assignment> Tasks { get; set; }
+		public IEnumerable<string> AssignmentsIds { get; set; }
 		public string FullName()
 		{
 			return FirstName + " " + LastName;

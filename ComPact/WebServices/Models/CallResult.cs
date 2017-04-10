@@ -1,22 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
-using Newtonsoft.Json;
 
-namespace ComPact.models
+namespace ComPact.Models
 {
 	public class CallResult<T>
 	{
 		public int status_code { get; set; }
 		public string message { get; set; }
-		[JsonProperty("data")]
+		[Newtonsoft.Json.JsonProperty("data")]
 		public CallResultData<T> Data { get; set; }
 	}
 
 	public class CallResultData<T>
 	{
-		[JsonProperty("result_count")]
+		[Newtonsoft.Json.JsonProperty("result_count")]
 		public int Count { get; set; }
-		[JsonProperty("results")]
-		public List<T> Results { get; set; }
+		[Newtonsoft.Json.JsonProperty("results")]
+		public List<T> Results { get; set; }	
 	}
 }

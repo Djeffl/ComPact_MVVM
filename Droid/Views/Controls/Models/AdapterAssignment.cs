@@ -20,7 +20,7 @@ namespace ComPact.Droid.Models
 
 			if (row == null)
 			{
-				row = LayoutInflater.From(_context).Inflate(Resource.Layout.ListViewTask, null, false);
+				row = LayoutInflater.From(_context).Inflate(Resource.Layout.ListViewAssignment, null, false);
 			}
 			TextView nameTextView = row.FindViewById<TextView>(Resource.Id.listViewTaskNameTextView);
 			nameTextView.Text = Items[position].ItemName;

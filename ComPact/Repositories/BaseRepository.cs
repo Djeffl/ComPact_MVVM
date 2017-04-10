@@ -28,9 +28,9 @@ namespace ComPact
 			return _connection.DropTableAsync<TEntity>();
 		}
 
-		public virtual IQueryable<TEntity> Where(Expression<Func<TEntity, bool>> filter)
+		public virtual async Task<IQueryable<TEntity>> Where(Expression<Func<TEntity, bool>> filter)
 		{
-			return _connection.Table<TEntity>().ToListAsync().Result.AsQueryable().Where((filter ?? (e => true)));
+			return (await _connection.Table<TEntity>().ToListAsync()).AsQueryable().Where((filter ?? (e => true)));
 		}
 
 		public virtual async Task<int> Count()

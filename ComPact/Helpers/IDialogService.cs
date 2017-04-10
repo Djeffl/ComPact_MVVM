@@ -6,6 +6,8 @@ namespace ComPact
 	public interface IDialogService
 	{
 		void ShowMessage(string message);
+
+		void ShowMessage(string message, string title);
 		//Task<string> DisplayActionSheetAsync(string title, string cancelButton, string destroyButton, params string[] otherButtons);
 
 		//Task DisplayActionSheetAsync(string title, params IActionSheetButton[] buttons);

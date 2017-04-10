@@ -7,6 +7,7 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
+        android:gravity="center_horizontal"
         android:layout_height="wrap_content">
         <include
             android:id="@+id/toolbarHeader"
@@ -35,31 +36,27 @@
         <TextView
             android:layout_marginLeft="10dp"
             android:layout_marginTop="5dp"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Members" />
         <ListView
             android:layout_height="match_parent"
             android:layout_width="match_parent"
             android:id="@+id/activityAddTaskListView" />
-        <LinearLayout
-            android:layout_height="match_parent"
-            android:layout_width="match_parent">
-            <android.support.v7.widget.RecyclerView
-                android:background="@drawable/border"
-                android:id="@+id/recyclerView"
-                android:gravity="center_horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="50dp"
-                android:layout_marginLeft="50dp" />
-        </LinearLayout>
+        <android.support.v7.widget.RecyclerView
+            android:layout_marginTop="20dp"
+            android:background="@drawable/border"
+            android:id="@+id/recyclerView"
+            android:gravity="center_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
     </LinearLayout>
     <android.support.design.widget.FloatingActionButton
+        android:tint="@color/yellow_accent_color"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_check_white_24dp"
-        android:layout_marginBottom="48dp"
+        android:layout_marginBottom="24dp"
         android:layout_marginRight="24dp"
         android:scaleType="center"
         android:layout_gravity="end|bottom"

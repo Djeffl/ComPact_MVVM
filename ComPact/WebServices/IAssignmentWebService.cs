@@ -1,9 +1,9 @@
 ﻿using System;
-using ComPact.Models;
+using ComPact.WebServices.Models;
 
 namespace ComPact.WebServices
 {
-	public interface IAssignmentWebService : IBaseWebservice<Assignment>
+	public interface IAssignmentWebService : IBaseWebservice<WebAssignment>
 	{
 	}
 }

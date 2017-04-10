@@ -2300,17 +2300,17 @@ namespace ComPact.Droid
 		public partial class Id
 		{
 			
-			// aapt resource value: 0x7f0b0095
-			public const int ActivityLoginQrScannerImageView = 2131427477;
+			// aapt resource value: 0x7f0b0096
+			public const int ActivityLoginQrScannerImageView = 2131427478;
+			
+			// aapt resource value: 0x7f0b009a
+			public const int ActivityPasswordRetrievalConfirmButton = 2131427482;
 			
 			// aapt resource value: 0x7f0b0099
-			public const int ActivityPasswordRetrievalConfirmButton = 2131427481;
+			public const int ActivityPasswordRetrievalEmailEditText = 2131427481;
 			
-			// aapt resource value: 0x7f0b0098
-			public const int ActivityPasswordRetrievalEmailEditText = 2131427480;
-			
-			// aapt resource value: 0x7f0b00b8
-			public const int action0 = 2131427512;
+			// aapt resource value: 0x7f0b00bc
+			public const int action0 = 2131427516;
 			
 			// aapt resource value: 0x7f0b0064
 			public const int action_bar = 2131427428;
@@ -2333,17 +2333,17 @@ namespace ComPact.Droid
 			// aapt resource value: 0x7f0b0041
 			public const int action_bar_title = 2131427393;
 			
-			// aapt resource value: 0x7f0b00b5
-			public const int action_container = 2131427509;
+			// aapt resource value: 0x7f0b00b9
+			public const int action_container = 2131427513;
 			
 			// aapt resource value: 0x7f0b0065
 			public const int action_context_bar = 2131427429;
 			
-			// aapt resource value: 0x7f0b00bc
-			public const int action_divider = 2131427516;
+			// aapt resource value: 0x7f0b00c0
+			public const int action_divider = 2131427520;
 			
-			// aapt resource value: 0x7f0b00b6
-			public const int action_image = 2131427510;
+			// aapt resource value: 0x7f0b00ba
+			public const int action_image = 2131427514;
 			
 			// aapt resource value: 0x7f0b0008
 			public const int action_menu_divider = 2131427336;
@@ -2360,11 +2360,11 @@ namespace ComPact.Droid
 			// aapt resource value: 0x7f0b0043
 			public const int action_mode_close_button = 2131427395;
 			
-			// aapt resource value: 0x7f0b00b7
-			public const int action_text = 2131427511;
+			// aapt resource value: 0x7f0b00bb
+			public const int action_text = 2131427515;
 			
-			// aapt resource value: 0x7f0b00c5
-			public const int actions = 2131427525;
+			// aapt resource value: 0x7f0b00c9
+			public const int actions = 2131427529;
 			
 			// aapt resource value: 0x7f0b0075
 			public const int activityAddAssignmentDescriptionEditText = 2131427445;
@@ -2387,71 +2387,83 @@ namespace ComPact.Droid
 			// aapt resource value: 0x7f0b0076
 			public const int activityAddTaskListView = 2131427446;
 			
-			// aapt resource value: 0x7f0b0081
-			public const int activityDetailAssignmentDescriptionTextView = 2131427457;
+			// aapt resource value: 0x7f0b0082
+			public const int activityDetailAssignmentDescriptionTextView = 2131427458;
 			
-			// aapt resource value: 0x7f0b0085
-			public const int activityDetailAssignmentEditTaskFloatingActionButton = 2131427461;
+			// aapt resource value: 0x7f0b0086
+			public const int activityDetailAssignmentEditTaskFloatingActionButton = 2131427462;
 			
 			// aapt resource value: 0x7f0b0080
-			public const int activityDetailAssignmentItemNameTitleTextView = 2131427456;
+			public const int activityDetailAssignmentIconImageView = 2131427456;
 			
-			// aapt resource value: 0x7f0b008e
-			public const int activityLoginEmailInputLoginEditText = 2131427470;
+			// aapt resource value: 0x7f0b0081
+			public const int activityDetailAssignmentItemNameTitleTextView = 2131427457;
 			
-			// aapt resource value: 0x7f0b0091
-			public const int activityLoginLoginButton = 2131427473;
+			// aapt resource value: 0x7f0b0085
+			public const int activityDetailAssignmentPersonEmailTextView = 2131427461;
+			
+			// aapt resource value: 0x7f0b0084
+			public const int activityDetailAssignmentPersonNameTextView = 2131427460;
+			
+			// aapt resource value: 0x7f0b0083
+			public const int activityDetailAssignmentPorfileImageView = 2131427459;
 			
 			// aapt resource value: 0x7f0b008f
-			public const int activityLoginPasswordInputLoginEditText = 2131427471;
-			
-			// aapt resource value: 0x7f0b0094
-			public const int activityLoginPasswordRedirectTextView = 2131427476;
+			public const int activityLoginEmailInputLoginEditText = 2131427471;
 			
 			// aapt resource value: 0x7f0b0092
-			public const int activityLoginQrCodeButton = 2131427474;
+			public const int activityLoginLoginButton = 2131427474;
+			
+			// aapt resource value: 0x7f0b0090
+			public const int activityLoginPasswordInputLoginEditText = 2131427472;
+			
+			// aapt resource value: 0x7f0b0095
+			public const int activityLoginPasswordRedirectTextView = 2131427477;
 			
 			// aapt resource value: 0x7f0b0093
-			public const int activityLoginRegisterRedirectTextView = 2131427475;
+			public const int activityLoginQrCodeButton = 2131427475;
 			
-			// aapt resource value: 0x7f0b0097
-			public const int activityMembersAddMemberFloatingActionButton = 2131427479;
+			// aapt resource value: 0x7f0b0094
+			public const int activityLoginRegisterRedirectTextView = 2131427476;
+			
+			// aapt resource value: 0x7f0b0098
+			public const int activityMembersAddMemberFloatingActionButton = 2131427480;
 			
 			// aapt resource value: 0x7f0b007d
 			public const int activityRegisterAddMemberTextView = 2131427453;
 			
-			// aapt resource value: 0x7f0b009e
-			public const int activityRegisterConfirmPasswordTextView = 2131427486;
+			// aapt resource value: 0x7f0b009f
+			public const int activityRegisterConfirmPasswordTextView = 2131427487;
 			
-			// aapt resource value: 0x7f0b009c
-			public const int activityRegisterEmailTextView = 2131427484;
+			// aapt resource value: 0x7f0b009d
+			public const int activityRegisterEmailTextView = 2131427485;
 			
-			// aapt resource value: 0x7f0b009a
-			public const int activityRegisterFirstNameTextView = 2131427482;
+			// aapt resource value: 0x7f0b009b
+			public const int activityRegisterFirstNameTextView = 2131427483;
 			
 			// aapt resource value: 0x7f0b007e
 			public const int activityRegisterIsAdminCheckBox = 2131427454;
 			
-			// aapt resource value: 0x7f0b009b
-			public const int activityRegisterLastNameTextView = 2131427483;
+			// aapt resource value: 0x7f0b009c
+			public const int activityRegisterLastNameTextView = 2131427484;
 			
-			// aapt resource value: 0x7f0b009d
-			public const int activityRegisterPasswordTextView = 2131427485;
+			// aapt resource value: 0x7f0b009e
+			public const int activityRegisterPasswordTextView = 2131427486;
 			
 			// aapt resource value: 0x7f0b007f
 			public const int activityRegisterRegisterButton = 2131427455;
 			
-			// aapt resource value: 0x7f0b00a1
-			public const int activitySettingsLogOutButton = 2131427489;
+			// aapt resource value: 0x7f0b00a2
+			public const int activitySettingsLogOutButton = 2131427490;
 			
-			// aapt resource value: 0x7f0b00a0
-			public const int activitySettingsMembersRedirectButton = 2131427488;
+			// aapt resource value: 0x7f0b00a1
+			public const int activitySettingsMembersRedirectButton = 2131427489;
 			
 			// aapt resource value: 0x7f0b0078
 			public const int activityTasksAddTaskFloatingActionButton = 2131427448;
 			
-			// aapt resource value: 0x7f0b00ae
-			public const int activityTasksTasksListView = 2131427502;
+			// aapt resource value: 0x7f0b00af
+			public const int activityTasksTasksListView = 2131427503;
 			
 			// aapt resource value: 0x7f0b0044
 			public const int activity_chooser_view_content = 2131427396;
@@ -2477,23 +2489,23 @@ namespace ComPact.Droid
 			// aapt resource value: 0x7f0b0015
 			public const int bottom = 2131427349;
 			
-			// aapt resource value: 0x7f0b0089
-			public const int bottomNavigationTabAssignmentImageView = 2131427465;
-			
-			// aapt resource value: 0x7f0b008b
-			public const int bottomNavigationTabLocationImageView = 2131427467;
+			// aapt resource value: 0x7f0b008a
+			public const int bottomNavigationTabAssignmentImageView = 2131427466;
 			
 			// aapt resource value: 0x7f0b008c
-			public const int bottomNavigationTabMessageImageView = 2131427468;
+			public const int bottomNavigationTabLocationImageView = 2131427468;
 			
-			// aapt resource value: 0x7f0b008a
-			public const int bottomNavigationTabPaymentImageView = 2131427466;
+			// aapt resource value: 0x7f0b008d
+			public const int bottomNavigationTabMessageImageView = 2131427469;
+			
+			// aapt resource value: 0x7f0b008b
+			public const int bottomNavigationTabPaymentImageView = 2131427467;
 			
 			// aapt resource value: 0x7f0b004b
 			public const int buttonPanel = 2131427403;
 			
-			// aapt resource value: 0x7f0b00b9
-			public const int cancel_action = 2131427513;
+			// aapt resource value: 0x7f0b00bd
+			public const int cancel_action = 2131427517;
 			
 			// aapt resource value: 0x7f0b0016
 			public const int center = 2131427350;
@@ -2507,8 +2519,8 @@ namespace ComPact.Droid
 			// aapt resource value: 0x7f0b005b
 			public const int checkbox = 2131427419;
 			
-			// aapt resource value: 0x7f0b00c1
-			public const int chronometer = 2131427521;
+			// aapt resource value: 0x7f0b00c5
+			public const int chronometer = 2131427525;
 			
 			// aapt resource value: 0x7f0b0022
 			public const int clip_horizontal = 2131427362;
@@ -2519,8 +2531,8 @@ namespace ComPact.Droid
 			// aapt resource value: 0x7f0b003d
 			public const int collapseActionView = 2131427389;
 			
-			// aapt resource value: 0x7f0b00d0
-			public const int contentFrame = 2131427536;
+			// aapt resource value: 0x7f0b00d4
+			public const int contentFrame = 2131427540;
 			
 			// aapt resource value: 0x7f0b004e
 			public const int contentPanel = 2131427406;
@@ -2531,14 +2543,14 @@ namespace ComPact.Droid
 			// aapt resource value: 0x7f0b0054
 			public const int customPanel = 2131427412;
 			
-			// aapt resource value: 0x7f0b00cd
-			public const int customToolbarBackImageView = 2131427533;
+			// aapt resource value: 0x7f0b00d1
+			public const int customToolbarBackImageView = 2131427537;
 			
-			// aapt resource value: 0x7f0b00cf
-			public const int customToolbarOptionsImageView = 2131427535;
+			// aapt resource value: 0x7f0b00d3
+			public const int customToolbarOptionsImageView = 2131427539;
 			
-			// aapt resource value: 0x7f0b00ce
-			public const int customToolbarTitleTextView = 2131427534;
+			// aapt resource value: 0x7f0b00d2
+			public const int customToolbarTitleTextView = 2131427538;
 			
 			// aapt resource value: 0x7f0b0062
 			public const int decor_content_parent = 2131427426;
@@ -2546,20 +2558,20 @@ namespace ComPact.Droid
 			// aapt resource value: 0x7f0b0047
 			public const int default_activity_button = 2131427399;
 			
-			// aapt resource value: 0x7f0b00a5
-			public const int design_bottom_sheet = 2131427493;
+			// aapt resource value: 0x7f0b00a6
+			public const int design_bottom_sheet = 2131427494;
+			
+			// aapt resource value: 0x7f0b00ad
+			public const int design_menu_item_action_area = 2131427501;
 			
 			// aapt resource value: 0x7f0b00ac
-			public const int design_menu_item_action_area = 2131427500;
+			public const int design_menu_item_action_area_stub = 2131427500;
 			
 			// aapt resource value: 0x7f0b00ab
-			public const int design_menu_item_action_area_stub = 2131427499;
+			public const int design_menu_item_text = 2131427499;
 			
 			// aapt resource value: 0x7f0b00aa
-			public const int design_menu_item_text = 2131427498;
-			
-			// aapt resource value: 0x7f0b00a9
-			public const int design_navigation_view = 2131427497;
+			public const int design_navigation_view = 2131427498;
 			
 			// aapt resource value: 0x7f0b0032
 			public const int disableHome = 2131427378;
@@ -2570,8 +2582,8 @@ namespace ComPact.Droid
 			// aapt resource value: 0x7f0b0019
 			public const int end = 2131427353;
 			
-			// aapt resource value: 0x7f0b00cb
-			public const int end_padder = 2131427531;
+			// aapt resource value: 0x7f0b00cf
+			public const int end_padder = 2131427535;
 			
 			// aapt resource value: 0x7f0b000f
 			public const int enterAlways = 2131427343;
@@ -2588,8 +2600,8 @@ namespace ComPact.Droid
 			// aapt resource value: 0x7f0b005a
 			public const int expanded_menu = 2131427418;
 			
-			// aapt resource value: 0x7f0b0096
-			public const int fab_rootLayout = 2131427478;
+			// aapt resource value: 0x7f0b0097
+			public const int fab_rootLayout = 2131427479;
 			
 			// aapt resource value: 0x7f0b0024
 			public const int fill = 2131427364;
@@ -2603,8 +2615,8 @@ namespace ComPact.Droid
 			// aapt resource value: 0x7f0b0029
 			public const int @fixed = 2131427369;
 			
-			// aapt resource value: 0x7f0b0087
-			public const int fragmentContainer = 2131427463;
+			// aapt resource value: 0x7f0b0088
+			public const int fragmentContainer = 2131427464;
 			
 			// aapt resource value: 0x7f0b000a
 			public const int home = 2131427338;
@@ -2615,8 +2627,8 @@ namespace ComPact.Droid
 			// aapt resource value: 0x7f0b0049
 			public const int icon = 2131427401;
 			
-			// aapt resource value: 0x7f0b00c6
-			public const int icon_group = 2131427526;
+			// aapt resource value: 0x7f0b00ca
+			public const int icon_group = 2131427530;
 			
 			// aapt resource value: 0x7f0b003e
 			public const int ifRoom = 2131427390;
@@ -2624,77 +2636,77 @@ namespace ComPact.Droid
 			// aapt resource value: 0x7f0b0046
 			public const int image = 2131427398;
 			
-			// aapt resource value: 0x7f0b00d3
-			public const int imageView = 2131427539;
+			// aapt resource value: 0x7f0b00d7
+			public const int imageView = 2131427543;
 			
-			// aapt resource value: 0x7f0b008d
-			public const int imageView1 = 2131427469;
+			// aapt resource value: 0x7f0b008e
+			public const int imageView1 = 2131427470;
 			
-			// aapt resource value: 0x7f0b00c2
-			public const int info = 2131427522;
+			// aapt resource value: 0x7f0b00c6
+			public const int info = 2131427526;
 			
 			// aapt resource value: 0x7f0b0003
 			public const int item_touch_helper_previous_elevation = 2131427331;
 			
-			// aapt resource value: 0x7f0b00a3
-			public const int largeLabel = 2131427491;
+			// aapt resource value: 0x7f0b00a4
+			public const int largeLabel = 2131427492;
 			
 			// aapt resource value: 0x7f0b001b
 			public const int left = 2131427355;
 			
-			// aapt resource value: 0x7f0b00c7
-			public const int line1 = 2131427527;
+			// aapt resource value: 0x7f0b00cb
+			public const int line1 = 2131427531;
 			
-			// aapt resource value: 0x7f0b00c9
-			public const int line3 = 2131427529;
+			// aapt resource value: 0x7f0b00cd
+			public const int line3 = 2131427533;
 			
-			// aapt resource value: 0x7f0b0090
-			public const int linearLayout1 = 2131427472;
+			// aapt resource value: 0x7f0b0091
+			public const int linearLayout1 = 2131427473;
 			
 			// aapt resource value: 0x7f0b0030
 			public const int listMode = 2131427376;
 			
-			// aapt resource value: 0x7f0b00af
-			public const int listViewItemOptionsItemName = 2131427503;
-			
-			// aapt resource value: 0x7f0b00b0
-			public const int listViewItemOtherOptionOtherButton = 2131427504;
-			
-			// aapt resource value: 0x7f0b0084
-			public const int listViewPersonEmailTextView = 2131427460;
-			
-			// aapt resource value: 0x7f0b0082
-			public const int listViewPersonImageImageView = 2131427458;
-			
-			// aapt resource value: 0x7f0b0083
-			public const int listViewPersonNameTextView = 2131427459;
-			
-			// aapt resource value: 0x7f0b00b1
-			public const int listViewPersonRadioButton = 2131427505;
+			// aapt resource value: 0x7f0b00b3
+			public const int listViewItemOptionsItemName = 2131427507;
 			
 			// aapt resource value: 0x7f0b00b4
-			public const int listViewTaskDoneCheckBox = 2131427508;
+			public const int listViewItemOtherOptionOtherButton = 2131427508;
+			
+			// aapt resource value: 0x7f0b00b7
+			public const int listViewPersonEmailTextView = 2131427511;
+			
+			// aapt resource value: 0x7f0b00b5
+			public const int listViewPersonImageImageView = 2131427509;
+			
+			// aapt resource value: 0x7f0b00b6
+			public const int listViewPersonNameTextView = 2131427510;
+			
+			// aapt resource value: 0x7f0b00b8
+			public const int listViewPersonRadioButton = 2131427512;
 			
 			// aapt resource value: 0x7f0b00b2
-			public const int listViewTaskImageImageView = 2131427506;
+			public const int listViewTaskDoneCheckBox = 2131427506;
 			
-			// aapt resource value: 0x7f0b00b3
-			public const int listViewTaskNameTextView = 2131427507;
+			// aapt resource value: 0x7f0b00b0
+			public const int listViewTaskImageImageView = 2131427504;
+			
+			// aapt resource value: 0x7f0b00b1
+			public const int listViewTaskNameTextView = 2131427505;
 			
 			// aapt resource value: 0x7f0b0048
 			public const int list_item = 2131427400;
 			
-			// aapt resource value: 0x7f0b00d2
-			public const int masked = 2131427538;
+			// aapt resource value: 0x7f0b00d6
+			public const int masked = 2131427542;
 			
-			// aapt resource value: 0x7f0b00bb
-			public const int media_actions = 2131427515;
+			// aapt resource value: 0x7f0b00bf
+			public const int media_actions = 2131427519;
 			
-			// aapt resource value: 0x7f0b00d4
-			public const int menu_help = 2131427540;
+			// aapt resource value: 0x7f0b00d8
+			public const int menu_help = 2131427544;
 			
-			// aapt resource value: 0x7f0b00d5
-			public const int menu_settings = 2131427541;
+			// aapt resource value: 0x7f0b00d9
+			public const int menu_settings = 2131427545;
 			
 			// aapt resource value: 0x7f0b003b
 			public const int middle = 2131427387;
@@ -2705,8 +2717,8 @@ namespace ComPact.Droid
 			// aapt resource value: 0x7f0b002b
 			public const int multiply = 2131427371;
 			
-			// aapt resource value: 0x7f0b00a8
-			public const int navigation_header_container = 2131427496;
+			// aapt resource value: 0x7f0b00a9
+			public const int navigation_header_container = 2131427497;
 			
 			// aapt resource value: 0x7f0b003f
 			public const int never = 2131427391;
@@ -2717,14 +2729,14 @@ namespace ComPact.Droid
 			// aapt resource value: 0x7f0b0028
 			public const int normal = 2131427368;
 			
-			// aapt resource value: 0x7f0b00c4
-			public const int notification_background = 2131427524;
+			// aapt resource value: 0x7f0b00c8
+			public const int notification_background = 2131427528;
 			
-			// aapt resource value: 0x7f0b00be
-			public const int notification_main_column = 2131427518;
+			// aapt resource value: 0x7f0b00c2
+			public const int notification_main_column = 2131427522;
 			
-			// aapt resource value: 0x7f0b00bd
-			public const int notification_main_column_container = 2131427517;
+			// aapt resource value: 0x7f0b00c1
+			public const int notification_main_column_container = 2131427521;
 			
 			// aapt resource value: 0x7f0b0020
 			public const int parallax = 2131427360;
@@ -2741,8 +2753,8 @@ namespace ComPact.Droid
 			// aapt resource value: 0x7f0b000c
 			public const int progress_horizontal = 2131427340;
 			
-			// aapt resource value: 0x7f0b009f
-			public const int qrCodeViewImageView = 2131427487;
+			// aapt resource value: 0x7f0b00a0
+			public const int qrCodeViewImageView = 2131427488;
 			
 			// aapt resource value: 0x7f0b005d
 			public const int radio = 2131427421;
@@ -2753,11 +2765,11 @@ namespace ComPact.Droid
 			// aapt resource value: 0x7f0b001c
 			public const int right = 2131427356;
 			
-			// aapt resource value: 0x7f0b00c3
-			public const int right_icon = 2131427523;
+			// aapt resource value: 0x7f0b00c7
+			public const int right_icon = 2131427527;
 			
-			// aapt resource value: 0x7f0b00bf
-			public const int right_side = 2131427519;
+			// aapt resource value: 0x7f0b00c3
+			public const int right_side = 2131427523;
 			
 			// aapt resource value: 0x7f0b002c
 			public const int screen = 2131427372;
@@ -2822,17 +2834,17 @@ namespace ComPact.Droid
 			// aapt resource value: 0x7f0b0036
 			public const int showTitle = 2131427382;
 			
-			// aapt resource value: 0x7f0b0088
-			public const int show_pdf = 2131427464;
+			// aapt resource value: 0x7f0b0089
+			public const int show_pdf = 2131427465;
 			
-			// aapt resource value: 0x7f0b00a2
-			public const int smallLabel = 2131427490;
+			// aapt resource value: 0x7f0b00a3
+			public const int smallLabel = 2131427491;
+			
+			// aapt resource value: 0x7f0b00a8
+			public const int snackbar_action = 2131427496;
 			
 			// aapt resource value: 0x7f0b00a7
-			public const int snackbar_action = 2131427495;
-			
-			// aapt resource value: 0x7f0b00a6
-			public const int snackbar_text = 2131427494;
+			public const int snackbar_text = 2131427495;
 			
 			// aapt resource value: 0x7f0b0013
 			public const int snap = 2131427347;
@@ -2855,8 +2867,8 @@ namespace ComPact.Droid
 			// aapt resource value: 0x7f0b001d
 			public const int start = 2131427357;
 			
-			// aapt resource value: 0x7f0b00ba
-			public const int status_bar_latest_event_content = 2131427514;
+			// aapt resource value: 0x7f0b00be
+			public const int status_bar_latest_event_content = 2131427518;
 			
 			// aapt resource value: 0x7f0b005e
 			public const int submenuarrow = 2131427422;
@@ -2867,14 +2879,14 @@ namespace ComPact.Droid
 			// aapt resource value: 0x7f0b0031
 			public const int tabMode = 2131427377;
 			
+			// aapt resource value: 0x7f0b00d0
+			public const int tagTextView = 2131427536;
+			
+			// aapt resource value: 0x7f0b00ce
+			public const int text = 2131427534;
+			
 			// aapt resource value: 0x7f0b00cc
-			public const int tagTextView = 2131427532;
-			
-			// aapt resource value: 0x7f0b00ca
-			public const int text = 2131427530;
-			
-			// aapt resource value: 0x7f0b00c8
-			public const int text2 = 2131427528;
+			public const int text2 = 2131427532;
 			
 			// aapt resource value: 0x7f0b0052
 			public const int textSpacerNoButtons = 2131427410;
@@ -2882,11 +2894,11 @@ namespace ComPact.Droid
 			// aapt resource value: 0x7f0b0051
 			public const int textSpacerNoTitle = 2131427409;
 			
-			// aapt resource value: 0x7f0b0086
-			public const int textView1 = 2131427462;
+			// aapt resource value: 0x7f0b0087
+			public const int textView1 = 2131427463;
 			
-			// aapt resource value: 0x7f0b00ad
-			public const int text_input_password_toggle = 2131427501;
+			// aapt resource value: 0x7f0b00ae
+			public const int text_input_password_toggle = 2131427502;
 			
 			// aapt resource value: 0x7f0b0000
 			public const int textinput_counter = 2131427328;
@@ -2894,8 +2906,8 @@ namespace ComPact.Droid
 			// aapt resource value: 0x7f0b0001
 			public const int textinput_error = 2131427329;
 			
-			// aapt resource value: 0x7f0b00c0
-			public const int time = 2131427520;
+			// aapt resource value: 0x7f0b00c4
+			public const int time = 2131427524;
 			
 			// aapt resource value: 0x7f0b004a
 			public const int title = 2131427402;
@@ -2915,8 +2927,8 @@ namespace ComPact.Droid
 			// aapt resource value: 0x7f0b0056
 			public const int topPanel = 2131427414;
 			
-			// aapt resource value: 0x7f0b00a4
-			public const int touch_outside = 2131427492;
+			// aapt resource value: 0x7f0b00a5
+			public const int touch_outside = 2131427493;
 			
 			// aapt resource value: 0x7f0b0004
 			public const int transition_current_scene = 2131427332;
@@ -2933,8 +2945,8 @@ namespace ComPact.Droid
 			// aapt resource value: 0x7f0b0002
 			public const int view_offset_helper = 2131427330;
 			
-			// aapt resource value: 0x7f0b00d1
-			public const int visible = 2131427537;
+			// aapt resource value: 0x7f0b00d5
+			public const int visible = 2131427541;
 			
 			// aapt resource value: 0x7f0b0040
 			public const int withText = 2131427392;
@@ -3167,16 +3179,16 @@ namespace ComPact.Droid
 			public const int FragmentTasks = 2130968632;
 			
 			// aapt resource value: 0x7f040039
-			public const int ListViewItemOptions = 2130968633;
+			public const int ListViewAssignment = 2130968633;
 			
 			// aapt resource value: 0x7f04003a
-			public const int ListViewItemOtherOption = 2130968634;
+			public const int ListViewItemOptions = 2130968634;
 			
 			// aapt resource value: 0x7f04003b
-			public const int ListViewPerson = 2130968635;
+			public const int ListViewItemOtherOption = 2130968635;
 			
 			// aapt resource value: 0x7f04003c
-			public const int ListViewTask = 2130968636;
+			public const int ListViewPerson = 2130968636;
 			
 			// aapt resource value: 0x7f04003d
 			public const int notification_action = 2130968637;

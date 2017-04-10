@@ -10,6 +10,7 @@
         android:layout_height="wrap_content"
         android:gravity="center_vertical">
         <ImageView
+            android:tint="@color/accent_color"
             android:id="@+id/listViewTaskImageImageView"
             android:layout_width="48dp"
             android:layout_height="48dp"

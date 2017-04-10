@@ -20,6 +20,7 @@ namespace ComPact.Droid.Fragments
 		//Elements
 		FloatingActionButton _addTaskFloatingActionButton;
 		ListView _tasksListView;
+		IconList _iconList = new IconList();
 		//data
 		ObservableCollection<Assignment> _assignments;
 		public ObservableCollection<Assignment> Assignments
@@ -46,15 +47,9 @@ namespace ComPact.Droid.Fragments
 			set
 			{
 				_user = value;
-				if (!_user.Admin)
-				{
-					_addTaskFloatingActionButton.Visibility = ViewStates.Gone;
-				}
-				else
-				{
-					_addTaskFloatingActionButton.Visibility = ViewStates.Visible;
-
-				}
+				bindings.Add(this.SetBinding(() => ViewModel.User.Admin, () => _addTaskFloatingActionButton.Visibility).ConvertSourceToTarget((arg) => {
+					return arg ? ViewStates.Visible : ViewStates.Gone;
+				}));
 			}
 		}
 
@@ -134,7 +129,6 @@ namespace ComPact.Droid.Fragments
 
 		void SetBindings()
 		{
-			bindings.Add(this.SetBinding(() => ViewModel.User, () => User));
 			bindings.Add(this.SetBinding(() => ViewModel.Assignments, () => Assignments));
 			//this.SetBindings(() => ViewModel.Done, () => _tasksListView, BindingMode.TwoWay);
 			//this.SetBinding(() => ViewModel.ItemName, () => _itemNameEditText.Text, BindingMode.TwoWay);
@@ -163,8 +157,10 @@ namespace ComPact.Droid.Fragments
 		{
 			// Not reusing views here
 			LayoutInflater inflater = LayoutInflater.From(Application.Context);
-			convertView = inflater.Inflate(Resource.Layout.ListViewTask, null);
+			convertView = inflater.Inflate(Resource.Layout.ListViewAssignment, null);
 
+			ImageView iconImageView = convertView.FindViewById<ImageView>(Resource.Id.listViewTaskImageImageView);
+			iconImageView.SetImageResource(_iconList.FindByName(assignment.IconName).IconId);
 			TextView nameTextView = convertView.FindViewById<TextView>(Resource.Id.listViewTaskNameTextView);
 			nameTextView.Text = assignment.ItemName;
 
@@ -174,16 +170,52 @@ namespace ComPact.Droid.Fragments
 			CheckBox checkBox = convertView.FindViewById<CheckBox>(Resource.Id.listViewTaskDoneCheckBox);
 			checkBox.Click += (sender, e) =>
 			{
-				convertView.Visibility = ViewStates.Gone;
-				int positiono = (int)convertView.Tag;
-				// your remaining code
 
+				//TODO Verwijder
+				/**
+				 * Command met binding
+				 * * Promp "are you sure"
+				 * Remove data VM
+				 * API call Task -> done
+				 */
+				//new AlertDialog.Builder()
+				//			   .SetTitle("Finished")
+				//               .SetMessage("Is this task finished?")
+	   //                        .SetNegativeButton(Android.Resource.String.No, (sender1, e1) =>{})
+	   //                        .SetPositiveButton(Android.Resource.String.Yes, (senderAlert, args) =>
+				//				{
+									ViewModel.AssignmentDoneCommand?.Execute(assignment);
+									
+								//}).Show();
+
+				// your remaining code
 			};
-			convertView.Click += (sender, e) =>
-			{
-				ViewModel.DetailAssignmentRedirectCommand.Execute(assignment);
-				System.Diagnostics.Debug.WriteLine("clicked");
-			};
+			//if (ViewModel.User.Admin)
+			//{
+				convertView.Click += (sender, e) =>
+				{
+					ViewModel.DetailAssignmentRedirectCommand.Execute(assignment);
+					System.Diagnostics.Debug.WriteLine("clicked");
+				};
+			//}
+			//else
+			//{
+
+				if (assignment.Description != null && assignment.Description != "")
+				{
+					convertView.Click += (sender, e) =>
+					{
+						ViewModel.DetailAssignmentRedirectCommand.Execute(assignment);
+						System.Diagnostics.Debug.WriteLine("clicked");
+					};
+				}
+				else
+				{
+					convertView.SetBackgroundColor(new Android.Graphics.Color(238, 238, 238));
+				}
+			//}
+
+
 
 			return convertView;
 		}

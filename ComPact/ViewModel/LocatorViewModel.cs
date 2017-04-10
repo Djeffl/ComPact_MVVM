@@ -1,8 +1,4 @@
-﻿using System;
-using System.Diagnostics;
-using ComPact;
-using ComPact.Assignments;
-using ComPact.Helpers;
+﻿using ComPact.Assignments;
 using ComPact.Members;
 using ComPact.Repositories;
 using ComPact.Services;
@@ -176,6 +172,10 @@ namespace ComPact
 
 		void RegisterServices()
 		{
+			SimpleIoc.Default.Register<IRepositoryMapper, RepositoryMapper>();
+			SimpleIoc.Default.Register<IWebMapper, WebMapper>();
+			SimpleIoc.Default.Register<IApiService, ApiService>();
+
 			SimpleIoc.Default.Register<IMemberDataService, MemberDataService>();
 			SimpleIoc.Default.Register<IAssignmentDataService, AssignmentDataService>();
 			SimpleIoc.Default.Register<IUserDataService, UserDataService>();
@@ -185,7 +185,7 @@ namespace ComPact
 		void RegisterWebServices()
 		{
 			SimpleIoc.Default.Register<IMemberWebService, MemberWebService>();
-			SimpleIoc.Default.Register<IAssignmentWebService, TaskWebService>();
+			SimpleIoc.Default.Register<IAssignmentWebService, AssignmentWebService>();
 			SimpleIoc.Default.Register<IUserWebService, UserWebService>();
 		}
 		void RegisterRepositories()

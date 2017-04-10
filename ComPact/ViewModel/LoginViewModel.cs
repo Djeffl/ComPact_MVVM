@@ -1,17 +1,11 @@
-﻿using System;
-using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using ComPact.Services;
-using GalaSoft.MvvmLight;
+﻿using ComPact.Services;
+using ComPact.ViewModel;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Views;
-using Newtonsoft.Json;
 
 namespace ComPact
 {
-	public class LoginViewModel : ViewModelBase
+	public class LoginViewModel : BaseViewModel
 	{
 		private readonly INavigationService _navigationService;
 		private readonly IAuthenticationService _authenticationService;
@@ -72,7 +66,8 @@ namespace ComPact
 		/**
 		 * 
 		 */
-		public LoginViewModel(INavigationService navigationService, IAuthenticationService authenticationService, IDialogService dialogService)
+		public LoginViewModel(INavigationService navigationService, IUserDataService userDataService, IAuthenticationService authenticationService, IDialogService dialogService)
+			:base(userDataService)
 		{
 			_navigationService = navigationService;
 			_authenticationService = authenticationService;
@@ -113,18 +108,18 @@ namespace ComPact
 
 		async void Login()
 		{
-			bool isSuccessful= await _authenticationService.Login(Email, Password);
-			ClearFields();
+			bool isSuccessful = await _authenticationService.Login(Email, Password);
+			//ClearFields();
 			if (isSuccessful)
 			{
 				_navigationService.NavigateTo(LocatorViewModel.HomePageKey);
 			}
 		}
-		void ClearFields()
-		{
-			Email = "";
-			Password = "";
-		}
+		//void ClearFields()
+		//{
+		//	Email = "";
+		//	Password = "";
+		//}
 		#endregion
 	}
 }

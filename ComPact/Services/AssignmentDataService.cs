@@ -1,61 +1,60 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using ComPact.Data;
-using ComPact.Models;
 using ComPact.WebServices;
+using ComPact.Models;
 
 namespace ComPact.Services
 {
 	public class AssignmentDataService : IAssignmentDataService
 	{
-		readonly IAssignmentWebService _assignmentWebService;
+		readonly IApiService _apiService;
 		readonly IAssignmentRepository _assignmentRepository;
 		readonly IDialogService _dialogService;
+		readonly IRepositoryMapper _mapper;
 
-		const string BasePath = "/api/assignments/";
-		const string CreateTaskPath = "/api/assignments/create";
-
-		public AssignmentDataService(IAssignmentWebService assignmentWebService, IAssignmentRepository assignmentRepository, IDialogService dialogService)
+		public AssignmentDataService(IApiService apiService, IAssignmentRepository assignmentRepository, IDialogService dialogService, IRepositoryMapper mapper)
 		{
-			_assignmentWebService = assignmentWebService;
+			_apiService = apiService;
 			_assignmentRepository = assignmentRepository;
 			_dialogService = dialogService;
+			_mapper = mapper;
 		}
 
 		public async Task<Assignment> Create(Assignment assignment)
 		{
-			try
-			{
-				return await _assignmentWebService.Create(CreateTaskPath, assignment);
-				//Assignment response = await _assignmentWebService.Create(CreateTaskPath, assignment);
-				//return await _assignmentRepository.Insert(response);
-
-			}
-			catch (Exception ex)
-			{
-				throw ex;
-			}
-		}
-		public async Task<IEnumerable<Assignment>> GetAssignments()
-		{
-			return await _assignmentRepository.All();
-		}
-		public async Task<IEnumerable<Assignment>> GetAssignments(string loginToken)
-		{
-			string apiUrlCall = APICalls.BaseAssignemntPath + "?loginToken=" + loginToken;
-			var assignments = await _assignmentWebService.ReadAll(apiUrlCall);
-			//await _assignmentRepository.Insert(assignments);
-			return assignments;
+			Assignment response = await _apiService.AddAssignment(assignment);
+			RepoAssignment data = _mapper.InvertMap(response);
+			return _mapper.Map(await _assignmentRepository.Insert(data));
+			
 		}
 		public async Task<IEnumerable<Assignment>> GetAll()
 		{
-			return await _assignmentRepository.All();
+			return _mapper.Map(await _assignmentRepository.All());
 		}
+
+		public async Task<IEnumerable<Assignment>> GetAll(string userId, bool isAdmin)
+		{
+			IEnumerable<Assignment> response = await _apiService.GetAssignments(userId, isAdmin);
+			IEnumerable<RepoAssignment> data = _mapper.InvertMap(response);
+			await _assignmentRepository.Insert(data);
+			return await GetAll();
+		}
+		public async Task<IEnumerable<Assignment>> GetAllUnfinished()
+		{
+			return _mapper.Map(await _assignmentRepository.GetAllUnfinished());
+		}
+
 		public async Task<Assignment> Update(Assignment assignment)
 		{
-			return await _assignmentWebService.Update(APICalls.UpdateAssignmentPath, assignment);
+			Assignment response = await _apiService.UpdateAssignment(assignment);
+			RepoAssignment data = _mapper.InvertMap(response);
+			await _assignmentRepository.Update(data);
+			return response;
+		}
+		public async Task<Assignment> Get(string id)
+		{
+			return _mapper.Map(await _assignmentRepository.Get(id));
 		}
 	}
 }

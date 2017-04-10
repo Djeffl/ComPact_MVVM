@@ -1,17 +1,17 @@
 ﻿using ComPact.Helpers;
-using GalaSoft.MvvmLight;
+using ComPact.ViewModel;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Views;
 
 namespace ComPact
 {
-	public class HelpViewModel: ViewModelBase
+	public class HelpViewModel: BaseViewModel
 	{
 		/**
 		 * Declare Services
 		 */
-		private readonly INavigationService _navigationService;
-		private readonly IBackService _backService;
+		readonly INavigationService _navigationService;
+		readonly IBackService _backService;
 		//private readonly IDialogService _dialogService;
 		#region Parameters
 		/**
@@ -37,7 +37,8 @@ namespace ComPact
 		/**
 		 * Init services & Init() & RegisterCommands();
 		 */
-		public HelpViewModel(INavigationService navigationService, IBackService backService)
+		public HelpViewModel(INavigationService navigationService, IUserDataService userDataService, IBackService backService)
+			:base(userDataService)
 		{
 			//Init Services
 			_navigationService = navigationService;

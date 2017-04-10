@@ -12,13 +12,21 @@ namespace ComPact.Droid.Controls
 		// Event handler for item clicks:
 		public event EventHandler<int> ItemClick;
 
+		// Return the number of photos available in the photo album:
+		public override int ItemCount
+		{
+			get { return IconList.Count; }
+		}
+
 		// Underlying data set (a icon list) Findable in Controls/Models/Icon.cs
 		public IconList IconList { get; private set; }
+
 
 		// Load the adapter with the data set (photo album) at construction time:
 		public CustomRecyclerViewAdapter(IconList iconList)
 		{
 			IconList = iconList;
+
 		}
 
 		// Create a new photo CardView (invoked by the layout manager): 
@@ -41,11 +49,7 @@ namespace ComPact.Droid.Controls
 			vh.Image.SetImageResource(IconList[position].IconId);
 		}
 
-		// Return the number of photos available in the photo album:
-		public override int ItemCount
-		{
-			get { return IconList.Count; }
-		}
+
 
 		// Raise an event when the item-click takes place:
 		void OnClick(int position)

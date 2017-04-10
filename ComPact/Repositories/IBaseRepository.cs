@@ -10,7 +10,7 @@ namespace ComPact.Repositories
 	{
 		Task<IEnumerable<TEntity>> All();
 
-		IQueryable<TEntity> Where(Expression<Func<TEntity, bool>> filter);
+		Task<IQueryable<TEntity>> Where(Expression<Func<TEntity, bool>> filter);
 
 		Task<int> Count();
 

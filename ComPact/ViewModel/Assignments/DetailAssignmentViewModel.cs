@@ -7,13 +7,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using ComPact.Helpers;
 using ComPact.Models;
-using GalaSoft.MvvmLight;
+using ComPact.ViewModel;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Views;
 
 namespace ComPact.Assignments
 {
-	public class DetailAssignmentViewModel: ViewModelBase
+	public class DetailAssignmentViewModel: BaseViewModel
 	{
 		/**
 		 * Declare Services
@@ -21,7 +21,6 @@ namespace ComPact.Assignments
 		readonly INavigationService _navigationService;
 		readonly IAssignmentDataService _assignmentDataService;
 		readonly IMemberDataService _memberDataService;
-		readonly IUserDataService _userDataService;
 		readonly IPopUpService _popUpService;
 		readonly IDialogService _dialogService;
 
@@ -88,6 +87,7 @@ namespace ComPact.Assignments
 			}
 			set
 			{
+				value.ItemName = FirstCharToUpper(value.ItemName);
 				Set(ref _assignment, value);
 			}
 		}
@@ -99,7 +99,7 @@ namespace ComPact.Assignments
 		#region Commands
 		public RelayCommand EditRedirectCommand { get; set; }
 		public RelayCommand BackRedirectCommand { get; set; }
-		public RelayCommand GetMembersCommand { get; set; }
+		public RelayCommand<string> GetMemberCommand { get; set; }
 
 		public RelayCommand GetUserCommand { get; private set; }
 
@@ -110,6 +110,7 @@ namespace ComPact.Assignments
 		 * Init services & Init() & RegisterCommands();
 		 */
 		public DetailAssignmentViewModel(INavigationService navigationService, IAssignmentDataService assignmentDataService, IMemberDataService memberDataService, IDialogService dialogService, IPopUpService popUpService, IUserDataService userDataService)
+			:base(userDataService)
 		{
 			//Init Services
 			_navigationService = navigationService;
@@ -117,7 +118,6 @@ namespace ComPact.Assignments
 			_memberDataService = memberDataService;
 			_dialogService = dialogService;
 			_popUpService = popUpService;
-			_userDataService = userDataService;
 
 			Init();
 
@@ -138,6 +138,10 @@ namespace ComPact.Assignments
 			{
 				await GetUser();
 			});
+			GetMemberCommand = new RelayCommand<string>(async(id) =>
+			{
+				await GetMember(id);
+			});
 		}
 
 		#endregion
@@ -147,9 +151,11 @@ namespace ComPact.Assignments
 		{
 			_navigationService.NavigateTo(LocatorViewModel.EditAssignmentPageKey, Assignment);
 		}
-		public async Task GetUser()
+
+		async Task GetMember(string id)
 		{
-			User = await _userDataService.GetUser();
+			Member = await _memberDataService?.Get(id);
+			Debug.WriteLine("ok");
 		}
 		#endregion
 	}

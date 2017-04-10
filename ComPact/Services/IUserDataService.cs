@@ -6,9 +6,10 @@ namespace ComPact
 {
 	public interface IUserDataService
 	{
-		Task Create(User user);
+		Task<User> Create(User user);
+		Task<User> GetUser();
 		Task<User> Login(User user);
 		Task LogOut();
-		Task<User> GetUser();
+
 	}
 }

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading.Tasks;
-using ComPact.models;
 using Refit;
 
 namespace ComPact.WebServices

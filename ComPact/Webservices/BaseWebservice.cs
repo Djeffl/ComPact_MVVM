@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using Refit;
 using ComPact.Exceptions;
+using System.Net;
 
 namespace ComPact
 {
@@ -48,18 +49,21 @@ namespace ComPact
 			try
 			{
 				HttpResponseMessage response = await client.PostAsync(urlExtend, postContent);
+				if (response.StatusCode == HttpStatusCode.Conflict)
+				{
+					throw new ArgumentException();
+				}
 				response.EnsureSuccessStatusCode();
-				Debug.WriteLine(response.EnsureSuccessStatusCode());
 				var result = JsonConvert.DeserializeObject<T>(await response.Content.ReadAsStringAsync());
 				return result;
 			}
-			//EXCeptions andere namen
-			//catch (TaskCanceledException taskEx) { 
-				
-			//}
+			catch (ArgumentException)
+			{
+				throw new ArgumentException();
+			}
 			catch (Exception ex)
 			{
-				throw new WebException("Create failed", ex);
+				throw new Exceptions.WebException("Create failed", ex);
 			}
 		}
 		public async Task<T> Create(string urlExtend, IEnumerable<T> obj)
@@ -69,6 +73,10 @@ namespace ComPact
 			var data = JsonConvert.SerializeObject(obj);
 			var postContent = new StringContent(data, Encoding.UTF8, "application/json");
 			HttpResponseMessage response = await client.PostAsync(urlExtend, postContent);
+			if (response.StatusCode == HttpStatusCode.Conflict)
+			{
+				throw new ArgumentException();
+			}
 			response.EnsureSuccessStatusCode();
 			var result = JsonConvert.DeserializeObject<T>(await response.Content.ReadAsStringAsync());
 

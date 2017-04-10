@@ -7,12 +7,8 @@ namespace ComPact.Models
 {
 	public class User: Member
 	{
-		[JsonProperty("loginToken")]
+		public bool Admin { get; set; }
 		public string LoginToken { get; set; }
-		[JsonProperty("refreshToken")]
 		public string RefreshToken { get; set; }
-		[Ignore]
-		[JsonProperty("members")]
-		public IEnumerable<Member> members { get; set; }
 	}
 }

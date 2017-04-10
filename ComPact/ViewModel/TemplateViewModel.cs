@@ -1,11 +1,8 @@
-﻿using System;
-using GalaSoft.MvvmLight;
-using GalaSoft.MvvmLight.Command;
-using GalaSoft.MvvmLight.Views;
+﻿using GalaSoft.MvvmLight.Views;
 
 namespace ComPact.ViewModel
 {
-	public class TemplateViewModel: ViewModelBase
+	public class TemplateViewModel: BaseViewModel
 	{
 		/**
 		 * Declare Services
@@ -37,7 +34,8 @@ namespace ComPact.ViewModel
 		/**
 		 * Init services & Init() & RegisterCommands();
 		 */
-		public TemplateViewModel(INavigationService navigationService)
+		public TemplateViewModel(INavigationService navigationService, IUserDataService userDataService)
+			:base(userDataService)
 		{
 			//Init Services
 			//_navigationService = navigationService;

@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Threading.Tasks;
-using ComPact.Models;
 
 namespace ComPact.WebServices
 {
-	public interface IUserWebService: IBaseWebservice<User>
+	public interface IUserWebService: IBaseWebservice<WebUser>
 	{
-		Task<User> Login(string urlExtend, User user);
+		Task<WebUser> Login(string urlExtend, WebUser user);
 	}
 }

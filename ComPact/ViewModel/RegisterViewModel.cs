@@ -1,17 +1,15 @@
 ﻿using System;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using System.Windows.Input;
 using ComPact.Helpers;
-using ComPact.Models;
 using ComPact.Services;
-using GalaSoft.MvvmLight;
+using ComPact.ViewModel;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Views;
 
 namespace ComPact
 {
-	public class RegisterViewModel : ViewModelBase
+	public class RegisterViewModel : BaseViewModel
 	{
 		private readonly INavigationService _navigationService;
 		private readonly IAuthenticationService _authenticationService;
@@ -141,7 +139,8 @@ namespace ComPact
 		#endregion
 
 		#region Constructor
-		public RegisterViewModel(INavigationService navigationService, IAuthenticationService authenticationService, IDialogService dialogService)
+		public RegisterViewModel(INavigationService navigationService, IUserDataService userDataService, IAuthenticationService authenticationService, IDialogService dialogService)
+			:base(userDataService)
 		{
 			_authenticationService = authenticationService;
 			_navigationService = navigationService;
@@ -177,7 +176,7 @@ namespace ComPact
 				LastName = LastName,
 				Email = Email,
 				Password = Password,
-				ConfirmPassword = Password,
+				ConfirmPassword = ConfirmPassword,
 				Admin = true
 			};
 			if (_registration.Email != null && _registration.FirstName != null && _registration.LastName != null && _registration.Password != null && _registration.ConfirmPassword != null) // && admin != null)
@@ -187,20 +186,12 @@ namespace ComPact
 
 					if (_registration.Password == _registration.ConfirmPassword)
 					{
-
-						try
+						bool isSuccessful = await _authenticationService.Register(_registration.FirstName, _registration.LastName, _registration.Email, _registration.Password, _registration.Admin);
+						if (isSuccessful)
 						{
-							bool isSuccessful = await _authenticationService.Register(_registration.FirstName, _registration.LastName, _registration.Email, _registration.Password, _registration.Admin);
-							if (isSuccessful)
-							{
-								_navigationService.NavigateTo(LocatorViewModel.HomePageKey);
-							}
+							_popUpService.Show("You succesfully created an account!", "long"); 
+							_navigationService.NavigateTo(LocatorViewModel.HomePageKey);
 						}
-						catch (Exception)
-						{
-							_dialogService.ShowMessage("Email already taken!");
-						}
-
 					}
 					else
 					{

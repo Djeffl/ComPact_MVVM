@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading.Tasks;
-using ComPact.Data;
 using ComPact.Exceptions;
 using ComPact.Helpers;
 using ComPact.Models;
@@ -67,7 +67,7 @@ namespace ComPact.Services
 		public async Task<bool> Register(string firstName, string lastName, string email, string password, bool admin)
 		{
 			bool isSuccessful = false;
-			var user = new User()
+			var user = new User
 			{
 				Id = null,
 				FirstName = firstName,
@@ -82,6 +82,10 @@ namespace ComPact.Services
 				isSuccessful = true;
 			}
 			//TODO Add other exception catches
+			catch (ArgumentException)
+			{
+				_dialogService.ShowMessage("This email is already being used.");
+			}
 			catch (Exception)
 			{
 				_dialogService.ShowMessage("Something went wrong, please try again later.");
@@ -91,22 +95,34 @@ namespace ComPact.Services
 		public async Task<bool> Login(string email, string password)
 		{
 			bool isSuccessful = false;
-			var user = new User()
+			var user = new User
 			{
 				Email = email,
 				Password = password
 			};
 			try
 			{
-				User responseUser = await _userDataService.Login(user);
-				IEnumerable<Member> members = await _memberDataService?.Save(responseUser.members);
-				IEnumerable<Assignment> assignments = await _assignmentDataService?.GetAssignments(responseUser.LoginToken);
+				User responseUser = await _userDataService?.Login(user);
+				IEnumerable<Assignment> assignments;
+				if (responseUser.Admin == true)
+				{
+					IEnumerable<Member> members = await _memberDataService?.GetAll(responseUser.Id);
+					assignments = await _assignmentDataService?.GetAll(responseUser.Id, true);
+				}
+				else
+				{
+					assignments = await _assignmentDataService?.GetAll(responseUser.Id, false);
+				}
 
 				isSuccessful = true;
 			}
-			catch (Exception)
+			catch (ArgumentException)
 			{
 				_dialogService.ShowMessage("Your combination does not match!");
+			}
+			catch (Exception)
+			{
+				_dialogService.ShowMessage("Something went wrong please try again later");
 			}
 			return isSuccessful;
 		}
@@ -141,6 +157,7 @@ namespace ComPact.Services
 			try
 			{
 				await _userDataService.LogOut();
+				await _memberDataService.LogOut();
 				//_memberDataService.LogOut();
 				//_assignmentDataService.LogOut();
 				isSuccessful = true;

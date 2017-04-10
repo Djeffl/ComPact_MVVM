@@ -5,6 +5,10 @@ namespace ComPact.Exceptions
 	{
 		public WebException() { }
 
+		public WebException(string message)
+			: base(message)
+		{ }
+
 		public WebException(string message, Exception ex)
 			: base(message, ex)
 		{ }

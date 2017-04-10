@@ -1,13 +1,12 @@
-﻿using System.Diagnostics;
-using ComPact.Helpers;
+﻿using ComPact.Helpers;
 using ComPact.Services;
-using GalaSoft.MvvmLight;
+using ComPact.ViewModel;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Views;
 
 namespace ComPact
 {
-	public class SettingsViewModel: ViewModelBase
+	public class SettingsViewModel: BaseViewModel
 	{
 		/**
 		 * Declare Services
@@ -43,7 +42,8 @@ namespace ComPact
 		/**
 		 * Init services & Init() & RegisterCommands();
 		 */
-		public SettingsViewModel(INavigationService navigationService, IAuthenticationService authenticationService)
+		public SettingsViewModel(INavigationService navigationService, IUserDataService userDataService, IAuthenticationService authenticationService)
+			:base(userDataService)
 		{
 			//Init Services
 			_navigationService = navigationService;

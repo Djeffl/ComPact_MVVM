@@ -4,7 +4,7 @@ using ComPact.Repositories;
 
 namespace ComPact.Repositories
 {
-	public interface IUserRepository: IBaseRepository<User, string>
+	public interface IUserRepository: IBaseRepository<RepoUser, string>
 	{
 	}
 }

@@ -1,20 +1,17 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using ComPact.Models;
-using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Views;
 
 namespace ComPact.ViewModel
 {
-	public class AssignmentsViewModel: ViewModelBase, INotifyPropertyChanged
+	public class AssignmentsViewModel: BaseViewModel, INotifyPropertyChanged
 	{
 		/**
 		 * Declare Services
@@ -115,6 +112,7 @@ namespace ComPact.ViewModel
 		public RelayCommand GetAssignmentsCommand { get; set; }
 
 		public RelayCommand GetUserCommand { get; private set; }
+		public RelayCommand<Assignment> AssignmentDoneCommand { get; set; }
 
 
 		#endregion
@@ -123,6 +121,7 @@ namespace ComPact.ViewModel
 		 * Init services & Init() & RegisterCommands();
 		 */
 		public AssignmentsViewModel(INavigationService navigationService, IAssignmentDataService assignmentDataService, IDialogService dialogService, IUserDataService userDataService)
+			:base(userDataService)
 		{
 			//Init Services
 			_navigationService = navigationService;
@@ -155,22 +154,17 @@ namespace ComPact.ViewModel
 			{
 				await GetUser();
 			});
+			AssignmentDoneCommand = new RelayCommand<Assignment>(async (assignment) =>
+			{
+				await AssignmentDone(assignment);
+				Assignments.Remove(assignment);
+			});
 		}
 
 
 		#endregion
 
 		#region Methods
-		//void CreateTaskAsync()
-		//{
-		//	//Do other stuff send to db and stuff
-		//	Task newTask = new Task
-		//	{
-		//		ItemName = ItemName,
-		//		Description = Description
-		//	};
-		//	_dialogService.ShowMessage(ItemName);
-		//}
 		void AddTaskRedirect()
 		{
 			_navigationService.NavigateTo(LocatorViewModel.AddTaskPageKey);
@@ -183,30 +177,19 @@ namespace ComPact.ViewModel
 		public async Task GetAssignments()
 		{
 			User responseUser = await _userDataService.GetUser();
-			IEnumerable<Assignment> list = await _assignmentDataService?.GetAssignments(responseUser.LoginToken);
-			Assignments = Convert<Assignment>(list);
+			IEnumerable<Assignment> assignments = await _assignmentDataService?.GetAllUnfinished();
+			Assignments = Convert<Assignment>(assignments);
 		}
-		public async Task GetUser()
+		public async Task AssignmentDone(Assignment assignment)
 		{
-			User = await _userDataService.GetUser();
+			assignment.AdminId = null;
+			assignment.Description = null;
+			assignment.IconName = null;
+			assignment.ItemName = null;
+			assignment.MemberId = null;
+			assignment.Done = true;
+			await _assignmentDataService.Update(assignment);
 		}
-
-		//If you're working with non-generic IEnumerable you can do it this way:
-		ObservableCollection<object> Convert(IEnumerable original)
-		{
-			return new ObservableCollection<object>(original.Cast<object>());
-		}
-		//If you're working with generic IEnumerable<T> you can do it this way:
-		ObservableCollection<T> Convert<T>(IEnumerable<T> original)
-		{
-			return new ObservableCollection<T>(original);
-		}
-		//If you're working with non-generic IEnumerable but know the type of elements, you can do it this way:
-		ObservableCollection<T> Convert<T>(IEnumerable original)
-		{
-			return new ObservableCollection<T>(original.Cast<T>());
-		}
-		//void 
 		#endregion
 	}
 }

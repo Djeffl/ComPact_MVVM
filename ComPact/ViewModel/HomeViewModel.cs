@@ -1,18 +1,14 @@
-﻿using System;
-using ComPact.Helpers;
-using GalaSoft.MvvmLight;
-using GalaSoft.MvvmLight.Command;
+﻿using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Views;
 
 namespace ComPact.ViewModel
 {
-	public class HomeViewModel: ViewModelBase
+	public class HomeViewModel: BaseViewModel
 	{
 		/**
 		 * Delcare Services
 		 */
 		private readonly INavigationService _navigationService;
-		//private readonly IUserDataService _userDataService;
 		//private readonly IDialogService _dialogService;
 		#region Parameters
 		/**
@@ -39,7 +35,8 @@ namespace ComPact.ViewModel
 		/**
 		 * Init services & Init() & RegisterCommands();
 		 */
-		public HomeViewModel(INavigationService navigationService, IMemberDataService userDataService)
+		public HomeViewModel(INavigationService navigationService, IUserDataService userDataService)
+			:base(userDataService)
 		{
 			//Init Services
 			_navigationService = navigationService;

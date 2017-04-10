@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
@@ -7,14 +6,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using ComPact.Helpers;
 using ComPact.Models;
-using ComPact.Services;
-using GalaSoft.MvvmLight;
+using ComPact.ViewModel;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Views;
 
 namespace ComPact.Assignments
 {
-	public class EditAssignmentViewModel : ViewModelBase
+	public class EditAssignmentViewModel : BaseViewModel
 	{
 		/**
 		 * Declare Services
@@ -22,7 +20,6 @@ namespace ComPact.Assignments
 		readonly INavigationService _navigationService;
 		readonly IAssignmentDataService _assignmentDataService;
 		readonly IMemberDataService _memberDataService;
-		readonly IUserDataService _userDataService;
 		readonly IPopUpService _popUpService;
 		readonly IDialogService _dialogService;
 
@@ -114,7 +111,8 @@ namespace ComPact.Assignments
 		/**
 		 * Init services & Init() & RegisterCommands();
 		 */
-		public EditAssignmentViewModel(INavigationService navigationService, IAssignmentDataService assignmentDataService, IMemberDataService memberDataService, IDialogService dialogService, IPopUpService popUpService, IUserDataService userDataService)
+		public EditAssignmentViewModel(INavigationService navigationService, IUserDataService userDataService,IAssignmentDataService assignmentDataService, IMemberDataService memberDataService, IDialogService dialogService, IPopUpService popUpService)
+			:base(userDataService)
 		{
 			//Init Services
 			_navigationService = navigationService;
@@ -122,7 +120,6 @@ namespace ComPact.Assignments
 			_memberDataService = memberDataService;
 			_dialogService = dialogService;
 			_popUpService = popUpService;
-			_userDataService = userDataService;
 
 			Init();
 
@@ -167,12 +164,12 @@ namespace ComPact.Assignments
 			//TODO Create dataService that 
 			//_userDataService
 
-			User user = await _userDataService.GetUser();
+			User user = await GetUser();
 
 			var edAssignment = new Assignment
 			{
-				LoginToken = user.LoginToken,
-				MemberEmail = memberEmail,
+				//LoginToken = user.LoginToken,
+				//MemberEmail = memberEmail,
 				ItemName = item,
 				Description = Description,
 
@@ -180,7 +177,7 @@ namespace ComPact.Assignments
 
 			//try
 			//{
-				await _assignmentDataService.Update(edAssignment);
+				//await _assignmentDataService.Update(edAssignment);
 			//}
 			//catch (Exception ex)
 			//{
@@ -191,8 +188,8 @@ namespace ComPact.Assignments
 
 		public async Task GetMembers()
 		{
-			IEnumerable<Member> list = await _memberDataService?.GetAll();
-			Members = Convert<Member>(list);
+			//IEnumerable<Member> list = await _memberDataService?.GetAll();
+			//Members = Convert<Member>(list);
 		}
 
 		//If you're working with non-generic IEnumerable you can do it this way:

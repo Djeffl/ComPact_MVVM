@@ -1,15 +1,17 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using ComPact;
+using ComPact.Models;
 using Newtonsoft.Json;
 
 namespace ComPact
 {
-	public class MemberWebService : BaseWebservice<Member>, IMemberWebService
+	public class MemberWebService : BaseWebservice<WebMember>, IMemberWebService
 	{
-		public async Task<Member> Forgot(string urlExtend, Member obj)
+		public async Task<WebMember> Forgot(string urlExtend, WebMember obj)
 		{
 			var client = GetHttpClient();
 
@@ -19,7 +21,7 @@ namespace ComPact
 			response.EnsureSuccessStatusCode();
 			var te = await response.Content.ReadAsStringAsync();
 			//System.Diagnostics.Debug.WriteLine(te);
-			var result = JsonConvert.DeserializeObject<Member>(await response.Content.ReadAsStringAsync());
+			var result = JsonConvert.DeserializeObject<WebMember>(await response.Content.ReadAsStringAsync());
 			System.Diagnostics.Debug.WriteLine(result);
 			return result;
 		}

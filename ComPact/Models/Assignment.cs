@@ -6,23 +6,18 @@ namespace ComPact.Models
 {
 	public class Assignment
 	{
-		[PrimaryKey]
-		[JsonProperty("_id")]
+
 		public string Id { get; set; }
-		[JsonProperty("itemName")]
 		public string ItemName { get; set; }
-		[JsonProperty("description")]
 		public string Description { get; set; }
-		[JsonProperty("loginToken")]
-		public string LoginToken { get; set; }
-		[JsonProperty("memberEmail")]
-		public string MemberEmail { get; set; }
-		//public Member Member { get; set; }
-		//public byte[] Image { get; set; }
+		public string AdminId { get; set; }
+		public string MemberId { get; set; }
+		public string IconName { get; set; }
 		public bool Done { get; set; }
+
 		public override string ToString()
 		{
-			return string.Format("{0}: {1}", ItemName, Description);
+			return string.Format("[Assignment: Id={0}, ItemName={1}, Description={2}, memberId={3}, IconName={4}, Done={5}]", Id, ItemName, Description, MemberId, IconName, Done);
 		}
 
 	}

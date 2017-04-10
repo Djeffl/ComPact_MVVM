@@ -28,5 +28,22 @@ namespace ComPact.Droid
 					}).Show();
 			});
 		}
+
+		public void ShowMessage(string message, string title)
+		{
+			
+			new Handler(Looper.MainLooper).Post(() =>
+			{
+
+				new AlertDialog.Builder(CrossCurrentActivity.Current.Activity)
+							   .SetTitle(title).SetMessage(message)
+	                           .SetNegativeButton(Android.Resource.String.No, (sender, e) =>{})
+	                           .SetPositiveButton(Android.Resource.String.Yes, (senderAlert, args) =>
+								{
+									
+								}).Show();
+
+			});
+		}
 	}
 }

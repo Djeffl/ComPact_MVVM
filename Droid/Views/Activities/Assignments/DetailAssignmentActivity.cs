@@ -8,6 +8,7 @@ using Android.Support.Design.Widget;
 using Android.Views;
 using Android.Widget;
 using ComPact.Assignments;
+using ComPact.Droid.Models;
 using ComPact.Models;
 using GalaSoft.MvvmLight.Helpers;
 using GalaSoft.MvvmLight.Views;
@@ -29,7 +30,7 @@ namespace ComPact.Droid
 		}
 
 		//Local variables
-
+		IconList _iconList = new IconList();
 		//Keep track of bindings to avoid premature garbage collection
 		readonly List<Binding> bindings = new List<Binding>();
 		//Elements
@@ -43,14 +44,26 @@ namespace ComPact.Droid
 			set
 			{
 				_user = value;
-				if (!_user.Admin)
+				bindings.Add(this.SetBinding(() => ViewModel.User.Admin, () => _editTaskFloatingActionButton.Visibility).ConvertSourceToTarget((arg) =>
 				{
-					_editTaskFloatingActionButton.Visibility = ViewStates.Gone;
-				}
-				else
+					return arg ? ViewStates.Visible : ViewStates.Gone;
+				}));
+			}
+		}
+		Member _member;
+		public Member Member
+		{
+			get
+			{
+				return _member;
+			}
+			set
+			{
+				_member = value;
+				if (_member != null)
 				{
-					_editTaskFloatingActionButton.Visibility = ViewStates.Visible;
-
+					_PersonNameTextView.Text = Member.FullName();
+					_PersonEmailTextView.Text = Member.Email;
 				}
 			}
 		}
@@ -70,9 +83,11 @@ namespace ComPact.Droid
 		TextView _titleTextView;
 		ImageView _optionsImageView;
 
-		Spinner _itemNameSpinner;
-		EditText _descriptionEditText;
-		ListView _membersListView;
+		ImageView _iconImageView;
+		TextView _itemNameTextView;
+		TextView _descriptionTextView;
+		TextView _PersonNameTextView;
+		TextView _PersonEmailTextView;
 		FloatingActionButton _editTaskFloatingActionButton;
 		//Bind Viewmodel to activity
 		DetailAssignmentViewModel ViewModel
@@ -91,7 +106,9 @@ namespace ComPact.Droid
 
 
 			Assignment = Nav.GetAndRemoveParameter<Assignment>(Intent);
+			ViewModel.GetMemberCommand.Execute(Assignment.MemberId);
 			ViewModel.Assignment = Assignment;
+
 			//Init elements
 			Init();
 			_optionsImageView.Visibility = ViewStates.Gone;
@@ -110,18 +127,29 @@ namespace ComPact.Droid
 			_optionsImageView = FindViewById<ImageView>(Resource.Id.customToolbarOptionsImageView);
 			_titleTextView = FindViewById<TextView>(Resource.Id.customToolbarTitleTextView);
 
-			_descriptionEditText = FindViewById<EditText>(Resource.Id.activityAddAssignmentDescriptionEditText);
-			_membersListView = FindViewById<ListView>(Resource.Id.activityAddTaskListView);
+			_iconImageView = FindViewById<ImageView>(Resource.Id.activityDetailAssignmentIconImageView);
+			_itemNameTextView = FindViewById<TextView>(Resource.Id.activityDetailAssignmentItemNameTitleTextView);
+			_descriptionTextView = FindViewById<TextView>(Resource.Id.activityDetailAssignmentDescriptionTextView);
+			_PersonNameTextView = FindViewById<TextView>(Resource.Id.activityDetailAssignmentPersonNameTextView);
+			_PersonEmailTextView = FindViewById<TextView>(Resource.Id.activityDetailAssignmentPersonEmailTextView);
 			_editTaskFloatingActionButton = FindViewById<FloatingActionButton>(Resource.Id.activityDetailAssignmentEditTaskFloatingActionButton);
 
 
 			//FILL UP 
+
+			_itemNameTextView.Text = Assignment.ItemName;
+			_descriptionTextView.Text = Assignment.Description;
+			_iconImageView.SetImageResource(_iconList.FindByName(Assignment.IconName).IconId);
+
+
+
 			//SET MEMBERS & ASSIGNMENTS ITEMS
 			/**
 			 * this will execute an async method
 			 * when async finished, create+set listadapter
 			 */
 			ViewModel.GetUserCommand?.Execute(null);
+
 
 			//Create custom adapter and assign to listview
 			//_membersListView.ItemSelected += (sender, e) =>
@@ -147,9 +175,8 @@ namespace ComPact.Droid
 		void SetBindings()
 		{
 			bindings.Add(this.SetBinding(() => ViewModel.Assignment, () => Assignment, BindingMode.TwoWay));
-			bindings.Add(this.SetBinding(() => ViewModel.Description, () => _descriptionEditText.Text, BindingMode.TwoWay));
 			bindings.Add(this.SetBinding(() => ViewModel.User, () => User));
-
+			bindings.Add(this.SetBinding(() => ViewModel.Member, () => Member));
 			//binding = this.SetBinding(() => ViewModel.User, () => items[_membersListView.SelectedItemPosition], BindingMode.TwoWay);
 		}
 

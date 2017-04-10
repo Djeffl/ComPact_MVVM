@@ -1,15 +1,16 @@
 ﻿using System;
-namespace ComPact.Data
+namespace ComPact.WebServices.Data
 {
-	public static class APICalls
+	public static class ApiCalls
 	{
 		///URLS
 		public const string BaseUserPath = "/api/users";
 		public const string BaseAssignemntPath = "/api/assignments";
 		public const string BaseAuthPath = "/api/authentication";
-		public const string CreateAuthPath = "/api/auth/create";
+		public const string CreateUserPath = "/api/auth/register";
 		public const string LoginAuthPath = "/api/auth/login";
 		public const string LoginTokenPath = "/api/users/login";
-		public const string UpdateAssignmentPath = "/api/assignments/update";
+
+		public const string CreateAssignmentPath = "/api/assignments/create";
 	}
 }
