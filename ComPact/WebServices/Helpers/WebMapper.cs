@@ -135,7 +135,7 @@ namespace ComPact
 
 		}
 
-		public IEnumerable<WebMember> Map(IEnumerable<Member> members)
+		public IEnumerable<WebMember> InvertMap(IEnumerable<Member> members)
 		{
 			var returnMembers = new List<WebMember>();
 			foreach (Member member in members)
@@ -143,6 +143,55 @@ namespace ComPact
 				returnMembers.Add(InvertMap(member));
 			}
 			return returnMembers;
+		}
+
+		public Payment Map(WebPayment payment)
+		{
+			var returnPayment = new Payment
+			{
+				Id = payment.Id,
+				Name = payment.Name,
+				Description = payment.Description,
+				Amount = payment.Amount,
+				AdminId = payment.AdminId,
+				MemberId = payment.MemberId
+			};
+			return returnPayment;
+		}
+
+		public WebPayment InvertMap(Payment payment)
+		{
+			var returnPayment = new WebPayment
+			{
+				Id = payment.Id,
+				Name = payment.Name,
+				Description = payment.Description,
+				Amount = payment.Amount,
+				AdminId = payment.AdminId,
+				MemberId = payment.MemberId
+			};
+			return returnPayment;
+		}
+
+		public IEnumerable<Payment> Map(IEnumerable<WebPayment> payments)
+		{
+
+			var returnPayments = new List<Payment>();
+			foreach (WebPayment payment in payments)
+			{
+				returnPayments.Add(Map(payment));
+			}
+			return returnPayments;
+		}
+
+		public IEnumerable<WebPayment> InvertMap(IEnumerable<Payment> payments)
+		{
+			var returnPayments = new List<WebPayment>();
+			foreach (Payment payment in payments)
+			{
+				returnPayments.Add(InvertMap(payment));
+			}
+			return returnPayments;
 		}
 	}
 }

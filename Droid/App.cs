@@ -11,8 +11,8 @@ using ComPact.Droid.Helpers;
 using ComPact.Droid.Activities;
 using Onboarding.Droid.Helpers;
 using ComPact.Droid.Members;
-using ComPact.Droid.Tasks;
 using ComPact.Droid.Assignments;
+using ComPact.Droid.Tasks;
 
 namespace ComPact.Droid
 {

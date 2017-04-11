@@ -202,6 +202,7 @@
     <Compile Include="Views\Controls\CustomRecyclerViewAdapter.cs" />
     <Compile Include="Views\Controls\Models\Icon.cs" />
     <Compile Include="Views\Controls\Models\Icono.cs" />
+    <Compile Include="Views\Activities\Assignments\FinishedAssignmentsActivity.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
@@ -398,6 +399,7 @@
     <AndroidResource Include="Resources\drawable-xxxhdpi\ic_store_white_24dp.png" />
     <AndroidResource Include="Resources\drawable-xxxhdpi\ic_time_to_leave_white_24dp.png" />
     <AndroidResource Include="Resources\drawable\Recyclerview_item.xml" />
+    <AndroidResource Include="Resources\layout\ActivityAddPayment.axml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\" />

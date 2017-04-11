@@ -109,17 +109,17 @@ namespace ComPact
 		async void Login()
 		{
 			bool isSuccessful = await _authenticationService.Login(Email, Password);
-			//ClearFields();
+			ClearFields();
 			if (isSuccessful)
 			{
 				_navigationService.NavigateTo(LocatorViewModel.HomePageKey);
 			}
 		}
-		//void ClearFields()
-		//{
-		//	Email = "";
-		//	Password = "";
-		//}
+		void ClearFields()
+		{
+			Email = "";
+			Password = "";
+		}
 		#endregion
 	}
 }

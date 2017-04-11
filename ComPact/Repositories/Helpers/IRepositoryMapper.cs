@@ -20,5 +20,11 @@ namespace ComPact
 		Assignment Map(RepoAssignment assignment);
 		IEnumerable<Assignment> Map(IEnumerable<RepoAssignment> assignments);
 		IEnumerable<RepoAssignment> InvertMap(IEnumerable<Assignment> assignments);
+
+		Payment Map(RepoPayment payment);
+		RepoPayment InvertMap(Payment payment);
+		IEnumerable<Payment> Map(IEnumerable<RepoPayment> payments);
+		IEnumerable<RepoPayment> InvertMap(IEnumerable<Payment> payments);
+
 	}
 }

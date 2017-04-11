@@ -7,12 +7,16 @@ using System.Threading;
 using System.Threading.Tasks;
 using Android.App;
 using Android.Content;
+using Android.Graphics;
 using Android.OS;
 using Android.Runtime;
 using Android.Support.Design.Widget;
+using Android.Support.V4.Content;
+using Android.Support.V7.Widget;
 using Android.Views;
 using Android.Widget;
 using ComPact.Assignments;
+using ComPact.Droid.Controls;
 using ComPact.Droid.Helpers;
 using ComPact.Droid.Models;
 using ComPact.Members;
@@ -36,7 +40,6 @@ namespace ComPact.Droid.Assignments
 					.GetInstance<INavigationService>();
 			}
 		}
-
 		Assignment _assignment;
 		public Assignment Assignment
 		{
@@ -49,9 +52,15 @@ namespace ComPact.Droid.Assignments
 				_assignment = value;
 			}
 		}
+
+
 		//Local variables
 		List<CheckBox> checkboxes = new List<CheckBox>();
-
+		Color _colorFilter;
+		Color _resetColorFilter;
+		IconList iconList;
+		List<RadioButton> radioButtons;
+		string iconName;
 		ObservableCollection<Member> _members;
 		public ObservableCollection<Member> Members
 		{
@@ -65,8 +74,8 @@ namespace ComPact.Droid.Assignments
 				SetMemberListView();
 			}
 		}
-		ObservableCollection<string> _assignments;
-		public ObservableCollection<string> Assignments
+		Assignment _assignments;
+		public Assignment Assignments
 		{
 			get
 			{
@@ -77,6 +86,9 @@ namespace ComPact.Droid.Assignments
 				_assignments = value;
 			}
 		}
+		public string IconName { get; set; }
+
+
 		//Keep track of bindings to avoid premature garbage collection
 		readonly List<Binding> bindings = new List<Binding>();
 		//Elements
@@ -84,9 +96,13 @@ namespace ComPact.Droid.Assignments
 		TextView _titleTextView;
 		ImageView _optionsImageView;
 
+		EditText _itemNameEditText;
 		EditText _descriptionEditText;
 		ListView _membersListView;
 		FloatingActionButton _addTaskFloatingActionButton;
+		RecyclerView _recyclerView;
+		//Bind Viewmodel to activity
+
 		//Bind Viewmodel to activity
 		EditAssignmentViewModel ViewModel
 		{
@@ -103,11 +119,17 @@ namespace ComPact.Droid.Assignments
 			SetContentView(Resource.Layout.ActivityAddAssignment);
 
 			Assignment = Nav.GetAndRemoveParameter<Assignment>(Intent);
-
+			ViewModel.GetMembersCommand.Execute(null);
+			//_membersListView.ItemSelected += (sender, e) =>
+			//{
+			//	Console.WriteLine("clicked");
+			//	var checkbox = e.View.FindViewById<CheckBox>(Resource.Id.listViewTaskDoneCheckBox);
+			//};
+			SetIconRecyclerView();
 			//Init elements
 			Init();
 			_optionsImageView.Visibility = ViewStates.Gone;
-			_titleTextView.Text = "New Task";
+			_titleTextView.Text = "Edit Task";
 			//bindings
 			SetBindings();
 
@@ -123,11 +145,16 @@ namespace ComPact.Droid.Assignments
 			_optionsImageView = FindViewById<ImageView>(Resource.Id.customToolbarOptionsImageView);
 			_titleTextView = FindViewById<TextView>(Resource.Id.customToolbarTitleTextView);
 
+			_itemNameEditText = FindViewById<EditText>(Resource.Id.activityAddAssignmentItemNameEditText);
 			_descriptionEditText = FindViewById<EditText>(Resource.Id.activityAddAssignmentDescriptionEditText);
 			_membersListView = FindViewById<ListView>(Resource.Id.activityAddTaskListView);
 			_addTaskFloatingActionButton = FindViewById<FloatingActionButton>(Resource.Id.activityTasksAddTaskFloatingActionButton);
 
-			ViewModel.Description = Assignment.Description;
+
+			_colorFilter = new Color(ContextCompat.GetColor(this, Resource.Color.yellow_accent_color));
+			_resetColorFilter = new Color(ContextCompat.GetColor(this, Resource.Color.accent_color));
+
+			//ViewModel.Description = Assignment.Description;
 			//_membersListView.
 			//FILL UP 
 			//SET MEMBERS & ASSIGNMENTS ITEMS
@@ -136,8 +163,9 @@ namespace ComPact.Droid.Assignments
 			 * when async finished, create+set listadapter
 			 */
 			ViewModel.GetMembersCommand?.Execute(null);
-			Assignments = ViewModel.AssignmentsOptions;
-
+			Assignments = ViewModel.Assignment;
+			_descriptionEditText.Text = Assignment.Description;
+			_itemNameEditText.Text = Assignment.ItemName;
 
 			_membersListView.ItemSelected += (sender, e) =>
 			{
@@ -169,8 +197,10 @@ namespace ComPact.Droid.Assignments
 		void SetBindings()
 		{
 			bindings.Add(this.SetBinding(() => ViewModel.Members, () => Members));
-			bindings.Add(this.SetBinding(() => ViewModel.AssignmentsOptions, () => Assignments));
-			bindings.Add(this.SetBinding(() => ViewModel.Description, () => _descriptionEditText.Text, BindingMode.TwoWay));
+
+			//bindings.Add(this.SetBinding(() => ViewModel.Members, () => Members));
+			//bindings.Add(this.SetBinding(() => ViewModel.AssignmentsOptions, () => Assignments));
+			//bindings.Add(this.SetBinding(() => ViewModel.Description, () => _descriptionEditText.Text, BindingMode.TwoWay));
 
 			//binding = this.SetBinding(() => ViewModel.User, () => items[_membersListView.SelectedItemPosition], BindingMode.TwoWay);
 		}
@@ -183,8 +213,15 @@ namespace ComPact.Droid.Assignments
 			//_addTaskFloatingActionButton.SetCommand("Click", ViewModel.CreateTaskCommand);
 			_addTaskFloatingActionButton.Click += (sender, e) =>
 			{
-				ViewModel.UpdateAssignmentCommand.Execute(null);
-				ClearFields();
+				var assignment = new Assignment()
+				{
+					//MemberId = Assignment.MemberId,
+					ItemName = _itemNameEditText.Text,
+					Description = _descriptionEditText.Text,
+					IconName = ViewModel.IconName,
+					Id = Assignment.Id
+				};
+				ViewModel.UpdateAssignmentCommand.Execute(assignment);
 			};
 			_backImageView.SetCommand("Click", ViewModel.BackRedirectCommand);
 			//_addTaskFloatingActionButton.SetCommand("Click", ViewModel.UpdateAssignmentCommand);
@@ -201,47 +238,61 @@ namespace ComPact.Droid.Assignments
 			_membersListView.Adapter = ViewModel.Members.GetAdapter(GetMemberAdapter); //adapterMember;//new AdapterMember(Application.Context, Members.ToList());
 
 		}
-		private View GetMemberAdapter(int position, Member members, View convertView)
+		void SetIconRecyclerView()
+		{
+			iconList = new IconList();
+			_recyclerView = FindViewById<RecyclerView>(Resource.Id.recyclerView);
+			RecyclerView.LayoutManager _layoutManager = new GridLayoutManager(this, 4);//new LinearLayoutManager(this)
+			_recyclerView.SetLayoutManager(_layoutManager);
+
+			CustomRecyclerViewAdapter iconAdapter = new CustomRecyclerViewAdapter(iconList);
+			iconAdapter.ItemClick += OnIconClick;
+			_recyclerView.SetAdapter(iconAdapter);
+		}
+
+		private View GetMemberAdapter(int position, Member member, View convertView)
 		{
 			// Not reusing views here
 			convertView = LayoutInflater.Inflate(Resource.Layout.ListViewPerson, null);
 
 			TextView nameTextView = convertView.FindViewById<TextView>(Resource.Id.listViewPersonNameTextView);
-			nameTextView.Text = members.FullName();
-
+			nameTextView.Text = member.FullName();
 			TextView emailTextView = convertView.FindViewById<TextView>(Resource.Id.listViewPersonEmailTextView);
-			emailTextView.Text = members.Email;
+			emailTextView.Text = member.Email;
+			var isSelectedRadioButton = convertView.FindViewById<RadioButton>(Resource.Id.listViewPersonRadioButton);
+			//radioButtons.Add(isSelectedRadioButton);
 
-			//CheckBox checkBox = convertView.FindViewById<CheckBox>(Resource.Id.listViewPersonAddCheckBox);
-			//checkboxes.Add(checkBox);
-			//TODO how to pass data onClick? can't conver to lambda
-			//checkBox.SetCommand("Click", ViewModel.MemberSelectedCommand, convertView);
-			//checkBox.Click += (sender, e) =>
+			//isSelectedRadioButton.SetCommand("Click", ViewModel.MemberSelectedCommand, member);
+			////TODO CLEAN ME UP
+			//isSelectedRadioButton.Click += (sender, e) =>
 			//{
-			//	System.Diagnostics.Debug.WriteLine("clicked");
-			//	ViewModel.MemberSelectedCommand?.Execute(members);
+			//	foreach (RadioButton radioButton in radioButtons)
+			//	{
+			//		radioButton.Checked = false;
+			//	}
+			//	isSelectedRadioButton.Checked = true;
 			//};
-			//convertView.Click += (sender, e) =>
-			//{
-			//	System.Diagnostics.Debug.WriteLine("clicked");
-			//};
-
 			return convertView;
 		}
-		void ClearFields()
+		void OnIconClick(object sender, int position)
 		{
-			_descriptionEditText.Text = "";
-			foreach (CheckBox checkBox in checkboxes)
+			ViewModel.IconName = new IconList()[position].Name;
+			// Display a toast that briefly shows the enumeration of the selected photo:
+			int photoNum = position + 1;
+			//Toast.MakeText(this, "This is photo number " + photoNum, ToastLength.Short).Show();
+
+			for (int iconPlace = 0; iconPlace < iconList.Count; iconPlace++)
 			{
-				checkBox.Checked = false;
+				((ImageView)((LinearLayout)_recyclerView.GetChildAt(iconPlace)).GetChildAt(0)).SetColorFilter(_resetColorFilter);
 			}
+			((ImageView)((LinearLayout)_recyclerView.GetChildAt(position)).GetChildAt(0)).SetColorFilter(_colorFilter);
 		}
 	}
-		//void Test()
-		//{
-		//	ViewModel.ItemNameCommand?.Execute(
-		//		 ((TextView)_itemNameSpinner.SelectedView).Text
-		//	);
-		//}
-		#endregion
+	//void Test()
+	//{
+	//	ViewModel.ItemNameCommand?.Execute(
+	//		 ((TextView)_itemNameSpinner.SelectedView).Text
+	//	);
+	//}
+	#endregion
 }

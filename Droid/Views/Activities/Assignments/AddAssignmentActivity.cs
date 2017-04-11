@@ -176,13 +176,11 @@ namespace ComPact.Droid.Tasks
 			//_itemNameSpinner.SetCommand("OnItemSelectedListener", ViewModel.Test?.Execute(
 			//	(TextView)_itemNameSpinner.SelectedView).Text
 			//);
-
 		}
 
 		void SetMemberListView()
 		{
 			_membersListView.Adapter = ViewModel.Members.GetAdapter(GetMemberAdapter); //adapterMember;//new AdapterMember(Application.Context, Members.ToList());
-
 		}
 		void SetIconRecyclerView()
 		{
@@ -225,7 +223,7 @@ namespace ComPact.Droid.Tasks
 			ViewModel.IconName = new IconList()[position].Name;
 			// Display a toast that briefly shows the enumeration of the selected photo:
 			int photoNum = position + 1;
-			Toast.MakeText(this, "This is photo number " + photoNum, ToastLength.Short).Show();
+			//Toast.MakeText(this, "This is photo number " + photoNum, ToastLength.Short).Show();
 
 			for (int iconPlace = 0; iconPlace < iconList.Count; iconPlace++)
 			{
@@ -246,7 +244,6 @@ namespace ComPact.Droid.Tasks
 			{
 				((ImageView)((LinearLayout)_recyclerView.GetChildAt(iconPlace)).GetChildAt(0)).SetColorFilter(_resetColorFilter);
 			}
-
 		}
 		//void Test()
 		//{

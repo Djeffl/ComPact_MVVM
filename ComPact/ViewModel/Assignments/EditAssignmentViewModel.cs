@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
@@ -65,17 +66,19 @@ namespace ComPact.Assignments
 				Set(ref _user, value);
 			}
 		}
-		private ObservableCollection<string> _assignmentsOptions = new ObservableCollection<string>();
-		public ObservableCollection<string> AssignmentsOptions
+		Assignment _assignment;
+		public Assignment Assignment
 		{
 			get
 			{
-				return new ObservableCollection<string>() { "Choose an option...", "Take out trash", "Groceries", "Feed pet", "Other" };
+				return _assignment;
 			}
-			//set
-			//{
-			//	Set(ref _assignmentsOptions, value);
-			//}
+			set
+			{
+				_assignment = value;
+				RaisePropertyChanged(nameof(Assignment));
+				//Set(ref _members, value);
+			}
 		}
 		private ObservableCollection<Member> _members = new ObservableCollection<Member>();
 		public ObservableCollection<Member> Members
@@ -93,13 +96,26 @@ namespace ComPact.Assignments
 				//Set(ref _members, value);
 			}
 		}
+		string _iconName;
+		public string IconName
+		{
+			get
+			{
+				return _iconName;
+			}
+			set
+			{
+				_iconName = value;
+				RaisePropertyChanged(nameof(IconName));
+			}
+		}
 		private string memberEmail;
 		private string item;
 
 
 		#endregion
 		#region Commands
-		public RelayCommand UpdateAssignmentCommand { get; set; }
+		public RelayCommand<Assignment> UpdateAssignmentCommand { get; set; }
 		public RelayCommand BackRedirectCommand { get; set; }
 		public RelayCommand<Member> MemberSelectedCommand { get; set; }
 		public RelayCommand<int> AssignmentsOptionsCommand { get; set; }
@@ -131,7 +147,10 @@ namespace ComPact.Assignments
 		}
 		void RegisterCommands()
 		{
-			UpdateAssignmentCommand = new RelayCommand(UpdateAssignment);
+			UpdateAssignmentCommand = new RelayCommand<Assignment>(async (assignment) =>
+			{
+				await UpdateAssignment(assignment);
+			});
 			BackRedirectCommand = new RelayCommand(_navigationService.GoBack);
 
 			MemberSelectedCommand = new RelayCommand<Member>(user =>
@@ -141,11 +160,11 @@ namespace ComPact.Assignments
 			});
 
 			//Returns position itemSelected
-			AssignmentsOptionsCommand = new RelayCommand<int>(pos =>
-			{
-				Debug.WriteLine(AssignmentsOptions[pos]);
-				item = AssignmentsOptions[pos];
-			});
+			//AssignmentsOptionsCommand = new RelayCommand<int>(pos =>
+			//{
+			//	Debug.WriteLine(AssignmentsOptions[pos]);
+			//	item = AssignmentsOptions[pos];
+			//});
 
 			GetMembersCommand = new RelayCommand(async () =>
 			{
@@ -159,37 +178,28 @@ namespace ComPact.Assignments
 		#endregion
 
 		#region Methods
-		void UpdateAssignment()
+		Task UpdateAssignment(Assignment assignment)
 		{
-			//TODO Create dataService that 
-			//_userDataService
 
-			User user = await GetUser();
-
-			var edAssignment = new Assignment
+			try
 			{
-				//LoginToken = user.LoginToken,
-				//MemberEmail = memberEmail,
-				ItemName = item,
-				Description = Description,
-
-			};
-
-			//try
-			//{
-				//await _assignmentDataService.Update(edAssignment);
-			//}
-			//catch (Exception ex)
-			//{
-			//}
-			_popUpService.Show("Task succesfully updated!", "long");
-			_navigationService.NavigateTo(LocatorViewModel.TasksPageKey);
+				string adminId = (await UserDataService?.GetUser()).Id;
+				assignment.AdminId = adminId;
+				await _assignmentDataService.Update(assignment);
+				_popUpService.Show("Task successfully updated!", "long");
+				//TODO NAVIGEER TERUG
+				_navigationService.NavigateTo(LocatorViewModel.HomePageKey);
+			}
+			catch (Exception ex)
+			{
+				Debug.WriteLine(ex);
+			}
 		}
 
 		public async Task GetMembers()
 		{
-			//IEnumerable<Member> list = await _memberDataService?.GetAll();
-			//Members = Convert<Member>(list);
+			IEnumerable<Member> list = await _memberDataService?.GetAll();
+			Members = Convert<Member>(list);
 		}
 
 		//If you're working with non-generic IEnumerable you can do it this way:

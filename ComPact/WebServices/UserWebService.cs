@@ -1,10 +1,10 @@
-﻿using System;
+using System;
 using System.Threading.Tasks;
 using ComPact.Models;
 
 namespace ComPact.WebServices
 {
-	public class UserWebService: BaseWebservice<WebUser>, IUserWebService
+	public class UserWebService: BaseWebService<WebUser>, IUserWebService
 	{
 		public async Task<WebUser> Login(string urlExtend, WebUser user)
 		{

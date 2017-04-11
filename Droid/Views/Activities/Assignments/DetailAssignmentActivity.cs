@@ -43,6 +43,7 @@ namespace ComPact.Droid
 			}
 			set
 			{
+				bindings.Add(this.SetBinding(() => ViewModel.Member, () => Member));
 				_user = value;
 				bindings.Add(this.SetBinding(() => ViewModel.User.Admin, () => _editTaskFloatingActionButton.Visibility).ConvertSourceToTarget((arg) =>
 				{
@@ -192,7 +193,7 @@ namespace ComPact.Droid
 		{
 			bindings.Add(this.SetBinding(() => ViewModel.Assignment, () => Assignment, BindingMode.TwoWay));
 			bindings.Add(this.SetBinding(() => ViewModel.User, () => User));
-			bindings.Add(this.SetBinding(() => ViewModel.Member, () => Member));
+
 			//binding = this.SetBinding(() => ViewModel.User, () => items[_membersListView.SelectedItemPosition], BindingMode.TwoWay);
 		}
 

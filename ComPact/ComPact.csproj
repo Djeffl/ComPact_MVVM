@@ -35,7 +35,7 @@
     <Compile Include="Repositories\MemberRepository.cs" />
     <Compile Include="Models\BaseModel.cs" />
     <Compile Include="Models\Member.cs" />
-    <Compile Include="WebServices\BaseWebservice.cs" />
+    <Compile Include="WebServices\BaseWebService.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\LocatorViewModel.cs" />
     <Compile Include="ViewModel\RegisterViewModel.cs" />
@@ -57,7 +57,7 @@
     <Compile Include="ViewModel\LoginQrViewModel.cs" />
     <Compile Include="Helpers\IDatabase.cs" />
     <Compile Include="Repositories\IBaseRepository.cs" />
-    <Compile Include="WebServices\IBaseWebservice.cs" />
+    <Compile Include="WebServices\IBaseWebService.cs" />
     <Compile Include="WebServices\IRefitService.cs" />
     <Compile Include="ViewModel\SplashViewModel.cs" />
     <Compile Include="ViewModel\Members\MembersViewModel.cs" />
@@ -102,6 +102,17 @@
     <Compile Include="Repositories\Models\RepoAssignment.cs" />
     <Compile Include="Services\IBaseDataService.cs" />
     <Compile Include="Services\BaseDataService.cs" />
+    <Compile Include="ViewModel\Assignments\FinishedAssignmentsViewModel.cs" />
+    <Compile Include="Models\Payment.cs" />
+    <Compile Include="WebServices\Models\WebPayment.cs" />
+    <Compile Include="Repositories\Models\RepoPayment.cs" />
+    <Compile Include="WebServices\paymentWebService.cs" />
+    <Compile Include="Repositories\IPaymentRepository.cs" />
+    <Compile Include="Repositories\PaymentRepository.cs" />
+    <Compile Include="Services\IPaymentDataService.cs" />
+    <Compile Include="WebServices\IPaymentWebService.cs" />
+    <Compile Include="Services\PaymentDataService.cs" />
+    <Compile Include="ViewModel\Payments\AddPaymentViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Contracts\" />
@@ -124,6 +135,7 @@
     <Folder Include="WebServices\Helpers\" />
     <Folder Include="Repositories\Models\" />
     <Folder Include="Repositories\Helpers\" />
+    <Folder Include="ViewModel\Payments\" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json">

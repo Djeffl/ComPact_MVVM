@@ -18,6 +18,6 @@ namespace ComPact.WebServices
 		Task<IEnumerable<Assignment>> GetAssignments(string userId, bool isAdmin);
 		Task<bool> DeleteAssignment(string assignmentId);
 
-
+		Task<Payment> AddPayment(Payment payment);
 	}
 }

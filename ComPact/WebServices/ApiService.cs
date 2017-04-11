@@ -13,6 +13,7 @@ namespace ComPact.WebServices
 		IAssignmentWebService _assignmentWebService;
 		IUserWebService _userWebService;
 		IMemberWebService _memberWebService;
+		IPaymentWebService _paymentWebService;
 
 		public ApiService(IWebMapper mapper, IAssignmentWebService assignmentWebService, IUserWebService userWebService, IMemberWebService memberWebService)
 		{
@@ -107,6 +108,13 @@ namespace ComPact.WebServices
 			{
 			}
 			return isSuccessful;
+		}
+
+		public async Task<Payment> AddPayment(Payment payment)
+		{
+			WebPayment data = _mapper.InvertMap(payment);
+			WebPayment response = await _paymentWebService.Create(ApiCalls.BasePaymentPath, data);
+			return _mapper.Map(response);
 		}
 
 	}

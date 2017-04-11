@@ -19,6 +19,12 @@ namespace ComPact
 		Member Map(WebMember member);
 		WebMember InvertMap(Member member);
 		IEnumerable<Member> Map(IEnumerable<WebMember> members);
-		IEnumerable<WebMember> Map(IEnumerable<Member> members);
+		IEnumerable<WebMember> InvertMap(IEnumerable<Member> members);
+
+		Payment Map(WebPayment payment);
+		WebPayment InvertMap(Payment payment);
+		IEnumerable<Payment> Map(IEnumerable<WebPayment> payments);
+		IEnumerable<WebPayment> InvertMap(IEnumerable<Payment> payments);
+
 	}
 }

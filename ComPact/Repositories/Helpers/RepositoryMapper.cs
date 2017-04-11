@@ -137,5 +137,54 @@ namespace ComPact
 			}
 			return returnAssignments;
 		}
+
+		public Payment Map(RepoPayment payment)
+		{
+			var returnPayment = new Payment
+			{
+				Id = payment.Id,
+				Name = payment.Name,
+				Description = payment.Description,
+				Amount = payment.Amount,
+				AdminId = payment.AdminId,
+				MemberId = payment.MemberId
+			};
+			return returnPayment;
+		}
+
+		public RepoPayment InvertMap(Payment payment)
+		{
+			var returnPayment = new RepoPayment
+			{
+				Id = payment.Id,
+				Name = payment.Name,
+				Description = payment.Description,
+				Amount = payment.Amount,
+				AdminId = payment.AdminId,
+				MemberId = payment.MemberId
+			};
+			return returnPayment;
+		}
+
+		public IEnumerable<Payment> Map(IEnumerable<RepoPayment> payments)
+		{
+
+			var returnPayments = new List<Payment>();
+			foreach (RepoPayment payment in payments)
+			{
+				returnPayments.Add(Map(payment));
+			}
+			return returnPayments;
+		}
+
+		public IEnumerable<RepoPayment> InvertMap(IEnumerable<Payment> payments)
+		{
+			var returnPayments = new List<RepoPayment>();
+			foreach (Payment payment in payments)
+			{
+				returnPayments.Add(InvertMap(payment));
+			}
+			return returnPayments;
+		}
 	}
 }

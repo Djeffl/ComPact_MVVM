@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
@@ -9,7 +9,7 @@ using Newtonsoft.Json;
 
 namespace ComPact
 {
-	public class MemberWebService : BaseWebservice<WebMember>, IMemberWebService
+	public class MemberWebService : BaseWebService<WebMember>, IMemberWebService
 	{
 		public async Task<WebMember> Forgot(string urlExtend, WebMember obj)
 		{

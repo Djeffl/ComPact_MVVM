@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <include
+            android:id="@+id/toolbarHeader"
+            layout="@layout/ToolbarHeader" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="25dp"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="What" />
+            <EditText
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="10dp"
+                android:hint="eg. Schoollunch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/activityAddPaymentWhatEditText" />
+            <TextView
+                android:layout_marginTop="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Price" />
+            <LinearLayout
+                android:layout_marginLeft="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="€" />
+                <EditText
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:hint="20.5"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/activityAddPaymentPriceEditText" />
+            </LinearLayout>
+            <TextView
+                android:layout_marginTop="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Details" />
+            <EditText
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="10dp"
+                android:hint=""
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/activityAddPaymentDescriptionEditText" />
+        </LinearLayout>
+    </LinearLayout>
+    <android.support.design.widget.FloatingActionButton
+        android:tint="@color/yellow_accent_color"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_check_white_24dp"
+        android:layout_marginBottom="24dp"
+        android:layout_marginRight="24dp"
+        android:scaleType="center"
+        android:layout_gravity="end|bottom"
+        app:fabSize="normal"
+        app:elevation="4dp"
+        app:borderWidth="0dp"
+        android:id="@+id/activityAddPaymentFloatingActionButton" />
+</FrameLayout>

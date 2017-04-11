@@ -1,5 +1,6 @@
 ﻿using ComPact.Assignments;
 using ComPact.Members;
+using ComPact.Payments;
 using ComPact.Repositories;
 using ComPact.Services;
 using ComPact.ViewModel;
@@ -29,6 +30,7 @@ namespace ComPact
 		public const string EditAssignmentPageKey = "EditAssignmentPageKey";
 		public const string MembersPageKey = "MembersPageKey";
 		public const string AddMembersPageKey = "AddMembersPagekey";
+		public const string AddPaymentPageKey = "AddPaymentPageKey";
 
 		public LoginViewModel LoginViewModel
 		{
@@ -138,6 +140,13 @@ namespace ComPact
 				return ServiceLocator.Current.GetInstance<AddMembersViewModel>();
 			}
 		}
+		public AddPaymentViewModel AddPaymentViewModel
+		{
+			get
+			{
+				return ServiceLocator.Current.GetInstance<AddPaymentViewModel>();
+			}
+		}
 		/**
 		 * Register every ViewModel to the IOC container
 		 */
@@ -168,6 +177,8 @@ namespace ComPact
 
 			SimpleIoc.Default.Register<MembersViewModel>();
 			SimpleIoc.Default.Register<AddMembersViewModel>();
+
+			SimpleIoc.Default.Register<AddPaymentViewModel>();
 		}
 
 		void RegisterServices()
@@ -180,6 +191,7 @@ namespace ComPact
 			SimpleIoc.Default.Register<IAssignmentDataService, AssignmentDataService>();
 			SimpleIoc.Default.Register<IUserDataService, UserDataService>();
 			SimpleIoc.Default.Register<IAuthenticationService, AuthenticationService>();
+			SimpleIoc.Default.Register<IPaymentDataService, PaymentDataService>();
 
 		}
 		void RegisterWebServices()
@@ -187,12 +199,16 @@ namespace ComPact
 			SimpleIoc.Default.Register<IMemberWebService, MemberWebService>();
 			SimpleIoc.Default.Register<IAssignmentWebService, AssignmentWebService>();
 			SimpleIoc.Default.Register<IUserWebService, UserWebService>();
+			SimpleIoc.Default.Register<IPaymentWebService, paymentWebService>();
+
 		}
 		void RegisterRepositories()
 		{
 			SimpleIoc.Default.Register<IUserRepository, UserRepository>();
 			SimpleIoc.Default.Register<IMemberRepository, MemberRepository>();
 			SimpleIoc.Default.Register<IAssignmentRepository, AssignmentRepository>();
+			SimpleIoc.Default.Register<IPaymentRepository, PaymentRepository>();
+
 		}
 	}
 }

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,7 +14,7 @@ using ComPact.Models;
 
 namespace ComPact
 {
-	public class BaseWebservice<T>: IBaseWebservice<T>
+	public class BaseWebService<T>: IBaseWebService<T>
 	{
 		static HttpClient _instance;
 		static string _baseUri = "http://192.168.56.1:8080/"; //"http://10.99.9.93:8080/"; 
