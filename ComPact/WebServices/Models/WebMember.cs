@@ -20,8 +20,8 @@ namespace ComPact.Models
 		public string AdminId { get; set; }
 		[JsonProperty("qrCode")]
 		public byte[] QrCode { get; set; }
-		[JsonProperty("AssignmentIds")]
-		public IEnumerable<string> AssignmentsIds { get; set; }
+		[JsonProperty("profilePicture")]
+		public byte[] ProfilePicture { get; set; }
 
 		public string FullName()
 		{

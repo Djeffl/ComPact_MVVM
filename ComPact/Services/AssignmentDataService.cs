@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using ComPact.WebServices;
 using ComPact.Models;
+using System.Linq;
 
 namespace ComPact.Services
 {
@@ -55,6 +56,24 @@ namespace ComPact.Services
 		public async Task<Assignment> Get(string id)
 		{
 			return _mapper.Map(await _assignmentRepository.Get(id));
+		}
+
+		public async Task<bool> Delete(string id)
+		{
+			bool isSuccessful = await _apiService.DeleteAssignment(id);
+			if (isSuccessful)
+			{
+				IEnumerable<RepoAssignment> response = await _assignmentRepository.Where((x => x.Id == id));
+				await _assignmentRepository.Delete(response.FirstOrDefault());
+				isSuccessful = true;
+			}
+			return isSuccessful;
+
+		}
+
+		public async Task LogOut()
+		{
+			await _assignmentRepository.Delete(await _assignmentRepository?.All());
 		}
 	}
 }

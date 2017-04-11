@@ -1,4 +1,8 @@
-﻿using ComPact.Services;
+﻿using System;
+using System.Diagnostics;
+using System.Threading.Tasks;
+using ComPact.Models;
+using ComPact.Services;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Views;
 
@@ -44,15 +48,26 @@ namespace ComPact.ViewModel
 		#region Methods
 		async void Login()
 		{
-			//bool LoggedIn = await _authenticationService.AuthenticateToken();
-			//if (LoggedIn)
-			//{
-			//	HomeRedirect();
-			//}
-			//else
-			//{
-			//	LoginRedirect();
-			//}
+			bool LoggedIn = false;
+			User user = await GetUser();
+			if (user != null)
+			{
+				try
+				{
+					LoggedIn = await _authenticationService.Login(user.RefreshToken);
+				}
+				catch (Exception)
+				{
+				}
+			}
+			if (LoggedIn)
+			{
+				HomeRedirect();
+			}
+			else
+			{
+				LoginRedirect();
+			}
 		}
 		void HomeRedirect()
 		{

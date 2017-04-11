@@ -67,8 +67,9 @@ namespace ComPact
 				Admin = user.Admin,
 				AdminId = user.AdminId,
 				QrCode = user.QrCode,
-				AssignmentsIds = user.AssignmentsIds,
-				RefreshToken = user.RefreshToken
+				RefreshToken = user.RefreshToken,
+				ProfilePicture = user.ProfilePicture
+
 			};
 			return returnUser;
 		}
@@ -85,9 +86,9 @@ namespace ComPact
 				Admin = user.Admin,
 				AdminId = user.AdminId,
 				QrCode = user.QrCode,
-				AssignmentsIds = user.AssignmentsIds,
 				LoginToken = user.LoginToken,
-				RefreshToken = user.RefreshToken
+				RefreshToken = user.RefreshToken,
+				ProfilePicture = user.ProfilePicture
 			};
 			return returnUser;
 		}
@@ -103,7 +104,7 @@ namespace ComPact
 				Password = member.Password,
 				AdminId = member.AdminId,
 				QrCode = member.QrCode,
-				AssignmentsIds = member.AssignmentsIds
+				ProfilePicture = member.ProfilePicture
 			};
 			return returnMember;
 		}
@@ -118,8 +119,8 @@ namespace ComPact
 				Email = member.Email,
 				Password = member.Password,
 				QrCode = member.QrCode,
-				AssignmentsIds = member.AssignmentsIds,
-				AdminId = member.AdminId
+				AdminId = member.AdminId,
+				ProfilePicture = member.ProfilePicture
 			};
 			return returnMember;
 		}

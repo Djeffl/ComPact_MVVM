@@ -75,7 +75,6 @@ namespace ComPact.Droid.Assignments
 			set
 			{
 				_assignments = value;
-				SetAssignmentsItemsListView();
 			}
 		}
 		//Keep track of bindings to avoid premature garbage collection
@@ -85,7 +84,6 @@ namespace ComPact.Droid.Assignments
 		TextView _titleTextView;
 		ImageView _optionsImageView;
 
-		Spinner _itemNameSpinner;
 		EditText _descriptionEditText;
 		ListView _membersListView;
 		FloatingActionButton _addTaskFloatingActionButton;
@@ -129,7 +127,6 @@ namespace ComPact.Droid.Assignments
 			_membersListView = FindViewById<ListView>(Resource.Id.activityAddTaskListView);
 			_addTaskFloatingActionButton = FindViewById<FloatingActionButton>(Resource.Id.activityTasksAddTaskFloatingActionButton);
 
-			_itemNameSpinner.SetSelection(2);
 			ViewModel.Description = Assignment.Description;
 			//_membersListView.
 			//FILL UP 
@@ -141,11 +138,7 @@ namespace ComPact.Droid.Assignments
 			ViewModel.GetMembersCommand?.Execute(null);
 			Assignments = ViewModel.AssignmentsOptions;
 
-			_itemNameSpinner.ItemSelected += (sender, e) =>
-			{
-				//Send position back to ViewModel
-				ViewModel.AssignmentsOptionsCommand?.Execute(e.Position);
-			};
+
 			_membersListView.ItemSelected += (sender, e) =>
 			{
 				Console.WriteLine("clicked");
@@ -205,14 +198,8 @@ namespace ComPact.Droid.Assignments
 		{
 			//AdapterMember adapterMember = new AdapterMember(this, Members.ToList());
 			//adapterMember.GetView(0, LayoutInflater.From(Application.Context).Inflate(Resource.Layout.ListViewPerson, null, false), );
-
 			_membersListView.Adapter = ViewModel.Members.GetAdapter(GetMemberAdapter); //adapterMember;//new AdapterMember(Application.Context, Members.ToList());
 
-		}
-		void SetAssignmentsItemsListView()
-		{
-			//AdapterTaskItemNameSpinner atns = new AdapterTaskItemNameSpinner(Application.Context, Assignments.ToList());
-			_itemNameSpinner.Adapter = new AdapterTaskItemNameSpinner(Application.Context, Assignments.ToList());
 		}
 		private View GetMemberAdapter(int position, Member members, View convertView)
 		{
@@ -243,7 +230,6 @@ namespace ComPact.Droid.Assignments
 		}
 		void ClearFields()
 		{
-			_itemNameSpinner.SetSelection(0);
 			_descriptionEditText.Text = "";
 			foreach (CheckBox checkBox in checkboxes)
 			{

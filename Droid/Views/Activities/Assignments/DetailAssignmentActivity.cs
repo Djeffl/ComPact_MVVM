@@ -48,6 +48,14 @@ namespace ComPact.Droid
 				{
 					return arg ? ViewStates.Visible : ViewStates.Gone;
 				}));
+				bindings.Add(this.SetBinding(() => ViewModel.User.Admin, () => _memberLinearLayout.Visibility).ConvertSourceToTarget((arg) =>
+				{
+					return arg ? ViewStates.Visible : ViewStates.Gone;
+				}));
+				bindings.Add(this.SetBinding(() => ViewModel.User.Admin, () => _memberTextView.Visibility).ConvertSourceToTarget((arg) =>
+				{
+					return arg ? ViewStates.Visible : ViewStates.Gone;
+				}));
 			}
 		}
 		Member _member;
@@ -85,7 +93,12 @@ namespace ComPact.Droid
 
 		ImageView _iconImageView;
 		TextView _itemNameTextView;
+		ImageView _deleteImageView;
 		TextView _descriptionTextView;
+
+
+		TextView _memberTextView;
+		LinearLayout _memberLinearLayout;
 		TextView _PersonNameTextView;
 		TextView _PersonEmailTextView;
 		FloatingActionButton _editTaskFloatingActionButton;
@@ -106,6 +119,7 @@ namespace ComPact.Droid
 
 
 			Assignment = Nav.GetAndRemoveParameter<Assignment>(Intent);
+			ViewModel.GetUserCommand.Execute(null);
 			ViewModel.GetMemberCommand.Execute(Assignment.MemberId);
 			ViewModel.Assignment = Assignment;
 
@@ -130,15 +144,17 @@ namespace ComPact.Droid
 			_iconImageView = FindViewById<ImageView>(Resource.Id.activityDetailAssignmentIconImageView);
 			_itemNameTextView = FindViewById<TextView>(Resource.Id.activityDetailAssignmentItemNameTitleTextView);
 			_descriptionTextView = FindViewById<TextView>(Resource.Id.activityDetailAssignmentDescriptionTextView);
+
+			_memberTextView = FindViewById<TextView>(Resource.Id.activityDetailAssignmentMemberTextView);
+			_memberLinearLayout = FindViewById<LinearLayout>(Resource.Id.activityDetailAssignmentMemberLinearLayout);
 			_PersonNameTextView = FindViewById<TextView>(Resource.Id.activityDetailAssignmentPersonNameTextView);
 			_PersonEmailTextView = FindViewById<TextView>(Resource.Id.activityDetailAssignmentPersonEmailTextView);
 			_editTaskFloatingActionButton = FindViewById<FloatingActionButton>(Resource.Id.activityDetailAssignmentEditTaskFloatingActionButton);
-
+			_deleteImageView = FindViewById<ImageView>(Resource.Id.activityDetailAssignmentDeleteImageView);
 
 			//FILL UP 
-
 			_itemNameTextView.Text = Assignment.ItemName;
-			_descriptionTextView.Text = Assignment.Description;
+			_descriptionTextView.Text = Assignment.Description != null ? Assignment.Description : "No description was given.";
 			_iconImageView.SetImageResource(_iconList.FindByName(Assignment.IconName).IconId);
 
 
@@ -187,6 +203,7 @@ namespace ComPact.Droid
 		{
 			_editTaskFloatingActionButton.SetCommand("Click", ViewModel.EditRedirectCommand);
 			_backImageView.SetCommand("Click", ViewModel.BackRedirectCommand);
+			_deleteImageView.SetCommand("Click", ViewModel?.DeleteAssignmentCommand);
 			//_membersListView.SetCommand("Click", ViewModel.CreateUserCommand, binding);
 			//_itemNameSpinner.SetCommand("OnItemSelectedListener", ViewModel.Test?.Execute(
 			//	(TextView)_itemNameSpinner.SelectedView).Text

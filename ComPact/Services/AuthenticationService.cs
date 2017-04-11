@@ -158,8 +158,8 @@ namespace ComPact.Services
 			{
 				await _userDataService.LogOut();
 				await _memberDataService.LogOut();
-				//_memberDataService.LogOut();
-				//_assignmentDataService.LogOut();
+				await _assignmentDataService.LogOut();
+
 				isSuccessful = true;
 			}
 			catch (Exception)
@@ -169,20 +169,44 @@ namespace ComPact.Services
 			return isSuccessful;
 		}
 
-		//public string LoginToken
-		//{
-		//	get
-		//	{
-		//		if (HasToken())
-		//		{
-		//			return Settings.LoginToken;
-		//		}
-		//		else
-		//		{
-		//			return null;
-		//		}
-		//	}
-		//}
+		public async Task<bool> Login(string token)
+		{
+			bool isSuccesful = false;
+
+			//User user = await _userDataService.GetUser();
+
+			if (token == null)
+			{
+			}
+			else
+			{
+				try
+				{
+					User data = new User
+					{
+						RefreshToken = token
+					};
+					var responseUser = await _userDataService.Login(data);
+					//IEnumerable<Assignment> assignments;
+					//if (responseUser.Admin == true)
+					//{
+					//	IEnumerable<Member> members = await _memberDataService?.GetAll(responseUser.Id);
+					//	assignments = await _assignmentDataService?.GetAll(responseUser.Id, true);
+					//}
+					//else
+					//{
+					//	assignments = await _assignmentDataService?.GetAll(responseUser.Id, false);
+					//}
+					isSuccesful = true;
+				}
+				catch (Exception)
+				{
+					_dialogService.ShowMessage("Something went wrong please try again later");
+				}
+			}
+			return isSuccesful;
+		}
+
 
 		//bool HasToken()
 		//{

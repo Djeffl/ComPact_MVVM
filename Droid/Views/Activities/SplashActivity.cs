@@ -7,7 +7,7 @@ using GalaSoft.MvvmLight.Helpers;
 
 namespace ComPact.Droid.Activities
 {
-	[Activity(Label = "ComPact", Icon = "@mipmap/icon")]
+	[Activity(Label = "ComPact", Icon = "@mipmap/icon", MainLauncher=true)]
 	public class SplashActivity: BaseActivity
 	{
 		//Local variables

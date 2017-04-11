@@ -10,6 +10,7 @@ namespace ComPact.Services
 		//Task<bool> AuthenticateEmailAndPassword(string email, string password);
 		Task<bool> Register(string firstName, string lastName, string email, string password, bool admin);
 		Task<bool> Login(string email, string password);
+		Task<bool> Login(string token);
 		Task<bool> LogOut();
 	}
 }

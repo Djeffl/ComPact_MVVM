@@ -10,6 +10,7 @@ using ComPact.Droid.Models;
 using System.Collections.Generic;
 using ComPact.Models;
 using System.Collections.ObjectModel;
+using Android.Graphics;
 
 namespace ComPact.Droid.Fragments
 {
@@ -36,6 +37,7 @@ namespace ComPact.Droid.Fragments
 
 			}
 		}
+		private List<int> resources = new List<int>();
 
 		User _user;
 		public User User
@@ -130,6 +132,7 @@ namespace ComPact.Droid.Fragments
 		void SetBindings()
 		{
 			bindings.Add(this.SetBinding(() => ViewModel.Assignments, () => Assignments));
+			bindings.Add(this.SetBinding(() => ViewModel.User, () => User));
 			//this.SetBindings(() => ViewModel.Done, () => _tasksListView, BindingMode.TwoWay);
 			//this.SetBinding(() => ViewModel.ItemName, () => _itemNameEditText.Text, BindingMode.TwoWay);
 			//Binding itemPosition = this.SetBinding(() => ViewModel., () => _describtionEditText.Text, BindingMode.TwoWay);
@@ -158,9 +161,17 @@ namespace ComPact.Droid.Fragments
 			// Not reusing views here
 			LayoutInflater inflater = LayoutInflater.From(Application.Context);
 			convertView = inflater.Inflate(Resource.Layout.ListViewAssignment, null);
-
 			ImageView iconImageView = convertView.FindViewById<ImageView>(Resource.Id.listViewTaskImageImageView);
-			iconImageView.SetImageResource(_iconList.FindByName(assignment.IconName).IconId);
+			if (ViewModel.User.Admin)
+			{
+				iconImageView.SetImageResource(Resource.Drawable.Profile_placeholderImage);
+				//iconImageView.SetImageBitmap();
+			}
+			else
+			{
+				iconImageView.SetImageResource(_iconList.FindByName(assignment.IconName).IconId);
+			}
+			//iconImageView.SetImageResource(_iconList.FindByName(assignment.IconName).IconId);
 			TextView nameTextView = convertView.FindViewById<TextView>(Resource.Id.listViewTaskNameTextView);
 			nameTextView.Text = assignment.ItemName;
 
@@ -192,11 +203,11 @@ namespace ComPact.Droid.Fragments
 			};
 			//if (ViewModel.User.Admin)
 			//{
-				convertView.Click += (sender, e) =>
-				{
-					ViewModel.DetailAssignmentRedirectCommand.Execute(assignment);
-					System.Diagnostics.Debug.WriteLine("clicked");
-				};
+				//convertView.Click += (sender, e) =>
+				//{
+				//	ViewModel.DetailAssignmentRedirectCommand.Execute(assignment);
+				//	System.Diagnostics.Debug.WriteLine("clicked");
+				//};
 			//}
 			//else
 			//{
@@ -211,6 +222,15 @@ namespace ComPact.Droid.Fragments
 				}
 				else
 				{
+					if (ViewModel.User.Admin)
+					{
+						convertView.Click += (sender, e) =>
+						{
+							ViewModel.DetailAssignmentRedirectCommand.Execute(assignment);
+							System.Diagnostics.Debug.WriteLine("clicked");
+						};
+					}
+			
 					convertView.SetBackgroundColor(new Android.Graphics.Color(238, 238, 238));
 				}
 			//}

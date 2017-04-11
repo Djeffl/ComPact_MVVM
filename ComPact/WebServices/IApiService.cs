@@ -16,6 +16,7 @@ namespace ComPact.WebServices
 		Task<Member> GetMember(string adminId);
 		Task<IEnumerable<Member>> GetMembers(string adminId);
 		Task<IEnumerable<Assignment>> GetAssignments(string userId, bool isAdmin);
+		Task<bool> DeleteAssignment(string assignmentId);
 
 
 	}

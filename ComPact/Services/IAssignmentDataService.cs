@@ -12,5 +12,7 @@ namespace ComPact
 		Task<IEnumerable<Assignment>> GetAll(string userId, bool isAdmin);
 		Task<Assignment> Update(Assignment assignment);
 		Task<IEnumerable<Assignment>> GetAllUnfinished();
+		Task<bool> Delete(string id);
+		Task LogOut();
 	}
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using ComPact.Models;
 
 namespace ComPact.WebServices
 {
@@ -11,5 +12,6 @@ namespace ComPact.WebServices
 		Task<T> Read(string urlExtend);
 		Task<IEnumerable<T>> ReadAll(string urlExtend);
 		Task<T> Update(string urlExtend, T obj);
+		Task<CallResult> Delete(string url);
 	}
 }

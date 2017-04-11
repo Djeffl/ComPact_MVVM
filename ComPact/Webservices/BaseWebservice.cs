@@ -10,6 +10,7 @@ using System.Diagnostics;
 using Refit;
 using ComPact.Exceptions;
 using System.Net;
+using ComPact.Models;
 
 namespace ComPact
 {
@@ -117,6 +118,19 @@ namespace ComPact
 			var result = JsonConvert.DeserializeObject<T>(await response.Content.ReadAsStringAsync());
 
 			return result;
+		}
+		public virtual async Task<CallResult> Delete(string url)
+		{
+			HttpClient client = GetHttpClient();
+			HttpResponseMessage response = await client.DeleteAsync(url);
+
+			if (response.IsSuccessStatusCode)
+			{
+				var getResponseString = await response.Content.ReadAsStringAsync();
+				var result = await Task.Run(() => JsonConvert.DeserializeObject<CallResult>(getResponseString));
+				return result;
+			}
+			return default(CallResult);
 		}
 
 	}

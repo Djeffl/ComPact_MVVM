@@ -25,7 +25,7 @@ namespace ComPact
 		public string Password { get; set; }
 		public string AdminId { get; set; }
 		public byte[] QrCode { get; set; }
-		public IEnumerable<string> AssignmentsIds { get; set; }
+		public byte[] ProfilePicture { get; set; }
 		public string FullName()
 		{
 			return FirstName + " " + LastName;

@@ -94,5 +94,20 @@ namespace ComPact.WebServices
 			WebAssignment response = await _assignmentWebService.Update(url, data);
 			return _mapper.Map(response);
 		}
+
+		public async Task<bool> DeleteAssignment(string assignmentId)
+		{
+			bool isSuccessful = false;
+			string url = ApiCalls.BaseAssignemntPath + String.Format("/{0}", assignmentId);
+			try
+			{
+				isSuccessful = (await _assignmentWebService.Delete(url)).success;
+			}
+			catch (Exception)
+			{
+			}
+			return isSuccessful;
+		}
+
 	}
 }

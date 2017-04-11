@@ -20,7 +20,16 @@ namespace ComPact.ViewModel
 
 		public async Task<User> GetUser()
 		{
-			User user = await UserDataService.GetUser();
+			User user;
+			try
+			{
+
+				user = await UserDataService.GetUser();
+			}
+			catch (Exception)
+			{
+				user = null;
+			}
 			return user;
 		}
 		public static string FirstCharToUpper(string input)

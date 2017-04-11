@@ -14,6 +14,7 @@
         <LinearLayout
             android:layout_marginLeft="10dp"
             android:layout_marginTop="30dp"
+            android:layout_marginRight="10dp"
             android:paddingBottom="30dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -29,6 +30,16 @@
                 android:id="@+id/activityDetailAssignmentItemNameTitleTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+            <ImageView
+                android:id="@+id/activityDetailAssignmentDeleteImageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_delete_white_24dp"
+                android:tint="@color/accent_color" />
         </LinearLayout>
         <TextView
             android:layout_marginLeft="30dp"
@@ -38,7 +49,7 @@
             android:layout_height="wrap_content" />
         <TextView
             android:layout_marginLeft="50dp"
-            android:text="Details text..."
+            android:text="No description was given."
             android:id="@+id/activityDetailAssignmentDescriptionTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
@@ -48,12 +59,14 @@
             android:layout_height="2dp"
             android:background="@color/blue_main_color" />
         <TextView
+            android:id="@+id/activityDetailAssignmentMemberTextView"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="5dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Member" />
         <LinearLayout
+            android:id="@+id/activityDetailAssignmentMemberLinearLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center_vertical">

@@ -17,7 +17,8 @@ namespace ComPact
 				AdminId = user.AdminId,
 				Admin = user.Admin,
 				RefreshToken = user.RefreshToken,
-				LoginToken = user.LoginToken
+				LoginToken = user.LoginToken,
+				ProfilePicture = user.ProfilePicture
 			};
 			return returnUser;
 		}
@@ -33,7 +34,9 @@ namespace ComPact
 				AdminId = user.AdminId,
 				Admin = user.Admin,
 				RefreshToken = user.RefreshToken,
-				LoginToken = user.LoginToken
+				LoginToken = user.LoginToken,
+				ProfilePicture = user.ProfilePicture
+
 			};
 			return returnUser;
 		}
@@ -46,6 +49,7 @@ namespace ComPact
 				LastName = member.LastName,
 				Email = member.Email,
 				AdminId = member.AdminId,
+				ProfilePicture = member.ProfilePicture
 			};
 			return returnMember;
 		}
@@ -59,6 +63,7 @@ namespace ComPact
 				LastName = member.LastName,
 				Email = member.Email,
 				AdminId = member.AdminId,
+				ProfilePicture = member.ProfilePicture
 			};
 			return returnMember;
 		}

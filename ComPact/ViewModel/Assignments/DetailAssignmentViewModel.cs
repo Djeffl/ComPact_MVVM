@@ -100,7 +100,7 @@ namespace ComPact.Assignments
 		public RelayCommand EditRedirectCommand { get; set; }
 		public RelayCommand BackRedirectCommand { get; set; }
 		public RelayCommand<string> GetMemberCommand { get; set; }
-
+		public RelayCommand DeleteAssignmentCommand { get; set; }
 		public RelayCommand GetUserCommand { get; private set; }
 
 
@@ -136,11 +136,17 @@ namespace ComPact.Assignments
 
 			GetUserCommand = new RelayCommand(async () =>
 			{
-				await GetUser();
+				User = await GetUser();
 			});
 			GetMemberCommand = new RelayCommand<string>(async(id) =>
 			{
 				await GetMember(id);
+			});
+			DeleteAssignmentCommand = new RelayCommand(async () =>
+			{
+				await DeleteAssignment();
+				_popUpService.Show("Succesfully deleted", "long");
+				_navigationService.GoBack();
 			});
 		}
 
@@ -154,8 +160,14 @@ namespace ComPact.Assignments
 
 		async Task GetMember(string id)
 		{
-			Member = await _memberDataService?.Get(id);
-			Debug.WriteLine("ok");
+			if (User.Admin)
+			{
+				Member = await _memberDataService?.Get(id);
+			}
+		}
+		async Task<bool> DeleteAssignment()
+		{
+			return await _assignmentDataService.Delete(Assignment.Id);
 		}
 		#endregion
 	}

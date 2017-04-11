@@ -152,7 +152,7 @@ namespace ComPact.ViewModel
 			});
 			GetUserCommand = new RelayCommand(async () =>
 			{
-				await GetUser();
+				User = await GetUser();
 			});
 			AssignmentDoneCommand = new RelayCommand<Assignment>(async (assignment) =>
 			{
