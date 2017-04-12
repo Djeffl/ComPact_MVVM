@@ -15,12 +15,13 @@ namespace ComPact.WebServices
 		IMemberWebService _memberWebService;
 		IPaymentWebService _paymentWebService;
 
-		public ApiService(IWebMapper mapper, IAssignmentWebService assignmentWebService, IUserWebService userWebService, IMemberWebService memberWebService)
+		public ApiService(IWebMapper mapper, IAssignmentWebService assignmentWebService, IUserWebService userWebService, IMemberWebService memberWebService, IPaymentWebService paymentWebService)
 		{
 			_mapper = mapper;
 			_assignmentWebService = assignmentWebService;
 			_userWebService = userWebService;
 			_memberWebService = memberWebService;
+			_paymentWebService = paymentWebService;
 		}
 
 		public async Task<User> AddUser(User user)

@@ -51,9 +51,11 @@ namespace ComPact.Droid.Fragments
 			base.OnActivityCreated(savedInstanceState);
 			FindViews();
 
-			HandleEvents();
 
-			//Data & services
+			SetBindings();
+
+            HandleEvents();
+			SetCommands();
 		}
 
 		public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
