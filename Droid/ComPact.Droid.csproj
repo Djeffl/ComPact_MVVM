@@ -203,6 +203,7 @@
     <Compile Include="Views\Controls\Models\Icon.cs" />
     <Compile Include="Views\Controls\Models\Icono.cs" />
     <Compile Include="Views\Activities\Assignments\FinishedAssignmentsActivity.cs" />
+    <Compile Include="Views\Activities\Payments\AddPaymentActivity.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
@@ -233,19 +234,16 @@
     <AndroidResource Include="Resources\drawable-hdpi\ic_message_white_24dp.png" />
     <AndroidResource Include="Resources\drawable-hdpi\ic_payment_white_24dp.png" />
     <AndroidResource Include="Resources\drawable-ldpi\ic_arrow_left.png" />
-    <AndroidResource Include="Resources\drawable-mdpi\.DS_Store" />
     <AndroidResource Include="Resources\drawable-mdpi\ic_arrow_left.png" />
     <AndroidResource Include="Resources\drawable-mdpi\ic_assignment_white_24dp.png" />
     <AndroidResource Include="Resources\drawable-mdpi\ic_location_on_white_24dp.png" />
     <AndroidResource Include="Resources\drawable-mdpi\ic_message_white_24dp.png" />
     <AndroidResource Include="Resources\drawable-mdpi\ic_payment_white_24dp.png" />
-    <AndroidResource Include="Resources\drawable-xhdpi\.DS_Store" />
     <AndroidResource Include="Resources\drawable-xhdpi\ic_arrow_left.png" />
     <AndroidResource Include="Resources\drawable-xhdpi\ic_assignment_white_24dp.png" />
     <AndroidResource Include="Resources\drawable-xhdpi\ic_location_on_white_24dp.png" />
     <AndroidResource Include="Resources\drawable-xhdpi\ic_message_white_24dp.png" />
     <AndroidResource Include="Resources\drawable-xhdpi\ic_payment_white_24dp.png" />
-    <AndroidResource Include="Resources\drawable-xxhdpi\.DS_Store" />
     <AndroidResource Include="Resources\drawable-xxhdpi\ic_arrow_left.png" />
     <AndroidResource Include="Resources\drawable-xxhdpi\ic_assignment_white_24dp.png" />
     <AndroidResource Include="Resources\drawable-xxhdpi\ic_location_on_white_24dp.png" />
@@ -257,7 +255,6 @@
     <AndroidResource Include="Resources\drawable-xxxhdpi\ic_location_on_white_24dp.png" />
     <AndroidResource Include="Resources\drawable-xxxhdpi\ic_message_white_24dp.png" />
     <AndroidResource Include="Resources\drawable-xxxhdpi\ic_payment_white_24dp.png" />
-    <AndroidResource Include="Resources\drawable\.DS_Store" />
     <AndroidResource Include="Resources\drawable\PasswordRetrievalImage.png" />
     <AndroidResource Include="Resources\drawable\ic_arrow_left.png" />
     <AndroidResource Include="Resources\drawable\logo_compact.png" />
@@ -312,7 +309,6 @@
     <AndroidResource Include="Resources\drawable\silverware.png" />
     <AndroidResource Include="Resources\drawable\sleep.png" />
     <AndroidResource Include="Resources\drawable\tennis.png" />
-    <AndroidResource Include="Resources\drawable-hdpi\.DS_Store" />
     <AndroidResource Include="Resources\drawable-hdpi\ic_alarm_white_24dp.png" />
     <AndroidResource Include="Resources\drawable-hdpi\ic_camera_roll_white_24dp.png" />
     <AndroidResource Include="Resources\drawable-hdpi\ic_child_friendly_white_24dp.png" />
@@ -415,6 +411,7 @@
     <Folder Include="Views\Activities\Members\" />
     <Folder Include="Views\Activities\Assignments\" />
     <Folder Include="Views\Controls\Models\" />
+    <Folder Include="Views\Activities\Payments\" />
   </ItemGroup>
   <ItemGroup>
     <AndroidAsset Include="Assets\RobotoTTF\Roboto-Black.ttf" />

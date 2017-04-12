@@ -1,4 +1,3 @@
-﻿using System;
 using Newtonsoft.Json;
 
 namespace ComPact
@@ -11,8 +10,8 @@ namespace ComPact
 		public string Name { get; set; }
 		[JsonProperty("description")]
 		public string Description { get; set; }
-		[JsonProperty("amount")]
-		public double Amount { get; set; }
+		[JsonProperty("price")]
+		public double Price { get; set; }
 		[JsonProperty("adminId")]
 		public string AdminId { get; set; }
 		[JsonProperty("memberId")]

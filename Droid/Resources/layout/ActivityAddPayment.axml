@@ -12,6 +12,7 @@
             android:id="@+id/toolbarHeader"
             layout="@layout/ToolbarHeader" />
         <LinearLayout
+            android:layout_marginTop="30dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginLeft="25dp"
@@ -34,7 +35,7 @@
                 android:text="Price" />
             <LinearLayout
                 android:layout_marginLeft="5dp"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp">
                 <TextView
@@ -42,10 +43,11 @@
                     android:layout_height="wrap_content"
                     android:text="€" />
                 <EditText
+                    android:inputType="numberDecimal"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:hint="20.5"
-                    android:layout_width="match_parent"
+                    android:layout_width="60dp"
                     android:layout_height="wrap_content"
                     android:id="@+id/activityAddPaymentPriceEditText" />
             </LinearLayout>
@@ -57,10 +59,10 @@
             <EditText
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="10dp"
-                android:hint=""
-                android:layout_width="wrap_content"
+                android:hint="content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/activityAddPaymentDescriptionEditText" />
+                android:id="@+id/activityAddPaymentDetailsEditText" />
         </LinearLayout>
     </LinearLayout>
     <android.support.design.widget.FloatingActionButton

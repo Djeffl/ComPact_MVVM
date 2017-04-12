@@ -152,7 +152,7 @@ namespace ComPact
 				Id = payment.Id,
 				Name = payment.Name,
 				Description = payment.Description,
-				Amount = payment.Amount,
+				Price = payment.Price,
 				AdminId = payment.AdminId,
 				MemberId = payment.MemberId
 			};
@@ -166,7 +166,7 @@ namespace ComPact
 				Id = payment.Id,
 				Name = payment.Name,
 				Description = payment.Description,
-				Amount = payment.Amount,
+				Price = payment.Price,
 				AdminId = payment.AdminId,
 				MemberId = payment.MemberId
 			};

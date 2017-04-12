@@ -117,5 +117,19 @@ namespace ComPact.WebServices
 			return _mapper.Map(response);
 		}
 
+		public async Task<IEnumerable<Payment>> GetPayments(string userId, bool isAdmin)
+		{
+			string url;
+			if (isAdmin)
+			{
+				url = ApiCalls.BasePaymentPath + String.Format("?adminId={0}", userId);
+			}
+			else
+			{
+				url = ApiCalls.BasePaymentPath + String.Format("?memberId={0}", userId);
+			}
+			IEnumerable<WebPayment> response = await _paymentWebService.ReadAll(url);
+			return _mapper.Map(response);
+		}
 	}
 }

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using ComPact.Models;
 
@@ -145,7 +145,7 @@ namespace ComPact
 				Id = payment.Id,
 				Name = payment.Name,
 				Description = payment.Description,
-				Amount = payment.Amount,
+				Price = payment.Amount,
 				AdminId = payment.AdminId,
 				MemberId = payment.MemberId
 			};
@@ -159,7 +159,7 @@ namespace ComPact
 				Id = payment.Id,
 				Name = payment.Name,
 				Description = payment.Description,
-				Amount = payment.Amount,
+				Amount = payment.Price,
 				AdminId = payment.AdminId,
 				MemberId = payment.MemberId
 			};

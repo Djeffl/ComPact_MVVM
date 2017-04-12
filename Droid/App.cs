@@ -54,7 +54,9 @@ namespace ComPact.Droid
 			nav.Configure(LocatorViewModel.LoginQrPageKey, typeof(LoginQrActivity));
 			nav.Configure(LocatorViewModel.RegisterPageKey, typeof(RegisterActivity));
 			nav.Configure(LocatorViewModel.PasswordRetrievalPageKey, typeof(PasswordRetrievalActivity));
+
 			nav.Configure(LocatorViewModel.HomePageKey, typeof(HomeActivity));
+
 			nav.Configure(LocatorViewModel.HelpPageKey, typeof(HelpActivity));
 			nav.Configure(LocatorViewModel.SettingsPageKey, typeof(SettingsActivity));
 
@@ -65,6 +67,9 @@ namespace ComPact.Droid
 
 			nav.Configure(LocatorViewModel.MembersPageKey, typeof(MembersActivity));
 			nav.Configure(LocatorViewModel.AddMembersPageKey, typeof(AddMembersActivity));
+
+			nav.Configure(LocatorViewModel.PaymentsPageKey, typeof(Fragments.PaymentFragments));
+			nav.Configure(LocatorViewModel.AddPaymentPageKey, typeof(AddPaymentActivity));
 		}
 
 		private static void RegisterIoc()

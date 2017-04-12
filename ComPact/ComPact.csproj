@@ -113,6 +113,7 @@
     <Compile Include="WebServices\IPaymentWebService.cs" />
     <Compile Include="Services\PaymentDataService.cs" />
     <Compile Include="ViewModel\Payments\AddPaymentViewModel.cs" />
+    <Compile Include="ViewModel\Payments\PaymentsViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Contracts\" />

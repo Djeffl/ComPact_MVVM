@@ -16,7 +16,7 @@ namespace ComPact.Droid.Fragments
 		{
 			//Delcare needed services here
 		}
-		protected void HandleEvents()
+		protected virtual void HandleEvents()
 		{
 
 		}

@@ -23,13 +23,17 @@ namespace ComPact
 		public const string PasswordRetrievalPageKey = "PasswordRetrievalPage";
 		public const string HomePageKey = "HomePagekey";
 		public const string HelpPageKey = "HelpPageKey";
-		public const string SettingsPageKey = "SettingsPageKey";
+		public const string SettingsPageKey = "SettingsPageKey"
+			;
 		public const string TasksPageKey = "TasksPageKey";
 		public const string AddTaskPageKey = "AddTaskPageKey";
 		public const string DetailAssignmentPageKey = "DetailAssignmentPageKey";
 		public const string EditAssignmentPageKey = "EditAssignmentPageKey";
+
 		public const string MembersPageKey = "MembersPageKey";
 		public const string AddMembersPageKey = "AddMembersPagekey";
+
+		public const string PaymentsPageKey = "PaymentsPageKey";
 		public const string AddPaymentPageKey = "AddPaymentPageKey";
 
 		public LoginViewModel LoginViewModel
@@ -140,6 +144,14 @@ namespace ComPact
 				return ServiceLocator.Current.GetInstance<AddMembersViewModel>();
 			}
 		}
+		#region Payments
+		public PaymentsViewModel PaymentsViewModel
+		{
+			get
+			{
+				return ServiceLocator.Current.GetInstance<PaymentsViewModel>();
+			}
+		}
 		public AddPaymentViewModel AddPaymentViewModel
 		{
 			get
@@ -147,6 +159,7 @@ namespace ComPact
 				return ServiceLocator.Current.GetInstance<AddPaymentViewModel>();
 			}
 		}
+		#endregion
 		/**
 		 * Register every ViewModel to the IOC container
 		 */
@@ -159,7 +172,7 @@ namespace ComPact
 			RegisterViewModels();
 		}
 
-		void RegisterViewModels() 
+		void RegisterViewModels()
 		{
 			SimpleIoc.Default.Register<SplashViewModel>();
 			SimpleIoc.Default.Register<LoginViewModel>();
@@ -178,6 +191,7 @@ namespace ComPact
 			SimpleIoc.Default.Register<MembersViewModel>();
 			SimpleIoc.Default.Register<AddMembersViewModel>();
 
+			SimpleIoc.Default.Register<PaymentsViewModel>();
 			SimpleIoc.Default.Register<AddPaymentViewModel>();
 		}
 

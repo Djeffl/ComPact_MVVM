@@ -32,19 +32,22 @@ namespace ComPact
 			throw new NotImplementedException();
 		}
 
-		public Task<IEnumerable<Payment>> GetAll()
+		public async Task<IEnumerable<Payment>> GetAll()
 		{
-			throw new NotImplementedException();
+			return _mapper.Map(await _paymentRepository?.All());
 		}
 
-		public Task<IEnumerable<Payment>> GetAll(string userId, bool isAdmin)
+		public async Task<IEnumerable<Payment>> GetAll(string userId, bool isAdmin)
 		{
-			throw new NotImplementedException();
+			IEnumerable<Payment> response = await _apiService.GetPayments(userId, isAdmin);
+			IEnumerable<RepoPayment> data = _mapper.InvertMap(response);
+			await _paymentRepository.Insert(data);
+			return await GetAll();
 		}
 
-		public Task LogOut()
+		public async Task LogOut()
 		{
-			throw new NotImplementedException();
+			await _paymentRepository.Delete(await _paymentRepository?.All());
 		}
 
 		public Task<Payment> Update(Payment payment)
