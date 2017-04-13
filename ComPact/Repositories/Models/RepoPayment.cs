@@ -12,5 +12,6 @@ namespace ComPact
 		public double Amount { get; set; }
 		public string AdminId { get; set; }
 		public string MemberId { get; set; }
+		public DateTime CreatedAt { get; set; }
 	}
 }

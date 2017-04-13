@@ -16,18 +16,20 @@ namespace ComPact.Services
 		readonly IUserDataService _userDataService;
 		readonly IMemberDataService _memberDataService;
 		readonly IAssignmentDataService _assignmentDataService;
+		readonly IPaymentDataService _paymentDataService;
 
 
 		/**
 		 * Constructor
 		 */
 
-		public AuthenticationService(IUserDataService userDataService, IDialogService dialogService, IMemberDataService memberDataService, IAssignmentDataService assignmentDataService)
+		public AuthenticationService(IUserDataService userDataService, IDialogService dialogService, IMemberDataService memberDataService, IAssignmentDataService assignmentDataService, IPaymentDataService paymentDataService)
 		{
 			_userDataService = userDataService;
 			_dialogService = dialogService;
 			_memberDataService = memberDataService;
 			_assignmentDataService = assignmentDataService;
+			_paymentDataService = paymentDataService;
 		}
 
 		//public async Task<bool> AuthenticateEmailAndPassword(string email, string password)
@@ -159,6 +161,7 @@ namespace ComPact.Services
 				await _userDataService.LogOut();
 				await _memberDataService.LogOut();
 				await _assignmentDataService.LogOut();
+				await _paymentDataService.LogOut();
 
 				isSuccessful = true;
 			}

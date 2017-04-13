@@ -10,6 +10,7 @@ namespace ComPact.Models
 		public double Price { get; set; }
 		public string AdminId { get; set; }
 		public string MemberId { get; set; }
+		public DateTime CreatedAt { get; set; }
 
 		public override string ToString()
 		{

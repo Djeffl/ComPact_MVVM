@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Globalization;
+using System.Threading;
 using Android.App;
 using Android.OS;
 using Android.Views;
@@ -32,9 +34,6 @@ namespace ComPact.Droid.Activities
 			//Set Lay out
 			SetContentView(Resource.Layout.ActivitySplash);
 
-			//View x;
-
-			//x.Post(() => { });
 
 			//Init elements
 			Init();

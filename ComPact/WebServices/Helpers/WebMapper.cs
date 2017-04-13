@@ -154,7 +154,9 @@ namespace ComPact
 				Description = payment.Description,
 				Price = payment.Price,
 				AdminId = payment.AdminId,
-				MemberId = payment.MemberId
+				MemberId = payment.MemberId,
+				CreatedAt = payment.CreatedAt
+
 			};
 			return returnPayment;
 		}
@@ -168,7 +170,9 @@ namespace ComPact
 				Description = payment.Description,
 				Price = payment.Price,
 				AdminId = payment.AdminId,
-				MemberId = payment.MemberId
+				MemberId = payment.MemberId,
+				CreatedAt = payment.CreatedAt
+
 			};
 			return returnPayment;
 		}

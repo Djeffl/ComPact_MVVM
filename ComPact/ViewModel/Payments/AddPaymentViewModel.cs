@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Threading.Tasks;
 using ComPact.Helpers;
 using ComPact.Models;
@@ -76,6 +77,8 @@ namespace ComPact.Payments
 		{
 			try
 			{
+				Payment.CreatedAt = DateTime.Now.ToLocalTime();
+
 				await _paymentDataService.Create(Payment);
 				_popUpService.Show("Payment succesfully created", "long");
 			}

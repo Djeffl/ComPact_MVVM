@@ -1,3 +1,4 @@
+using System;
 using Newtonsoft.Json;
 
 namespace ComPact
@@ -16,6 +17,9 @@ namespace ComPact
 		public string AdminId { get; set; }
 		[JsonProperty("memberId")]
 		public string MemberId { get; set; }
+		[JsonProperty("createdAt")]
+		public DateTime CreatedAt;
+
 
 	}
 }

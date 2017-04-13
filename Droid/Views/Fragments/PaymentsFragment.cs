@@ -56,14 +56,14 @@ namespace ComPact.Droid.Fragments
 
 			SetBindings();
 
-			HandleEvents();
 			SetCommands();
 		}
-		//public override void OnResume()
-		//{
-		//	base.OnResume();
+		public override void OnResume()
+		{
+			base.OnResume();
+            HandleEvents();
 
-		//}
+		}
 
 		public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 		{
@@ -101,7 +101,9 @@ namespace ComPact.Droid.Fragments
 			TextView priceTextView = convertView.FindViewById<TextView>(Resource.Id.paymentItemViewPriceTextView);
 
 			nameTextView.Text = payment.Name;
-			priceTextView.Text = payment.Price.ToString();
+			priceTextView.Text = String.Format(CultureInfo, "{0:C}",payment.Price);
+			timeTextView.Text = payment.CreatedAt.TimeOfDay.ToString("c").Remove(5);
+			dateTextView.Text = payment.CreatedAt.ToShortDateString();
 
 			return convertView;
 		}

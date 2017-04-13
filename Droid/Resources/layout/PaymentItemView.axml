@@ -1,43 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:padding="10dp"
+    android:orientation="horizontal"
     android:theme="@style/MyTheme">
-    <ImageView
-        android:id="@+id/paymentItemVIewImageView"
-        android:tint="@color/accent_color"
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:src="@drawable/sleep" />
     <LinearLayout
-        android:orientation="vertical"
+        android:orientation="horizontal"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp">
-        <TextView
-            android:id="@+id/paymentsItemViewTitleTextView"
-            android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_gravity="center_vertical"
+            android:id="@+id/paymentItemVIewImageView"
+            android:tint="@color/accent_color"
             android:layout_height="wrap_content"
-            android:text="14dp" />
+            android:layout_width="wrap_content"
+            android:src="@drawable/ic_assignment_white_24dp" />
         <LinearLayout
-            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:orientation="vertical"
             android:layout_width="wrap_content"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content">
             <TextView
-                android:id="@+id/paymentItemViewTimeTextView"
+                android:id="@+id/paymentsItemViewTitleTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="00:00" />
-            <TextView
-                android:id="@+id/paymentItemViewDateTextView"
-                android:layout_width="wrap_content"
+                android:textSize="16dp" />
+            <LinearLayout
                 android:layout_height="wrap_content"
-                android:text="27/08/1994" />
+                android:layout_width="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/paymentItemViewTimeTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="12dp"
+                    android:textColor="@color/accent_email_color"
+                    android:layout_marginLeft="2dp"
+                    android:text="00:00" />
+                <TextView
+                    android:id="@+id/paymentItemViewDateTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="12dp"
+                    android:textColor="@color/accent_email_color"
+                    android:layout_marginLeft="7dp"
+                    android:text="27/08/1994" />
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
     <TextView
         android:id="@+id/paymentItemViewPriceTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="20dp"
         android:text="€" />
-</LinearLayout>
+</RelativeLayout>
