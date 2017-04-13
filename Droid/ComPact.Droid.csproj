@@ -396,6 +396,7 @@
     <AndroidResource Include="Resources\drawable-xxxhdpi\ic_time_to_leave_white_24dp.png" />
     <AndroidResource Include="Resources\drawable\Recyclerview_item.xml" />
     <AndroidResource Include="Resources\layout\ActivityAddPayment.axml" />
+    <AndroidResource Include="Resources\layout\PaymentItemView.axml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\" />

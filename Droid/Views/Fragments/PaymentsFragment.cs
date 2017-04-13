@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using Android.App;
 using Android.OS;
 using Android.Support.Design.Widget;
 using Android.Views;
+using Android.Widget;
 using ComPact.Models;
 using ComPact.Payments;
 using GalaSoft.MvvmLight.Helpers;
@@ -30,8 +32,7 @@ namespace ComPact.Droid.Fragments
 			{
 				_payments = value;
 				//FILL list
-				//_adapter = new PaymentsAdapter(this);
-				//_recyclerView.SetAdapter(_adapter);
+				_paymentsListView.Adapter = ViewModel.Payments.GetAdapter(GetPaymentsAdapter);
 			}
 		}
 
@@ -39,6 +40,7 @@ namespace ComPact.Droid.Fragments
 		readonly List<Binding> bindings = new List<Binding>();
 		//Elements
 		FloatingActionButton _addPaymentFloatingActionButton;
+		ListView _paymentsListView;
 		public override void OnCreate(Bundle savedInstanceState)
 		{
 			base.OnCreate(savedInstanceState);
@@ -54,9 +56,14 @@ namespace ComPact.Droid.Fragments
 
 			SetBindings();
 
-            HandleEvents();
+			HandleEvents();
 			SetCommands();
 		}
+		//public override void OnResume()
+		//{
+		//	base.OnResume();
+
+		//}
 
 		public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 		{
@@ -67,7 +74,7 @@ namespace ComPact.Droid.Fragments
 		protected override void FindViews()
 		{
 			_addPaymentFloatingActionButton = View.FindViewById<FloatingActionButton>(Resource.Id.activityPaymentsAddPaymentFloatingActionButton);
-			//_recyclerView = View.FindViewById<RecyclerView>(Resource.Id.fragmentPaymentsRecyclerView);
+			_paymentsListView = View.FindViewById<ListView>(Resource.Id.fragmentPaymentsPaymentsListView);
 		}
 		protected override void HandleEvents()
 		{
@@ -81,6 +88,22 @@ namespace ComPact.Droid.Fragments
 		void SetCommands()
 		{
 			_addPaymentFloatingActionButton.SetCommand("Click", ViewModel.AddPaymentRedirectCommand);
+		}
+		View GetPaymentsAdapter(int position, Payment payment, View convertView)
+		{
+			// Not reusing views here
+			LayoutInflater inflater = LayoutInflater.From(Application.Context);
+			convertView = inflater.Inflate(Resource.Layout.PaymentItemView, null);
+			ImageView iconImageView = convertView.FindViewById<ImageView>(Resource.Id.paymentItemVIewImageView);
+			TextView nameTextView = convertView.FindViewById<TextView>(Resource.Id.paymentsItemViewTitleTextView);
+			TextView timeTextView = convertView.FindViewById<TextView>(Resource.Id.paymentItemViewTimeTextView);
+			TextView dateTextView = convertView.FindViewById<TextView>(Resource.Id.paymentItemViewDateTextView);
+			TextView priceTextView = convertView.FindViewById<TextView>(Resource.Id.paymentItemViewPriceTextView);
+
+			nameTextView.Text = payment.Name;
+			priceTextView.Text = payment.Price.ToString();
+
+			return convertView;
 		}
 	}
 }
