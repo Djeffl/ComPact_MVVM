@@ -20,5 +20,6 @@ namespace ComPact.WebServices
 
 		Task<Payment> AddPayment(Payment payment);
 		Task<IEnumerable<Payment>> GetPayments(string userId, bool isAdmin);
+		Task<bool> DeletePayment(string paymentId);
 	}
 }

@@ -6,9 +6,9 @@ using Android.Widget;
 
 namespace ComPact.Droid.Fragments
 {
-	public class BaseFragment: Fragment
+	public class BaseFragment : Fragment
 	{
-		public CultureInfo CultureInfo = CultureInfo.GetCultureInfo("nl-BE");
+		public CultureInfo CultureInfo {get;set;}
 
 		void ListView_ItemClick(object sender, AdapterView.ItemClickEventArgs e)
 		{
@@ -18,6 +18,7 @@ namespace ComPact.Droid.Fragments
 		public BaseFragment()
 		{
 			//Delcare needed services here
+			CultureInfo = CultureInfo.GetCultureInfo("nl-BE");
 		}
 		protected virtual void HandleEvents()
 		{

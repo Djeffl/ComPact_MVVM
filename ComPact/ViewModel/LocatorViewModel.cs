@@ -35,6 +35,8 @@ namespace ComPact
 
 		public const string PaymentsPageKey = "PaymentsPageKey";
 		public const string AddPaymentPageKey = "AddPaymentPageKey";
+		public const string DetailPaymentPageKey = "DetailPaymentPageKey";
+		public const string EditPaymentPageKey = "EditPaymentPageKey";
 
 		public LoginViewModel LoginViewModel
 		{
@@ -159,6 +161,20 @@ namespace ComPact
 				return ServiceLocator.Current.GetInstance<AddPaymentViewModel>();
 			}
 		}
+		public DetailPaymentViewModel DetailPaymentViewModel
+		{
+			get
+			{
+				return ServiceLocator.Current.GetInstance<DetailPaymentViewModel>();
+			}
+		}
+		public EditPaymentViewModel EditPaymentViewModel
+		{
+			get
+			{
+				return ServiceLocator.Current.GetInstance<EditPaymentViewModel>();
+			}
+		}
 		#endregion
 		/**
 		 * Register every ViewModel to the IOC container
@@ -193,6 +209,8 @@ namespace ComPact
 
 			SimpleIoc.Default.Register<PaymentsViewModel>();
 			SimpleIoc.Default.Register<AddPaymentViewModel>();
+			SimpleIoc.Default.Register<DetailPaymentViewModel>();
+			SimpleIoc.Default.Register<EditPaymentViewModel>();
 		}
 
 		void RegisterServices()
@@ -200,6 +218,7 @@ namespace ComPact
 			SimpleIoc.Default.Register<IRepositoryMapper, RepositoryMapper>();
 			SimpleIoc.Default.Register<IWebMapper, WebMapper>();
 			SimpleIoc.Default.Register<IApiService, ApiService>();
+			SimpleIoc.Default.Register<IFileDownloadService, FileDownloadService>();
 
 			SimpleIoc.Default.Register<IMemberDataService, MemberDataService>();
 			SimpleIoc.Default.Register<IAssignmentDataService, AssignmentDataService>();

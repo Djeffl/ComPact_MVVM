@@ -132,5 +132,20 @@ namespace ComPact.WebServices
 			IEnumerable<WebPayment> response = await _paymentWebService.ReadAll(url);
 			return _mapper.Map(response);
 		}
+
+		public async Task<bool> DeletePayment(string paymentId)
+		{
+			bool isSuccessful = false;
+			string url = ApiCalls.BasePaymentPath + String.Format("/{0}", paymentId);
+			try
+			{
+				isSuccessful = (await _paymentWebService.Delete(url)).success;
+			}
+			catch (Exception)
+			{
+				
+			}
+			return isSuccessful;
+		}
 	}
 }

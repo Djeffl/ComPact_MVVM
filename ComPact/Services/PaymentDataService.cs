@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using ComPact.Models;
 using ComPact.WebServices;
@@ -27,9 +28,16 @@ namespace ComPact
 			return response;
 		}
 
-		public Task<bool> Delete(string id)
+		public async Task<bool> Delete(string id)
 		{
-			throw new NotImplementedException();
+			bool isSuccessful = await _apiService.DeletePayment(id);
+			if (isSuccessful)
+			{
+				IEnumerable<RepoPayment> response = await _paymentRepository.Where((x => x.Id == id));
+				await _paymentRepository.Delete(response.FirstOrDefault());
+				isSuccessful = true;
+			}
+			return isSuccessful;
 		}
 
 		public async Task<IEnumerable<Payment>> GetAll()

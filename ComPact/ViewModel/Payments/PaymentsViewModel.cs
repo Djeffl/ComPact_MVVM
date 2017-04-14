@@ -8,75 +8,81 @@ using GalaSoft.MvvmLight.Views;
 
 namespace ComPact.Payments
 {
-public class PaymentsViewModel : BaseViewModel
-{
-	readonly INavigationService _navigationService;
-	readonly IPaymentDataService _paymentDataService;
-
-	#region Parameters
-	/**
-	 * Parameters
-	 */
-	ObservableCollection<Payment> _payments = new ObservableCollection<Payment>();
-	public ObservableCollection<Payment> Payments
+	public class PaymentsViewModel : BaseViewModel
 	{
-		get
+		readonly INavigationService _navigationService;
+		readonly IPaymentDataService _paymentDataService;
+
+		#region Parameters
+		/**
+		 * Parameters
+		 */
+		ObservableCollection<Payment> _payments = new ObservableCollection<Payment>();
+		public ObservableCollection<Payment> Payments
 		{
-			return _payments;
+			get
+			{
+				return _payments;
+			}
+			set
+			{
+				_payments = value;
+				RaisePropertyChanged(nameof(Payments));
+			}
 		}
-		set
+		#endregion
+		#region Commands
+		public RelayCommand AddPaymentRedirectCommand { get; set; }
+		public RelayCommand LoadDataCommand { get; set; }
+		public RelayCommand<Payment> DetailPaymentRedirectCommand { get; set; }
+		#endregion
+		#region Constructor
+		/**
+		 * Init services & Init() & RegisterCommands();
+		 */
+		public PaymentsViewModel(INavigationService navigationService, IUserDataService userDataService, IPaymentDataService paymentDataService)
+			: base(userDataService)
 		{
-			_payments = value;
-			RaisePropertyChanged(nameof(Payments));
+			//Init Services
+			_navigationService = navigationService;
+			_paymentDataService = paymentDataService;
+
+			Init();
+
+			RegisterCommands();
 		}
-	}
-	#endregion
-	#region Commands
-	public RelayCommand AddPaymentRedirectCommand { get; set; }
-	public RelayCommand LoadDataCommand { get; set; }
-	#endregion
-	#region Constructor
-	/**
-	 * Init services & Init() & RegisterCommands();
-	 */
-	public PaymentsViewModel(INavigationService navigationService, IUserDataService userDataService, IPaymentDataService paymentDataService)
-		: base(userDataService)
-	{
-		//Init Services
-		_navigationService = navigationService;
-		_paymentDataService = paymentDataService;
 
-		Init();
-
-		RegisterCommands();
-	}
-
-	void Init()
-	{
-		//Register values
-	}
-	void RegisterCommands()
-	{
-		AddPaymentRedirectCommand = new RelayCommand(PaymentRedirect);
-		LoadDataCommand = new RelayCommand(async () =>
+		void Init()
 		{
-			await LoadData();
-		});
-	}
+			//Register values
+		}
+		void RegisterCommands()
+		{
+			AddPaymentRedirectCommand = new RelayCommand(PaymentRedirect);
+			LoadDataCommand = new RelayCommand(async () =>
+			{
+				await LoadData();
+			});
+			DetailPaymentRedirectCommand = new RelayCommand<Payment>(DetailPaymentRedirect);
+		}
 
 
-	#endregion
+		#endregion
 
-	#region Methods
-	void PaymentRedirect()
-	{
-		_navigationService.NavigateTo(LocatorViewModel.AddPaymentPageKey);
-	}
+		#region Methods
+		void PaymentRedirect()
+		{
+			_navigationService.NavigateTo(LocatorViewModel.AddPaymentPageKey);
+		}
 
-	async Task LoadData()
-	{
-		Payments = Convert(await _paymentDataService.GetAll());
-	}
+		async Task LoadData()
+		{
+			Payments = Convert(await _paymentDataService.GetAll());
+		}
+		void DetailPaymentRedirect(Payment payment)
+		{
+			_navigationService.NavigateTo(LocatorViewModel.DetailPaymentPageKey, payment);
+		}
 		#endregion
 	}
 }

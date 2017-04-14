@@ -31,7 +31,7 @@ namespace ComPact.Droid.Fragments
 			set
 			{
 				_payments = value;
-				//FILL list
+				//Set adapter after payments are loaded
 				_paymentsListView.Adapter = ViewModel.Payments.GetAdapter(GetPaymentsAdapter);
 			}
 		}
@@ -104,6 +104,8 @@ namespace ComPact.Droid.Fragments
 			priceTextView.Text = String.Format(CultureInfo, "{0:C}",payment.Price);
 			timeTextView.Text = payment.CreatedAt.TimeOfDay.ToString("c").Remove(5);
 			dateTextView.Text = payment.CreatedAt.ToShortDateString();
+
+			convertView.SetCommand("Click", ViewModel.DetailPaymentRedirectCommand, payment);
 
 			return convertView;
 		}

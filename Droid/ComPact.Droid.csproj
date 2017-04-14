@@ -204,6 +204,9 @@
     <Compile Include="Views\Controls\Models\Icono.cs" />
     <Compile Include="Views\Activities\Assignments\FinishedAssignmentsActivity.cs" />
     <Compile Include="Views\Activities\Payments\AddPaymentActivity.cs" />
+    <Compile Include="Views\Activities\Payments\DetailPaymentActivity.cs" />
+    <Compile Include="Views\Activities\Payments\EditPaymentActivity.cs" />
+    <Compile Include="Helpers\FileSystem.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
@@ -397,6 +400,8 @@
     <AndroidResource Include="Resources\drawable\Recyclerview_item.xml" />
     <AndroidResource Include="Resources\layout\ActivityAddPayment.axml" />
     <AndroidResource Include="Resources\layout\PaymentItemView.axml" />
+    <AndroidResource Include="Resources\layout\ActivityDetailPayment.axml" />
+    <AndroidResource Include="Resources\drawable\placeholderPicture.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\" />

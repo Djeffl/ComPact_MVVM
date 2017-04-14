@@ -13,6 +13,8 @@ using Onboarding.Droid.Helpers;
 using ComPact.Droid.Members;
 using ComPact.Droid.Assignments;
 using ComPact.Droid.Tasks;
+using ComPact.Droid.Payments;
+using ComPact.Services;
 
 namespace ComPact.Droid
 {
@@ -70,6 +72,8 @@ namespace ComPact.Droid
 
 			nav.Configure(LocatorViewModel.PaymentsPageKey, typeof(Fragments.PaymentFragments));
 			nav.Configure(LocatorViewModel.AddPaymentPageKey, typeof(AddPaymentActivity));
+			nav.Configure(LocatorViewModel.DetailPaymentPageKey, typeof(DetailPaymentActivity));
+			nav.Configure(LocatorViewModel.EditPaymentPageKey, typeof(EditPaymentActivity));
 		}
 
 		private static void RegisterIoc()
@@ -78,6 +82,7 @@ namespace ComPact.Droid
 			SimpleIoc.Default.Register<IPopUpService, PopUpService>();
 			SimpleIoc.Default.Register<IDatabase, Database>();
 			SimpleIoc.Default.Register<IMenuDialogService, MenuDialogService>();
+			SimpleIoc.Default.Register<IFileSystem, FileSystem>();
 		}
 	}
 }

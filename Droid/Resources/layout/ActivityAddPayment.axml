@@ -11,10 +11,15 @@
         <include
             android:id="@+id/toolbarHeader"
             layout="@layout/ToolbarHeader" />
+        <ImageView
+            android:id="@+id/activityAddPaymentAddPicture"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/placeholderPicture" />
         <LinearLayout
             android:layout_marginTop="30dp"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="25dp"
             android:orientation="vertical">
             <TextView

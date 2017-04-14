@@ -114,6 +114,11 @@
     <Compile Include="Services\PaymentDataService.cs" />
     <Compile Include="ViewModel\Payments\AddPaymentViewModel.cs" />
     <Compile Include="ViewModel\Payments\PaymentsViewModel.cs" />
+    <Compile Include="ViewModel\Payments\DetailPaymentViewModel.cs" />
+    <Compile Include="ViewModel\Payments\EditPaymentViewModel.cs" />
+    <Compile Include="Services\FileDownloadService.cs" />
+    <Compile Include="Services\IFileDownloadService.cs" />
+    <Compile Include="Helpers\IFileSystem.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Contracts\" />
