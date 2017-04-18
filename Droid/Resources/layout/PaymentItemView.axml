@@ -10,11 +10,11 @@
         android:layout_height="wrap_content">
         <ImageView
             android:layout_gravity="center_vertical"
-            android:id="@+id/paymentItemVIewImageView"
+            android:id="@+id/paymentItemViewImageView"
             android:tint="@color/accent_color"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            android:src="@drawable/ic_assignment_white_24dp" />
+            android:src="@drawable/ic_monetization_on_white_24dp" />
         <LinearLayout
             android:layout_marginLeft="20dp"
             android:orientation="vertical"

@@ -11,13 +11,26 @@
         <include
             android:id="@+id/toolbarHeader"
             layout="@layout/ToolbarHeader" />
+        <ImageView
+            android:id="@+id/activityDetailPaymentPictureImageView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/placeholderpicture" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginBottom="15dp"
+            android:background="@color/blue_main_color" />
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="20dp">
             <TextView
                 android:id="@+id/activityDetailPaymentTitleTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="25dp"
                 android:text="Title" />
             <ImageView
                 android:id="@+id/activityDetailPaymentDeletePaymentImageView"
@@ -25,25 +38,32 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_delete_white_24dp"
                 android:tint="@color/accent_color"
-                android:layout_alignParentRight="true" />
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true" />
         </RelativeLayout>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
             android:text="Price" />
         <TextView
             android:id="@+id/activityDetailPaymentPriceTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="25dp"
             android:text="€0.00" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="15dp"
             android:text="Details" />
         <TextView
             android:id="@+id/activityDetailPaymentDetailTextView"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="25dp"
+            android:text="Lorum dipsum" />
     </LinearLayout>
     <android.support.design.widget.FloatingActionButton
         android:tint="@color/yellow_accent_color"

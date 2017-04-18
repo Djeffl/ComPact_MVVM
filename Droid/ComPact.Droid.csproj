@@ -147,6 +147,18 @@
     <Reference Include="GalaSoft.MvvmLight.Platform.AndroidSupport">
       <HintPath>..\packages\MvvmLightAndroidSupport.5.3.0.0\lib\monoandroid1\GalaSoft.MvvmLight.Platform.AndroidSupport.dll</HintPath>
     </Reference>
+    <Reference Include="Plugin.Permissions.Abstractions">
+      <HintPath>..\packages\Plugin.Permissions.1.2.1\lib\MonoAndroid10\Plugin.Permissions.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Plugin.Permissions">
+      <HintPath>..\packages\Plugin.Permissions.1.2.1\lib\MonoAndroid10\Plugin.Permissions.dll</HintPath>
+    </Reference>
+    <Reference Include="Plugin.Media.Abstractions">
+      <HintPath>..\packages\Xam.Plugin.Media.2.6.2\lib\MonoAndroid10\Plugin.Media.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Plugin.Media">
+      <HintPath>..\packages\Xam.Plugin.Media.2.6.2\lib\MonoAndroid10\Plugin.Media.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ComPact\ComPact.csproj">
@@ -402,6 +414,11 @@
     <AndroidResource Include="Resources\layout\PaymentItemView.axml" />
     <AndroidResource Include="Resources\layout\ActivityDetailPayment.axml" />
     <AndroidResource Include="Resources\drawable\placeholderPicture.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\ic_monetization_on_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\ic_monetization_on_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_monetization_on_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\ic_monetization_on_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\ic_monetization_on_white_24dp.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\" />

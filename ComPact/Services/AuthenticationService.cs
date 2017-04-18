@@ -110,10 +110,13 @@ namespace ComPact.Services
 				{
 					IEnumerable<Member> members = await _memberDataService?.GetAll(responseUser.Id);
 					assignments = await _assignmentDataService?.GetAll(responseUser.Id, true);
+					await _paymentDataService?.GetAll(responseUser.Id, true);
 				}
 				else
 				{
 					assignments = await _assignmentDataService?.GetAll(responseUser.Id, false);
+					await _paymentDataService?.GetAll(responseUser.Id, false);
+
 				}
 
 				isSuccessful = true;

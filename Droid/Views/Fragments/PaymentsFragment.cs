@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Android.App;
+using Android.Graphics;
 using Android.OS;
 using Android.Support.Design.Widget;
+using Android.Support.V4.Content;
 using Android.Views;
 using Android.Widget;
 using ComPact.Models;
@@ -32,10 +34,22 @@ namespace ComPact.Droid.Fragments
 			{
 				_payments = value;
 				//Set adapter after payments are loaded
-				_paymentsListView.Adapter = ViewModel.Payments.GetAdapter(GetPaymentsAdapter);
+				//_paymentsListView.Adapter = ViewModel.Payments.GetAdapter(GetPaymentsAdapter);
 			}
 		}
-
+		ObservableCollection<Member> _members = new ObservableCollection<Member>();
+		public ObservableCollection<Member> Members
+		{
+			get
+			{
+				return _members;
+			}
+			set
+			{
+				_members = value;
+				SetListViewAdapter();
+			}
+		}
 		//Keep track of bindings to avoid premature garbage collection
 		readonly List<Binding> bindings = new List<Binding>();
 		//Elements
@@ -84,6 +98,7 @@ namespace ComPact.Droid.Fragments
 		void SetBindings()
 		{
 			bindings.Add(this.SetBinding(() => ViewModel.Payments, () => Payments, BindingMode.OneWay));
+			bindings.Add(this.SetBinding(() => ViewModel.Members, () => Members, BindingMode.OneWay));
 		}
 		void SetCommands()
 		{
@@ -94,7 +109,7 @@ namespace ComPact.Droid.Fragments
 			// Not reusing views here
 			LayoutInflater inflater = LayoutInflater.From(Application.Context);
 			convertView = inflater.Inflate(Resource.Layout.PaymentItemView, null);
-			ImageView iconImageView = convertView.FindViewById<ImageView>(Resource.Id.paymentItemVIewImageView);
+			ImageView iconImageView = convertView.FindViewById<ImageView>(Resource.Id.paymentItemViewImageView);
 			TextView nameTextView = convertView.FindViewById<TextView>(Resource.Id.paymentsItemViewTitleTextView);
 			TextView timeTextView = convertView.FindViewById<TextView>(Resource.Id.paymentItemViewTimeTextView);
 			TextView dateTextView = convertView.FindViewById<TextView>(Resource.Id.paymentItemViewDateTextView);
@@ -105,9 +120,15 @@ namespace ComPact.Droid.Fragments
 			timeTextView.Text = payment.CreatedAt.TimeOfDay.ToString("c").Remove(5);
 			dateTextView.Text = payment.CreatedAt.ToShortDateString();
 
+			iconImageView.SetColorFilter(Color.Rgb(224, 71, 74));
 			convertView.SetCommand("Click", ViewModel.DetailPaymentRedirectCommand, payment);
 
 			return convertView;
+		}
+
+		void SetListViewAdapter()
+		{
+			_paymentsListView.Adapter = ViewModel.Payments.GetAdapter(GetPaymentsAdapter);
 		}
 	}
 }

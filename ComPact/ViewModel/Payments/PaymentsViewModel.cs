@@ -12,6 +12,7 @@ namespace ComPact.Payments
 	{
 		readonly INavigationService _navigationService;
 		readonly IPaymentDataService _paymentDataService;
+		readonly IMemberDataService _memberDataService;
 
 		#region Parameters
 		/**
@@ -30,6 +31,19 @@ namespace ComPact.Payments
 				RaisePropertyChanged(nameof(Payments));
 			}
 		}
+		ObservableCollection<Member> _members = new ObservableCollection<Member>();
+		public ObservableCollection<Member> Members
+		{
+			get
+			{
+				return _members;
+			}
+			set
+			{
+				_members = value;
+				RaisePropertyChanged(nameof(Members));
+			}
+		}
 		#endregion
 		#region Commands
 		public RelayCommand AddPaymentRedirectCommand { get; set; }
@@ -40,12 +54,13 @@ namespace ComPact.Payments
 		/**
 		 * Init services & Init() & RegisterCommands();
 		 */
-		public PaymentsViewModel(INavigationService navigationService, IUserDataService userDataService, IPaymentDataService paymentDataService)
+		public PaymentsViewModel(INavigationService navigationService, IUserDataService userDataService, IPaymentDataService paymentDataService, IMemberDataService memberDataService)
 			: base(userDataService)
 		{
 			//Init Services
 			_navigationService = navigationService;
 			_paymentDataService = paymentDataService;
+			_memberDataService = memberDataService;
 
 			Init();
 
@@ -78,6 +93,7 @@ namespace ComPact.Payments
 		async Task LoadData()
 		{
 			Payments = Convert(await _paymentDataService.GetAll());
+			Members = Convert(await _memberDataService.GetAll());
 		}
 		void DetailPaymentRedirect(Payment payment)
 		{
