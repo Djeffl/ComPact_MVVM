@@ -180,7 +180,6 @@ namespace ComPact.Assignments
 		#region Methods
 		Task UpdateAssignment(Assignment assignment)
 		{
-
 			try
 			{
 				string adminId = (await UserDataService?.GetUser()).Id;
@@ -200,22 +199,6 @@ namespace ComPact.Assignments
 		{
 			IEnumerable<Member> list = await _memberDataService?.GetAll();
 			Members = Convert<Member>(list);
-		}
-
-		//If you're working with non-generic IEnumerable you can do it this way:
-		ObservableCollection<object> Convert(IEnumerable original)
-		{
-			return new ObservableCollection<object>(original.Cast<object>());
-		}
-		//If you're working with generic IEnumerable<T> you can do it this way:
-		ObservableCollection<T> Convert<T>(IEnumerable<T> original)
-		{
-			return new ObservableCollection<T>(original);
-		}
-		//If you're working with non-generic IEnumerable but know the type of elements, you can do it this way:
-		ObservableCollection<T> Convert<T>(IEnumerable original)
-		{
-			return new ObservableCollection<T>(original.Cast<T>());
 		}
 		#endregion
 	}

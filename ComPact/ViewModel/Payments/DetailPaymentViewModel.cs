@@ -62,6 +62,7 @@ namespace ComPact.Payments
 		void RegisterCommands()
 		{
 			BackRedirectCommand = new RelayCommand(_navigationService.GoBack);
+			EditPaymentRedirectCommand = new RelayCommand(EditPaymentRedirect);
 			DeletePaymentCommand = new RelayCommand(async () =>
 			{
 				await DeletePayment();
@@ -70,22 +71,21 @@ namespace ComPact.Payments
 
 		#endregion
 		#region Methods
+		void EditPaymentRedirect()
+		{
+			_navigationService.NavigateTo(LocatorViewModel.EditPaymentPageKey);
+		}
 		async Task DeletePayment()
 		{
 			var result = await _dialogService.ShowMessage("Are you sure?", "test");
 
 			if (result)
 			{
-				System.Diagnostics.Debug.WriteLine("OK FROM DIALOG");
 				await _paymentDataService.Delete(Payment.Id);
 				_navigationService.GoBack();
 				_popUpService.Show("Payment successfully deleted!", "long");
 			}
-
-			else
-			{
-				System.Diagnostics.Debug.WriteLine("CANCEL FROM DIALOG");
-			}
+			
 
 
 		}

@@ -28,7 +28,7 @@ using Microsoft.Practices.ServiceLocation;
 
 namespace ComPact.Droid.Assignments
 {
-	[Activity(Label = "EditAssignmentActivity")]
+	[Activity]
 	public class EditAssignmentActivity : BaseActivity
 	{
 

@@ -119,6 +119,7 @@ namespace ComPact.Droid.Payments
 		{
 			_backImageView.SetCommand("Click", ViewModel.BackRedirectCommand);
 			_deletePaymentImageView.SetCommand("Click", ViewModel.DeletePaymentCommand);
+			_editFloatingActionButton.SetCommand("Click", ViewModel.EditPaymentRedirectCommand);
 		}
 		void Init()
 		{

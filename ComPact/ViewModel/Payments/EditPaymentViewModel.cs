@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Globalization;
 using System.Threading.Tasks;
 using ComPact.Helpers;
@@ -16,7 +17,7 @@ namespace ComPact.Payments
 		 */
 		readonly INavigationService _navigationService;
 		readonly IPaymentDataService _paymentDataService;
-		readonly IMemberDataService _memberDataService;
+		readonly IPopUpService _popUpService;
 		#region Parameters
 		/**
 		 * Parameters
@@ -38,13 +39,16 @@ namespace ComPact.Payments
 		#region Commands
 		public RelayCommand EditPaymentRedirectCommand { get; set; }
 		public RelayCommand BackRedirectCommand { get; set; }
+		public RelayCommand<Payment> UpdatePaymentCommand { get; set; }
+
 		#endregion
 		#region Constructor
-		public EditPaymentViewModel(INavigationService navigationService, IUserDataService userDataService, IPaymentDataService paymentDataService)
+		public EditPaymentViewModel(INavigationService navigationService, IUserDataService userDataService, IPaymentDataService paymentDataService, IPopUpService popUpService)
 			: base(userDataService)
 		{
 			_navigationService = navigationService;
 			_paymentDataService = paymentDataService;
+			_popUpService = popUpService;
 
 			Init();
 
@@ -59,13 +63,32 @@ namespace ComPact.Payments
 		{
 			BackRedirectCommand = new RelayCommand(_navigationService.GoBack);
 			EditPaymentRedirectCommand = new RelayCommand(EditPaymentRedirect);
+			UpdatePaymentCommand = new RelayCommand<Payment>(async payment =>
+			{
+				await UpdatePayment(payment);
+			});
 
 		}
-		#endregion
+
+	#endregion
 		#region Methods
 		void EditPaymentRedirect()
 		{
 			_navigationService.NavigateTo(LocatorViewModel.EditPaymentPageKey);
+		}
+		async Task UpdatePayment(Payment payment)
+		{
+			try
+			{
+				await _paymentDataService.Update(payment);
+				_popUpService.Show("Payment successfully updated!", "long");
+				//TODO NAVIGEER TERUG
+				_navigationService.NavigateTo(LocatorViewModel.HomePageKey);
+			}
+			catch (Exception ex)
+			{
+				Debug.WriteLine(ex);
+			}
 		}
 
 		#endregion
