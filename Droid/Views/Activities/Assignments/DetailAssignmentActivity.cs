@@ -121,7 +121,7 @@ namespace ComPact.Droid
 
 			Assignment = Nav.GetAndRemoveParameter<Assignment>(Intent);
 			ViewModel.GetUserCommand.Execute(null);
-			ViewModel.GetMemberCommand.Execute(Assignment.MemberId);
+			ViewModel.GetMemberCommand.Execute(Assignment.Member.Id);
 			ViewModel.Assignment = Assignment;
 
 			//Init elements

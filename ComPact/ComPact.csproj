@@ -48,7 +48,6 @@
     <Compile Include="Helpers\IDialogService.cs" />
     <Compile Include="Helpers\IBackService.cs" />
     <Compile Include="Helpers\IPopUpService.cs" />
-    <Compile Include="ViewModel\HomeViewModel.cs" />
     <Compile Include="ViewModel\TemplateViewModel.cs" />
     <Compile Include="Helpers\IMenuDialogService.cs" />
     <Compile Include="ViewModel\HelpViewModel.cs" />
@@ -119,6 +118,7 @@
     <Compile Include="Services\FileDownloadService.cs" />
     <Compile Include="Services\IFileDownloadService.cs" />
     <Compile Include="Helpers\IFileSystem.cs" />
+    <Compile Include="ViewModel\HomeViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Contracts\" />

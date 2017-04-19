@@ -162,7 +162,7 @@ namespace ComPact.Droid.Tasks
 			{
 				var assignment = new Assignment()
 				{
-					MemberId = ViewModel.SelectedMember.Id,
+					Member = ViewModel.SelectedMember,
 					ItemName = _itemNameEditText.Text,
 					Description = _descriptionEditText.Text,
 					IconName = ViewModel.IconName,

@@ -14,7 +14,7 @@ using GalaSoft.MvvmLight.Helpers;
 
 namespace ComPact.Droid.Fragments
 {
-	public class PaymentFragments : BaseFragment
+	public class PaymentFragment : BaseFragment
 	{
 		PaymentsViewModel ViewModel
 		{
@@ -34,20 +34,7 @@ namespace ComPact.Droid.Fragments
 			{
 				_payments = value;
 				//Set adapter after payments are loaded
-				//_paymentsListView.Adapter = ViewModel.Payments.GetAdapter(GetPaymentsAdapter);
-			}
-		}
-		ObservableCollection<Member> _members = new ObservableCollection<Member>();
-		public ObservableCollection<Member> Members
-		{
-			get
-			{
-				return _members;
-			}
-			set
-			{
-				_members = value;
-				SetListViewAdapter();
+                SetListViewAdapter();
 			}
 		}
 		//Keep track of bindings to avoid premature garbage collection
@@ -98,7 +85,6 @@ namespace ComPact.Droid.Fragments
 		void SetBindings()
 		{
 			bindings.Add(this.SetBinding(() => ViewModel.Payments, () => Payments, BindingMode.OneWay));
-			bindings.Add(this.SetBinding(() => ViewModel.Members, () => Members, BindingMode.OneWay));
 		}
 		void SetCommands()
 		{

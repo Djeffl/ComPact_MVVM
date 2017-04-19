@@ -79,7 +79,10 @@ namespace ComPact.Payments
 			{
 				Payment.CreatedAt = DateTime.Now.ToLocalTime();
 				string memberId = (await UserDataService?.GetUser()).Id;
-				Payment.MemberId = memberId;
+				Payment.Member = new Member
+				{
+					Id = memberId
+				};
 				await _paymentDataService.Create(Payment);
 				_popUpService.Show("Payment succesfully created", "long");
 			}

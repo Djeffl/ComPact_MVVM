@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using GalaSoft.MvvmLight.Ioc;
 using GalaSoft.MvvmLight.Views;
 using Microsoft.Practices.ServiceLocation;
@@ -70,7 +70,7 @@ namespace ComPact.Droid
 			nav.Configure(LocatorViewModel.MembersPageKey, typeof(MembersActivity));
 			nav.Configure(LocatorViewModel.AddMembersPageKey, typeof(AddMembersActivity));
 
-			nav.Configure(LocatorViewModel.PaymentsPageKey, typeof(Fragments.PaymentFragments));
+			nav.Configure(LocatorViewModel.PaymentsPageKey, typeof(Fragments.PaymentFragment));
 			nav.Configure(LocatorViewModel.AddPaymentPageKey, typeof(AddPaymentActivity));
 			nav.Configure(LocatorViewModel.DetailPaymentPageKey, typeof(DetailPaymentActivity));
 			nav.Configure(LocatorViewModel.EditPaymentPageKey, typeof(EditPaymentActivity));

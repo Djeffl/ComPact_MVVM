@@ -9,14 +9,12 @@ namespace ComPact.Models
 		public string Description { get; set; }
 		public double Price { get; set; }
 		public string AdminId { get; set; }
-		public string MemberId { get; set; }
 		public DateTime CreatedAt { get; set; }
-
-		public Member Member;
+		public Member Member { get; set; }
 
 		public override string ToString()
 		{
-			return string.Format("[Payment: Id={0}, Name={1}, Description={2}, Amount={3}, AdminId={4}, MemberId={5}]", Id, Name, Description, Price, AdminId, MemberId);
+			return string.Format("[Payment: Id={0}, Name={1}, Description={2}, Amount={3}, AdminId={4}, Member={5}]", Id, Name, Description, Price, AdminId, Member);
 		}
 	}
 }

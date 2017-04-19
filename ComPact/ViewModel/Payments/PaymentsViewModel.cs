@@ -31,19 +31,6 @@ namespace ComPact.Payments
 				RaisePropertyChanged(nameof(Payments));
 			}
 		}
-		ObservableCollection<Member> _members = new ObservableCollection<Member>();
-		public ObservableCollection<Member> Members
-		{
-			get
-			{
-				return _members;
-			}
-			set
-			{
-				_members = value;
-				RaisePropertyChanged(nameof(Members));
-			}
-		}
 		#endregion
 		#region Commands
 		public RelayCommand AddPaymentRedirectCommand { get; set; }
@@ -92,8 +79,7 @@ namespace ComPact.Payments
 
 		async Task LoadData()
 		{
-			Payments = Convert(await _paymentDataService.GetAll());
-			Members = Convert(await _memberDataService.GetAll());
+			Payments = Convert(await _paymentDataService.GetAll((await GetUser()).Admin));
 		}
 		void DetailPaymentRedirect(Payment payment)
 		{

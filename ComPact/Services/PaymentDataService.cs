@@ -12,11 +12,13 @@ namespace ComPact
 		readonly IApiService _apiService;
 		readonly IPaymentRepository _paymentRepository;
 		readonly IRepositoryMapper _mapper;
+		readonly IMemberRepository _memberRespository;
 
-		public PaymentDataService(IApiService apiService, IPaymentRepository paymentRepository, IRepositoryMapper mapper)
+		public PaymentDataService(IApiService apiService, IPaymentRepository paymentRepository, IMemberRepository memberRepository, IRepositoryMapper mapper)
 		{
 			_apiService = apiService;
 			_paymentRepository = paymentRepository;
+			_memberRespository = memberRepository;
 			_mapper = mapper;
 		}
 
@@ -40,9 +42,25 @@ namespace ComPact
 			return isSuccessful;
 		}
 
-		public async Task<IEnumerable<Payment>> GetAll()
+		public async Task<IEnumerable<Payment>> GetAll(bool isAdmin)
 		{
-			return _mapper.Map(await _paymentRepository?.All());
+			IEnumerable<Payment> payments = _mapper.Map(await _paymentRepository?.All());
+			if (isAdmin)
+			{
+
+				IEnumerable<Member> members = _mapper.Map(await _memberRespository?.All());
+				foreach (var payment in payments)
+				{
+					foreach (var member in members)
+					{
+						if (payment.Member.Id == member.Id)
+						{
+							payment.Member = member;
+						}
+					}
+				}
+			}
+			return payments;
 		}
 
 		public async Task<IEnumerable<Payment>> GetAll(string userId, bool isAdmin)
@@ -50,7 +68,7 @@ namespace ComPact
 			IEnumerable<Payment> response = await _apiService.GetPayments(userId, isAdmin);
 			IEnumerable<RepoPayment> data = _mapper.InvertMap(response);
 			await _paymentRepository.Insert(data);
-			return await GetAll();
+			return await GetAll(isAdmin);
 		}
 
 		public async Task LogOut()

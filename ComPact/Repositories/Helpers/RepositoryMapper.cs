@@ -96,7 +96,9 @@ namespace ComPact
 				Id = assignment.Id,
 				ItemName = assignment.ItemName,
 				Description = assignment.Description,
-				MemberId = assignment.MemberId,
+				Member = new Member {
+					Id = assignment.MemberId
+				},
 				IconName = assignment.IconName,
 				Done = assignment.Done
 			};
@@ -109,7 +111,7 @@ namespace ComPact
 				Id = assignment.Id,
 				ItemName = assignment.ItemName,
 				Description = assignment.Description,
-				MemberId = assignment.MemberId,
+				MemberId = assignment.Member.Id,
 				AdminId = assignment.AdminId,
 				IconName = assignment.IconName,
 				Done = assignment.Done
@@ -147,7 +149,10 @@ namespace ComPact
 				Description = payment.Description,
 				Price = payment.Amount,
 				AdminId = payment.AdminId,
-				MemberId = payment.MemberId,
+				Member = new Member
+				{
+					Id = payment.MemberId
+				},
 				CreatedAt = payment.CreatedAt
 			};
 			return returnPayment;
@@ -162,7 +167,7 @@ namespace ComPact
 				Description = payment.Description,
 				Amount = payment.Price,
 				AdminId = payment.AdminId,
-				MemberId = payment.MemberId,
+				MemberId = payment.Member.Id,
 				CreatedAt = payment.CreatedAt
 
 			};

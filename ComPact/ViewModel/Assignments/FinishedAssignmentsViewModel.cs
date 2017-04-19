@@ -186,7 +186,7 @@ namespace ComPact.ViewModel
 			assignment.Description = null;
 			assignment.IconName = null;
 			assignment.ItemName = null;
-			assignment.MemberId = null;
+			assignment.Member = null;
 			assignment.Done = true;
 			await _assignmentDataService.Update(assignment);
 		}
