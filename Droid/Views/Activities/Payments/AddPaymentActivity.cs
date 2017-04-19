@@ -27,7 +27,7 @@ namespace ComPact.Droid
 	{
 		//Local variables
 		File _imageDirectory;
-		File _imageFile;
+		string _currentImageFilePath;
 		//Keep track of bindings to avoid premature garbage collection
 		readonly List<Binding> bindings = new List<Binding>();
 		//Elements
@@ -128,28 +128,26 @@ namespace ComPact.Droid
 			Bitmap bitmap;
 			int height = _addPictureImageView.Height;
 			int width = _addPictureImageView.Width;
-			bitmap = GetImageBitmapFromFilePath(_imageFile.Path, width, height);
+			bitmap = GetImageBitmapFromFilePath(_currentImageFilePath, height, width);
 			if (bitmap != null)
 			{
 				_addPictureImageView.SetImageBitmap(bitmap);
 				bitmap = null;
 			}
-			//Requires to avoid memory leaks
-			GC.Collect();
 			//bitmap = (Bitmap)data.Extras.Get("data");
 			//_addPictureImageView.SetImageBitmap(bitmap);
 		}
 
 		private void BtnCamera_click(object sender, EventArgs e)
 		{
-			//TakePictureIntent();
-			Intent takePictureIntent = new Intent(MediaStore.ActionImageCapture);
-			if (takePictureIntent.ResolveActivity(PackageManager) != null)
-			{
-				_imageFile = new File(_imageDirectory, String.Format("payments_{0}.jpg", Guid.NewGuid()));
-				takePictureIntent.PutExtra(MediaStore.ExtraOutput, Android.Net.Uri.FromFile(_imageFile));
-				StartActivityForResult(takePictureIntent, 0);
-			}
+			TakePictureIntent();
+			//Intent takePictureIntent = new Intent(MediaStore.ActionImageCapture);
+			//if (takePictureIntent.ResolveActivity(PackageManager) != null)
+			//{
+			//	_imageFile = new File(_imageDirectory, String.Format("payments_{0}.jpg", Guid.NewGuid()));
+			//	takePictureIntent.PutExtra(MediaStore.ExtraOutput, Android.Net.Uri.FromFile(_imageFile));
+			//	StartActivityForResult(takePictureIntent, 0);
+			//}
 		}
 
 		Bitmap GetImageBitmapFromFilePath(string fileName, int width, int height)
@@ -185,57 +183,54 @@ namespace ComPact.Droid
 			return resizedBitMap;
 		}
 
-		//string mCurrentPhotoPath;
 
-		//private File CreateImageFile()
-		//{
-		//	// Create an image file name
-		//	string timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").Format(new Java.Util.Date());
-		//	string imageFileName = "JPEG_" + timeStamp + "_";
-		//	File storageDir = GetExternalFilesDir(Android.OS.Environment.DirectoryPictures);
-		//	File image = File.CreateTempFile(
-		//		imageFileName,  /* prefix */
-		//		".jpg",         /* suffix */
-		//		storageDir      /* directory */
-		//	);
 
-		//	// Save a file: path for use with ACTION_VIEW intents
-		//	mCurrentPhotoPath = image.AbsolutePath;
-		//	return image;
-		//}
+		private File CreateImageFile()
+		{
+			// Create an image file name
+			string imageFileName = String.Format("payments_{0}", Guid.NewGuid());
+			File storageDir = GetExternalFilesDir(Android.OS.Environment.DirectoryPictures);
+			File image = File.CreateTempFile(
+				imageFileName,  /* prefix */
+				".jpg",         /* suffix */
+				storageDir      /* directory */
+			);
+			// Save a file: path for use with ACTION_VIEW intents
+			_currentImageFilePath = image.AbsolutePath;
+			return image;
+		}
 
 		//Android.Net.Uri _currentImageUri;
 
-		//void TakePictureIntent()
-		//{
-		//	Intent takePictureIntent = new Intent(MediaStore.ActionImageCapture);
-		//	// Ensure that there's a camera activity to handle the intent
-		//	if (takePictureIntent.ResolveActivity(PackageManager) != null)
-		//	{
-		//		// Create the File where the photo should go
-		//		File photoFile = null;
-		//		try
-		//		{
-		//			photoFile = CreateImageFile();
-		//		}
-		//		catch (IOException ex)
-		//		{
-		//			// Error occurred while creating the File
-		//		}
-		//		// Continue only if the File was successfully created
-		//		if (photoFile != null)
-		//		{
-		//			//var photoURI = FileProvider.GetUriForFile(this,
-		//			//									  "be.3factr.compact.fileprovider",
-		//			//									  photoFile);
-		//			FileSystem system = new FileSystem();
-		//			//system.WriteToFile(
-		//			//takePictureIntent.PutExtra(MediaStore.ExtraOutput, photoURI);
+		void TakePictureIntent()
+		{
+			Intent takePictureIntent = new Intent(MediaStore.ActionImageCapture);
+			// Ensure that there's a camera activity to handle the intent
+			if (takePictureIntent.ResolveActivity(PackageManager) != null)
+			{
+				// Create the File where the photo should go
+				File photoFile = null;
+				try
+				{
+					photoFile = CreateImageFile();
+				}
+				catch (IOException ex)
+				{
+					// Error occurred while creating the File
+				}
+				// Continue only if the File was successfully created
+				if (photoFile != null)
+				{
+					//var photoURI = FileProvider.GetUriForFile(this, "be.x3factr.compact.fileprovider", photoFile);
+					Java.Net.URI photoUri = photoFile.ToURI();
+					FileSystem system = new FileSystem();
 
-		//			StartActivityForResult(takePictureIntent, 1);
-		//		}
-		//	}
-		//}
+					takePictureIntent.PutExtra(MediaStore.ExtraOutput, _currentImageFilePath);//photoUri); //photoURI);
+
+					StartActivityForResult(takePictureIntent, 1);
+				}
+			}
+		}
 
 		#endregion
 	}

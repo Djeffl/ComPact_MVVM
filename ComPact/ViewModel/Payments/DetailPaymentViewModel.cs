@@ -85,9 +85,6 @@ namespace ComPact.Payments
 				_navigationService.GoBack();
 				_popUpService.Show("Payment successfully deleted!", "long");
 			}
-			
-
-
 		}
 		#endregion
 	}
