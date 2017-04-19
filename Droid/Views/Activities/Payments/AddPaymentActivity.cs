@@ -111,11 +111,11 @@ namespace ComPact.Droid
 			_addPictureImageView.Click += BtnCamera_click;
 
 			//Directory for image
-			_imageDirectory = new File(Android.OS.Environment.GetExternalStoragePublicDirectory(Android.OS.Environment.DirectoryPictures), "payments");
-			if (!_imageDirectory.Exists())
-			{
-				_imageDirectory.Mkdirs();
-			}
+			//_imageDirectory = new File(Android.OS.Environment.GetExternalStoragePublicDirectory(Android.OS.Environment.DirectoryPictures), "payments");
+			//if (!_imageDirectory.Exists())
+			//{
+			//	_imageDirectory.Mkdirs();
+			//}s
 		}
 
 
