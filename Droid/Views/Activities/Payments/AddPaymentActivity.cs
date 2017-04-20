@@ -58,16 +58,16 @@ namespace ComPact.Droid
 
 			//Init elements
 			FindViews();
-			_optionsImageView.Visibility = ViewStates.Gone;
-			_titleTextView.Text = "Add Payment";
-			//bindings
-			SetBindings();
-
-			//Use Commands
-			SetCommands();
-
 			//init
 			Init();
+			//bindings
+			SetBindings();
+			//Use Commands
+			SetCommands();
+			//Set Hint visible priceEditText
+			_priceEditText.Text = null;
+
+
 		}
 		/**
 		 * Init Views
@@ -106,9 +106,10 @@ namespace ComPact.Droid
 		}
 		void Init()
 		{
-			_priceEditText.Text = null;
+			_optionsImageView.Visibility = ViewStates.Gone;
+			_titleTextView.Text = "Add Payment";
 
-			_addPictureImageView.Click += BtnCamera_click;
+
 
 			//Directory for image
 			_imageDirectory = new File(Android.OS.Environment.GetExternalStoragePublicDirectory(Android.OS.Environment.DirectoryPictures), "payments");
@@ -117,6 +118,8 @@ namespace ComPact.Droid
 				_imageDirectory.Mkdirs();
 
 			}
+
+			_addPictureImageView.Click += BtnCamera_click;
 		}
 
 
@@ -223,10 +226,9 @@ namespace ComPact.Droid
 				if (photoFile != null)
 				{
 					var photoURI = FileProvider.GetUriForFile(this, this.PackageName + ".fileprovider", photoFile);
-					//Java.Net.URI photoUri = photoFile.ToURI();
 					FileSystem system = new FileSystem();
 
-					takePictureIntent.PutExtra(MediaStore.ExtraOutput, photoURI);//_currentImageFilePath);//photoUri); //photoURI);
+					takePictureIntent.PutExtra(MediaStore.ExtraOutput, photoURI);//_currentImageFilePath);
 
 					StartActivityForResult(takePictureIntent, 1);
 				}
