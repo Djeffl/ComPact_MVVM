@@ -51,55 +51,17 @@ namespace ComPact
 		{
 			await _memberRepository?.Delete(await _memberRepository?.All());
 		}
-
-
-
 		/**
-		 * Create User
-		 */
-		//public async Task<Member> Create(Member user)
-		//{
-		//	return await _memberWebservice.Create(APICalls.CreateAuthPath, user);
-		//}
-		//public async Task<Member> Get(string email)
-		//{
-		//	string getUserPathEmailPassword = "/api/users?email=\"" + email + "\"";
-		//	try
-		//	{
-		//		Member member = await _apiService.
-		//		return member;
-		//	}
-		//	catch (Exception)
-		//	{
-		//		throw new Exception("Can't connect to server. Please check your network.");
-		//	}
-		//}
+		* Create User	 
+		*/
+		public async Task<Member> Create(Member member)
+		{
+			Member response = await _apiService.AddMember(member);
+			RepoMember repoMember = _mapper.InvertMap(response);
+			repoMember = await _memberRepository.Insert(repoMember);
 
-		//public async Task<IEnumerable<Member>> Save(IEnumerable<Member> members)
-		//{
-		//	//try
-		//	//{
-		//	//	await _memberRepository.Insert(members);
-
-		//	//}
-		//	//catch (Exception ex)
-		//	//{
-		//	//	Debug.WriteLine(ex);
-		//	//}
-		//	//return await GetAll();
-		//	throw new NotImplementedException();
-		//}
-		//public async Task<IEnumerable<Member>> GetAll()
-		//{
-		//	throw new NotImplementedException();
-		//	//return await _memberRepository.All();
-		//}
-
-		//public void Forgot(Member user)
-		//{
-		//	_memberWebservice.Forgot("/api/users/forgot", user);
-		//}
-
+			return _mapper.Map(repoMember);
+		}
 	}
 }
 	

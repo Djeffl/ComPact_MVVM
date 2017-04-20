@@ -20,10 +20,10 @@ namespace ComPact.Droid.Models
 
 			if (row == null)
 			{
-				row = LayoutInflater.From(_context).Inflate(Resource.Layout.ListViewItemOptions, null, false);
+				//row = LayoutInflater.From(_context).Inflate(Resource.Layout.ListViewItemOptions, null, false);
 			}
-			TextView itemNameTextView = row.FindViewById<TextView>(Resource.Id.listViewItemOptionsItemName);
-			itemNameTextView.Text = Items[position];
+			//TextView itemNameTextView = row.FindViewById<TextView>(Resource.Id.listViewItemOptionsItemName);
+			//itemNameTextView.Text = Items[position];
 
 			return row;
 		}

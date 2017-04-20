@@ -11,14 +11,16 @@ namespace ComPact.Services
 	{
 		readonly IApiService _apiService;
 		readonly IAssignmentRepository _assignmentRepository;
+		readonly IMemberRepository _memberRespository;
 		readonly IDialogService _dialogService;
 		readonly IRepositoryMapper _mapper;
 
-		public AssignmentDataService(IApiService apiService, IAssignmentRepository assignmentRepository, IDialogService dialogService, IRepositoryMapper mapper)
+		public AssignmentDataService(IApiService apiService, IAssignmentRepository assignmentRepository, IMemberRepository memberRepository, IDialogService dialogService, IRepositoryMapper mapper)
 		{
 			_apiService = apiService;
 			_assignmentRepository = assignmentRepository;
 			_dialogService = dialogService;
+			_memberRespository = memberRepository;
 			_mapper = mapper;
 		}
 
@@ -29,9 +31,24 @@ namespace ComPact.Services
 			return _mapper.Map(await _assignmentRepository.Insert(data));
 			
 		}
-		public async Task<IEnumerable<Assignment>> GetAll()
+		public async Task<IEnumerable<Assignment>> GetAll(bool isAdmin)
 		{
-			return _mapper.Map(await _assignmentRepository.All());
+			IEnumerable<Assignment> assignments  = _mapper.Map(await _assignmentRepository?.All());
+			if (isAdmin)
+			{
+				IEnumerable<Member> members = _mapper.Map(await _memberRespository?.All());
+				foreach (var assignment in assignments)
+				{
+					foreach (var member in members)
+					{
+						if (assignment.Member.Id == member.Id)
+						{
+							assignment.Member = member;
+						}
+					}
+				}
+			}
+			return assignments;
 		}
 
 		public async Task<IEnumerable<Assignment>> GetAll(string userId, bool isAdmin)
@@ -39,7 +56,7 @@ namespace ComPact.Services
 			IEnumerable<Assignment> response = await _apiService.GetAssignments(userId, isAdmin);
 			IEnumerable<RepoAssignment> data = _mapper.InvertMap(response);
 			await _assignmentRepository.Insert(data);
-			return await GetAll();
+			return await GetAll(isAdmin);
 		}
 		public async Task<IEnumerable<Assignment>> GetAllUnfinished()
 		{

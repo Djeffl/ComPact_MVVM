@@ -115,6 +115,7 @@ namespace ComPact.Assignments
 
 		#endregion
 		#region Commands
+		public RelayCommand<Assignment> GetAssignmentCommand { get; set; }
 		public RelayCommand<Assignment> UpdateAssignmentCommand { get; set; }
 		public RelayCommand BackRedirectCommand { get; set; }
 		public RelayCommand<Member> MemberSelectedCommand { get; set; }
@@ -147,6 +148,10 @@ namespace ComPact.Assignments
 		}
 		void RegisterCommands()
 		{
+			GetAssignmentCommand = new RelayCommand<Assignment>(assignment =>
+			{
+				Assignment = assignment;
+			});
 			UpdateAssignmentCommand = new RelayCommand<Assignment>(async (assignment) =>
 			{
 				await UpdateAssignment(assignment);

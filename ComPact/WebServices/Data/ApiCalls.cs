@@ -13,6 +13,7 @@ namespace ComPact.WebServices.Data
 		public const string LoginTokenPath = "/api/users/login";
 
 		public const string CreateAssignmentPath = "/api/assignments/create";
+		public const string CreateMemberPath = "/api/users/addmember";
 
 	}
 }

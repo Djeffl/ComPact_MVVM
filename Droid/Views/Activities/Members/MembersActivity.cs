@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using Android.App;
 using Android.OS;
 using Android.Support.Design.Widget;
@@ -21,6 +22,8 @@ namespace ComPact.Droid.Members
 		ImageView _backImageView;
 		ImageView _OptionsImageView;
 		TextView _titleTextView;
+
+		ListView _memberListView;
 		FloatingActionButton _addMemberFloatingActionButton;
 
 		//Bind Viewmodel to activity
@@ -31,6 +34,20 @@ namespace ComPact.Droid.Members
 				return App.Locator.MembersViewModel;
 			}
 		}
+		//Parameters
+		ObservableCollection<Member> _members;
+		public ObservableCollection<Member> Members
+		{
+			get
+			{
+				return _members;
+			}
+			set
+			{
+				_members = value;
+				SetListViewAdapter();
+			}
+		}
 		#region OnCreate
 		protected override void OnCreate(Bundle savedInstanceState)
 		{
@@ -39,6 +56,7 @@ namespace ComPact.Droid.Members
 			SetContentView(Resource.Layout.ActivityMembers);
 
 			//Init elements
+			FindViews();
 			Init();
 			_OptionsImageView.Visibility = ViewStates.Gone;
 			_titleTextView.Text = "Members";
@@ -49,14 +67,27 @@ namespace ComPact.Droid.Members
 			//Use Commands
 			SetCommands();
 		}
+		protected override void OnResume()
+		{
+			base.OnResume();
+			ViewModel.LoadDataCommand?.Execute(null);
+		}
 		/**
 		 * Init Views
 		 */
-		void Init()
+		void FindViews()
 		{
 			_backImageView = FindViewById<ImageView>(Resource.Id.customToolbarBackImageView);
 			_OptionsImageView = FindViewById<ImageView>(Resource.Id.customToolbarOptionsImageView);
 			_titleTextView = FindViewById<TextView>(Resource.Id.customToolbarTitleTextView);
+
+			_memberListView = FindViewById<ListView>(Resource.Id.activityMembersMemberListView);
+			_addMemberFloatingActionButton = FindViewById<FloatingActionButton>(Resource.Id.activityMembersAddMemberFloatingActionButton);
+		}
+
+		void Init()
+		{
+			
 		}
 
 		/**
@@ -64,8 +95,7 @@ namespace ComPact.Droid.Members
 		 */
 		void SetBindings()
 		{
-			_backImageView = FindViewById<ImageView>(Resource.Id.customToolbarBackImageView);
-			_addMemberFloatingActionButton = FindViewById<FloatingActionButton>(Resource.Id.activityMembersAddMemberFloatingActionButton);
+			bindings.Add(this.SetBinding(() => ViewModel.Members,() => Members, BindingMode.OneWay));
 		}
 
 		/**
@@ -75,6 +105,21 @@ namespace ComPact.Droid.Members
 		{
 			_backImageView.SetCommand("Click", ViewModel.BackRedirectCommand);
 			_addMemberFloatingActionButton.SetCommand("Click", ViewModel.AddMembersRedirectCommand);
+		}
+		void SetListViewAdapter()
+		{
+			_memberListView.Adapter = ViewModel.Members.GetAdapter(GetMembersAdapter);
+		}
+		View GetMembersAdapter(int position, Member member, View convertView)
+		{
+			// Not reusing views here
+			LayoutInflater inflater = LayoutInflater.From(Application.Context);
+			convertView = inflater.Inflate(Resource.Layout.ListViewSimpleListview, null);
+			TextView textView = convertView.FindViewById<TextView>(Resource.Id.listViewSimpleListviewTextView);
+
+			textView.Text = member.FullName();
+
+			return convertView;
 		}
 		#endregion
 	}

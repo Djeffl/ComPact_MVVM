@@ -41,6 +41,8 @@ namespace ComPact.Payments
 		public RelayCommand EditPaymentRedirectCommand { get; set; }
 		public RelayCommand BackRedirectCommand { get; set; }
 		public RelayCommand DeletePaymentCommand { get; set; }
+		public RelayCommand LoadDataCommand { get; set; }
+		public RelayCommand<Payment> SetPaymentCommand { get; set; }
 		#endregion
 		#region Constructor
 		public DetailPaymentViewModel(INavigationService navigationService, IUserDataService userDataService, IPaymentDataService paymentDataService, IPopUpService popUpService, IDialogService dialogService)
@@ -67,17 +69,25 @@ namespace ComPact.Payments
 			{
 				await DeletePayment();
 			});
+			LoadDataCommand = new RelayCommand(async () =>
+			{
+				await LoadData();
+			});
+			SetPaymentCommand = new RelayCommand<Payment>((payment) =>
+			{
+				SetPayment(payment);
+			});
 		}
 
 		#endregion
 		#region Methods
 		void EditPaymentRedirect()
 		{
-			_navigationService.NavigateTo(LocatorViewModel.EditPaymentPageKey);
+			_navigationService.NavigateTo(LocatorViewModel.EditPaymentPageKey, Payment);
 		}
 		async Task DeletePayment()
 		{
-			var result = await _dialogService.ShowMessage("Are you sure?", "test");
+			var result = await _dialogService.ShowMessage("Are you sure?", "Delete Payment");
 
 			if (result)
 			{
@@ -85,6 +95,15 @@ namespace ComPact.Payments
 				_navigationService.GoBack();
 				_popUpService.Show("Payment successfully deleted!", "long");
 			}
+		}
+		void SetPayment(Payment payment)
+		{
+			Payment = payment;
+		}
+
+		async Task LoadData()
+		{
+			Payment = await _paymentDataService.Get(Payment.Id);
 		}
 		#endregion
 	}

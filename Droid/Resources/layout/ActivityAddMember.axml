@@ -16,43 +16,43 @@
             android:inputType="textPersonName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/activityAddMemberFirstNameTextView"
+            android:id="@+id/activityAddMemberFirstNameEditText"
             android:hint="Firstname" />
         <EditText
             android:inputType="textPersonName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/activityAddMemberLastNameTextView"
+            android:id="@+id/activityAddMemberLastNameEditText"
             android:hint="Lastname" />
         <EditText
             android:inputType="textEmailAddress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/activityAddMemberEmailTextView"
+            android:id="@+id/activityAddMemberEmailEditText"
             android:hint="Email" />
         <EditText
             android:inputType="textPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/activityAddMemberrPasswordTextView"
+            android:id="@+id/activityAddMemberPasswordEditText"
             android:hint="Password" />
         <EditText
             android:inputType="textPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/activityRegisterAddMemberTextView"
+            android:id="@+id/activityAddMemberConfirmPasswordEditText"
             android:hint="Retype password" />
-        <CheckBox
+    <!--<CheckBox
             android:id="@+id/activityRegisterIsAdminCheckBox"
             android:text="Admin"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content" />-->
         <Button
             android:theme="@style/main_button"
             android:text="Sign up!"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/activityRegisterRegisterButton"
+            android:id="@+id/activityAddMemberRegisterButton"
             android:background="#ff4b88be"
             android:textAllCaps="false" />
     </LinearLayout>

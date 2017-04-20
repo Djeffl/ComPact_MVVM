@@ -8,7 +8,7 @@ namespace ComPact
 	public interface IAssignmentDataService
 	{
 		Task<Assignment> Create(Assignment assignment);
-		Task<IEnumerable<Assignment>> GetAll();
+		Task<IEnumerable<Assignment>> GetAll(bool isAdmin);
 		Task<IEnumerable<Assignment>> GetAll(string userId, bool isAdmin);
 		Task<Assignment> Update(Assignment assignment);
 		Task<IEnumerable<Assignment>> GetAllUnfinished();

@@ -39,7 +39,8 @@ namespace ComPact.Payments
 		#region Commands
 		public RelayCommand EditPaymentRedirectCommand { get; set; }
 		public RelayCommand BackRedirectCommand { get; set; }
-		public RelayCommand<Payment> UpdatePaymentCommand { get; set; }
+		public RelayCommand UpdatePaymentCommand { get; set; }
+		public RelayCommand<Payment> SetPaymentCommand { get; set; }
 
 		#endregion
 		#region Constructor
@@ -63,11 +64,14 @@ namespace ComPact.Payments
 		{
 			BackRedirectCommand = new RelayCommand(_navigationService.GoBack);
 			EditPaymentRedirectCommand = new RelayCommand(EditPaymentRedirect);
-			UpdatePaymentCommand = new RelayCommand<Payment>(async payment =>
+			UpdatePaymentCommand = new RelayCommand(async () =>
 			{
-				await UpdatePayment(payment);
+				await UpdatePayment();
 			});
-
+			SetPaymentCommand = new RelayCommand<Payment>((payment) =>
+			{
+				Payment = payment;
+			});
 		}
 
 	#endregion
@@ -76,14 +80,14 @@ namespace ComPact.Payments
 		{
 			_navigationService.NavigateTo(LocatorViewModel.EditPaymentPageKey);
 		}
-		async Task UpdatePayment(Payment payment)
+		async Task UpdatePayment()
 		{
 			try
 			{
-				await _paymentDataService.Update(payment);
+				await _paymentDataService.Update(Payment);
 				_popUpService.Show("Payment successfully updated!", "long");
 				//TODO NAVIGEER TERUG
-				_navigationService.NavigateTo(LocatorViewModel.HomePageKey);
+				_navigationService.GoBack();
 			}
 			catch (Exception ex)
 			{

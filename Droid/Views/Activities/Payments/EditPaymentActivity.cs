@@ -31,7 +31,7 @@ namespace ComPact.Droid.Payments
 			}
 		}
 
-		Payment _payment;
+		Payment _payment = new Payment();
 		public Payment Payment
 		{
 			get
@@ -50,6 +50,10 @@ namespace ComPact.Droid.Payments
 		ImageView _backImageView;
 		TextView _titleTextView;
 		ImageView _optionsImageView;
+
+		EditText _titleEditText;
+		EditText _priceEditText;
+		EditText _detailsEditText;
 		FloatingActionButton _SavePaymentFloatingActionButton;
 
 		//Bind Viewmodel to activity
@@ -60,14 +64,13 @@ namespace ComPact.Droid.Payments
 				return App.Locator.EditPaymentViewModel;
 			}
 		}
+
 		#region OnCreate
 		protected override void OnCreate(Bundle savedInstanceState)
 		{
 			base.OnCreate(savedInstanceState);
 			//Set Lay out
 			SetContentView(Resource.Layout.ActivityAddPayment);
-
-			Payment = Nav.GetAndRemoveParameter<Payment>(Intent);
 
 			//Find views
 			FindViews();
@@ -81,6 +84,7 @@ namespace ComPact.Droid.Payments
 			//Use Commands
 			SetCommands();
 		}
+
 		/**
 		 * Init Views
 		 */
@@ -90,21 +94,26 @@ namespace ComPact.Droid.Payments
 			_optionsImageView = FindViewById<ImageView>(Resource.Id.customToolbarOptionsImageView);
 			_titleTextView = FindViewById<TextView>(Resource.Id.customToolbarTitleTextView);
 
+			_titleEditText = FindViewById<EditText>(Resource.Id.activityAddPaymentWhatEditText);
+			_priceEditText = FindViewById<EditText>(Resource.Id.activityAddPaymentPriceEditText);
+			_detailsEditText = FindViewById<EditText>(Resource.Id.activityAddPaymentDetailsEditText);
 			_SavePaymentFloatingActionButton = FindViewById<FloatingActionButton>(Resource.Id.activityAddPaymentFloatingActionButton);
-
 		}
 
 		void Init()
 		{
+			Payment = Nav.GetAndRemoveParameter<Payment>(Intent);
+			ViewModel.SetPaymentCommand.Execute(Payment);
 		}
-
 
 		/**
 		 * Set the bindings of this activity
 		 */
 		void SetBindings()
 		{
-			bindings.Add(this.SetBinding(() => Payment, () => Payment));
+			bindings.Add(this.SetBinding(() => ViewModel.Payment.Name, () => _titleEditText.Text, BindingMode.TwoWay));
+			bindings.Add(this.SetBinding(() => ViewModel.Payment.Price, () => _priceEditText.Text, BindingMode.TwoWay));
+			bindings.Add(this.SetBinding(() => ViewModel.Payment.Description, () => _detailsEditText.Text, BindingMode.TwoWay));
 		}
 
 		/**

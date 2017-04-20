@@ -127,9 +127,9 @@ namespace ComPact.Droid.Assignments
 			//};
 			SetIconRecyclerView();
 			//Init elements
+			FindViews();
 			Init();
-			_optionsImageView.Visibility = ViewStates.Gone;
-			_titleTextView.Text = "Edit Task";
+
 			//bindings
 			SetBindings();
 
@@ -139,7 +139,7 @@ namespace ComPact.Droid.Assignments
 		/**
 		 * Init Views
 		 */
-		void Init()
+		void FindViews()
 		{
 			_backImageView = FindViewById<ImageView>(Resource.Id.customToolbarBackImageView);
 			_optionsImageView = FindViewById<ImageView>(Resource.Id.customToolbarOptionsImageView);
@@ -188,7 +188,14 @@ namespace ComPact.Droid.Assignments
 			//};
 
 		}
-
+		void Init()
+		{
+			//Edit header
+			_optionsImageView.Visibility = ViewStates.Gone;
+			_titleTextView.Text = "Edit Task";
+			//
+			ViewModel.GetAssignmentCommand.Execute(Assignment);
+		}
 
 
 		/**
@@ -198,9 +205,10 @@ namespace ComPact.Droid.Assignments
 		{
 			bindings.Add(this.SetBinding(() => ViewModel.Members, () => Members));
 
-			//bindings.Add(this.SetBinding(() => ViewModel.Members, () => Members));
-			//bindings.Add(this.SetBinding(() => ViewModel.AssignmentsOptions, () => Assignments));
-			//bindings.Add(this.SetBinding(() => ViewModel.Description, () => _descriptionEditText.Text, BindingMode.TwoWay));
+			bindings.Add(this.SetBinding(() => ViewModel.Assignment.Description, () => _descriptionEditText.Text, BindingMode.TwoWay));
+			bindings.Add(this.SetBinding(() => ViewModel.Assignment.IconName, () => IconName));
+			bindings.Add(this.SetBinding(() => ViewModel.Assignment.ItemName, () => _itemNameEditText.Text, BindingMode.TwoWay));
+			//bindings.Add(this.SetBinding(() => ViewModel.Assignment.Member, () => Member, BindingMode.TwoWay));
 
 			//binding = this.SetBinding(() => ViewModel.User, () => items[_membersListView.SelectedItemPosition], BindingMode.TwoWay);
 		}
@@ -210,19 +218,19 @@ namespace ComPact.Droid.Assignments
 		 */
 		void SetCommands()
 		{
-			//_addTaskFloatingActionButton.SetCommand("Click", ViewModel.CreateTaskCommand);
-			_addTaskFloatingActionButton.Click += (sender, e) =>
-			{
-				var assignment = new Assignment()
-				{
-					//MemberId = Assignment.MemberId,
-					ItemName = _itemNameEditText.Text,
-					Description = _descriptionEditText.Text,
-					IconName = ViewModel.IconName,
-					Id = Assignment.Id
-				};
-				ViewModel.UpdateAssignmentCommand.Execute(assignment);
-			};
+			_addTaskFloatingActionButton.SetCommand("Click", ViewModel.UpdateAssignmentCommand);
+			//_addTaskFloatingActionButton.Click += (sender, e) =>
+			//{
+			//	var assignment = new Assignment()
+			//	{
+			//		//MemberId = Assignment.MemberId,
+			//		ItemName = _itemNameEditText.Text,
+			//		Description = _descriptionEditText.Text,
+			//		IconName = ViewModel.IconName,
+			//		Id = Assignment.Id
+			//	//};
+			//	ViewModel.UpdateAssignmentCommand.Execute(assignment);
+			//};
 			_backImageView.SetCommand("Click", ViewModel.BackRedirectCommand);
 			//_addTaskFloatingActionButton.SetCommand("Click", ViewModel.UpdateAssignmentCommand);
 			//_itemNameSpinner.SetCommand("OnItemSelectedListener", ViewModel.Test?.Execute(

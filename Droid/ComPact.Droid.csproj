@@ -303,8 +303,6 @@
     <AndroidResource Include="Resources\drawable-mdpi\ic_add_white_24dp.png" />
     <AndroidResource Include="Resources\layout\ActivityAddMember.axml" />
     <AndroidResource Include="Resources\layout\ListViewAssignment.axml" />
-    <AndroidResource Include="Resources\layout\ListViewItemOptions.axml" />
-    <AndroidResource Include="Resources\layout\ListViewItemOtherOption.axml" />
     <AndroidResource Include="Resources\layout\ListViewPerson.axml" />
     <AndroidResource Include="Resources\drawable-hdpi\ic_check_white_24dp.png" />
     <AndroidResource Include="Resources\drawable-mdpi\ic_check_white_24dp.png" />
@@ -419,6 +417,7 @@
     <AndroidResource Include="Resources\drawable-xhdpi\ic_monetization_on_white_24dp.png" />
     <AndroidResource Include="Resources\drawable-xxhdpi\ic_monetization_on_white_24dp.png" />
     <AndroidResource Include="Resources\drawable-xxxhdpi\ic_monetization_on_white_24dp.png" />
+    <AndroidResource Include="Resources\layout\ListViewSimpleListview.axml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\" />

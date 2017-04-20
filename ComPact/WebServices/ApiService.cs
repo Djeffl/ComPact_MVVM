@@ -59,13 +59,19 @@ namespace ComPact.WebServices
 			return _mapper.Map(response);
 		}
 
+		public async Task<Member> AddMember(Member member)
+		{
+			WebMember data = _mapper.InvertMap(member);
+			WebMember response = await _memberWebService.Create(ApiCalls.CreateMemberPath, data);
+			return _mapper.Map(response);
+		}
 
 		public async Task<IEnumerable<Member>> GetMembers(string adminId)
 		{
 			string url = ApiCalls.BaseUserPath + String.Format("?adminId={0}", adminId);
 			IEnumerable<WebMember> response = await _memberWebService.ReadAll(url);
 			return _mapper.Map(response);
-			
+
 		}
 
 		public Task<Member> GetMember(string adminId)
@@ -146,6 +152,14 @@ namespace ComPact.WebServices
 				
 			}
 			return isSuccessful;
+		}
+
+		public async Task<Payment> UpdatePayment(Payment payment)
+		{
+			string url = ApiCalls.BasePaymentPath + String.Format("/{0}", payment.Id);
+			WebPayment data = _mapper.InvertMap(payment);
+			WebPayment response = await _paymentWebService.Update(url, data);
+			return _mapper.Map(response);
 		}
 	}
 }

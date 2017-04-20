@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using ComPact.Models;
 
@@ -13,6 +13,7 @@ namespace ComPact.WebServices
 		Task<User> LoginUser(User user);
 		Task<User> GetUser(string email);
 
+		Task<Member> AddMember(Member member);
 		Task<Member> GetMember(string adminId);
 		Task<IEnumerable<Member>> GetMembers(string adminId);
 		Task<IEnumerable<Assignment>> GetAssignments(string userId, bool isAdmin);
@@ -21,5 +22,6 @@ namespace ComPact.WebServices
 		Task<Payment> AddPayment(Payment payment);
 		Task<IEnumerable<Payment>> GetPayments(string userId, bool isAdmin);
 		Task<bool> DeletePayment(string paymentId);
+		Task<Payment> UpdatePayment(Payment assignment);
 	}
 }

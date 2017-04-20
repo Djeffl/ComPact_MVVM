@@ -75,16 +75,28 @@ namespace ComPact.Droid.Payments
 
 			//Init elements
 			FindViews();
-			_optionsImageView.Visibility = ViewStates.Gone;
-			_titleTextView.Text = "Detail Payment";
-			//init
-			Init();
+
+			//Get Payment from previous screen & pass to viewmodel
+			Payment payment = Nav.GetAndRemoveParameter<Payment>(Intent);
+			ViewModel.SetPaymentCommand.Execute(payment);
 			//bindings
 			SetBindings();
+			//Init
+			Init();
 			//Use Commands
 			SetCommands();
 
 
+		}
+		protected override void OnResume()
+		{
+			base.OnResume();
+
+			ViewModel.LoadDataCommand.Execute(null);
+
+			_titleTextView.Text = Payment.Name;
+			_detailTextView.Text = Payment.Description;
+			_priceTextView.Text = String.Format(CultureInfo, "{0:C}", Payment.Price);
 		}
 		/**
 		 * Init Views
@@ -103,13 +115,18 @@ namespace ComPact.Droid.Payments
 			_deletePaymentImageView = FindViewById<ImageView>(Resource.Id.activityDetailPaymentDeletePaymentImageView);
 		}
 
+		void Init()
+		{
+			_optionsImageView.Visibility = ViewStates.Gone;
+			_titleTextView.Text = "Detail Payment";
+		}
+
 		/**
 		 * Set the bindings of this activity
 		 */
 		void SetBindings()
 		{
-			bindings.Add(this.SetBinding(() => Payment,() => ViewModel.Payment, BindingMode.TwoWay));
-			//bindings.Add(this.SetBinding(() => ViewModel.Payment, () => Payment, BindingMode.TwoWay));
+			bindings.Add(this.SetBinding(() => ViewModel.Payment,() => Payment, BindingMode.OneWay));
 		}
 
 		/**
@@ -120,13 +137,6 @@ namespace ComPact.Droid.Payments
 			_backImageView.SetCommand("Click", ViewModel.BackRedirectCommand);
 			_deletePaymentImageView.SetCommand("Click", ViewModel.DeletePaymentCommand);
 			_editFloatingActionButton.SetCommand("Click", ViewModel.EditPaymentRedirectCommand);
-		}
-		void Init()
-		{
-			Payment = Nav.GetAndRemoveParameter<Payment>(Intent);
-			_titleTextView.Text = Payment.Name;
-			_detailTextView.Text = Payment.Description;
-			_priceTextView.Text = String.Format(CultureInfo, "{0:C}",Payment.Price);
 		}
 		#endregion
 	}

@@ -76,9 +76,17 @@ namespace ComPact
 			await _paymentRepository.Delete(await _paymentRepository?.All());
 		}
 
-		public Task<Payment> Update(Payment payment)
+		public async Task<Payment> Update(Payment payment)
 		{
-			throw new NotImplementedException();
+			Payment response = await _apiService.UpdatePayment(payment);
+			RepoPayment data = _mapper.InvertMap(response);
+			await _paymentRepository.Update(data);
+			return response;
+		}
+
+		public async Task<Payment> Get(string paymentId)
+		{
+			return _mapper.Map(await _paymentRepository.Get(paymentId));
 		}
 	}
 }

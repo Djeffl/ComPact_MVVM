@@ -20,79 +20,7 @@ namespace ComPact
 		/**
 		 * Parameters
 		 */
-		private string _firstName;
-		public string FirstName
-		{
-			get
-			{
-				return _firstName;
-			}
-			set
-			{
-				Set(ref _firstName, value);
-			}
-		}
-		private string _lastName;
-		public string LastName
-		{
-			get
-			{
-				return _lastName;
-			}
-			set
-			{
-				Set(ref _lastName, value);
-			}
-		}
-		private string _email;
-		public string Email
-		{
-			get
-			{
-				return _email;
-			}
-			set
-			{
-				Set(ref _email, value);
-			}
-		}
-		private string _password;
-		public string Password
-		{
-			get
-			{
-				return _password;
-			}
-			set
-			{
-				Set(ref _password, value);
-			}
-		}
-		private string _confirmPassword;
-		public string ConfirmPassword
-		{
-			get
-			{
-				return _confirmPassword;
-			}
-			set
-			{
-				Set(ref _confirmPassword, value);
-			}
-		}
-		private bool _admin;
-		public bool Admin
-		{
-			get
-			{
-				return _admin;
-			}
-			set
-			{
-				Set(ref _admin, value);
-			}
-		}
-		private Registration _registration;
+		Registration _registration = new Registration();
 		public Registration Registration
 		{
 			get
@@ -101,50 +29,41 @@ namespace ComPact
 			}
 			set
 			{
-				Set(ref _registration, value);
+				_registration = value;
+                RaisePropertyChanged(nameof(Registration));
 			}
 		}
 		#endregion
 		#region Commands
-		private RelayCommand _registerUserAsyncCommand;
-		public RelayCommand RegisterUserAsyncCommand
-		{
-			get
-			{
-				if (_registerUserAsyncCommand == null)
-				{
-					return _registerUserAsyncCommand
-						?? (_registerUserAsyncCommand = new RelayCommand(
-							async () =>
-							{
-								await RegisterUserAsync();
-							}));
-				}
-				return _registerUserAsyncCommand;
-			}
-		}
-
-		private RelayCommand _backRedirectCommand;
-		public RelayCommand BackRedirectCommand
-		{
-			get
-			{
-				if (_backRedirectCommand == null)
-				{
-					return _backRedirectCommand = new RelayCommand(BackRedirect);
-				}
-				return _backRedirectCommand;
-			}
-		}
+		//private RelayCommand _registerUserAsyncCommand;
+		//public RelayCommand RegisterUserAsyncCommand
+		//{
+		//	get
+		//	{
+		//		if (_registerUserAsyncCommand == null)
+		//		{
+		//			return _registerUserAsyncCommand
+		//				?? (_registerUserAsyncCommand = new RelayCommand(
+		//					async () =>
+		//					{
+		//						await RegisterUser();
+		//					}));
+		//		}
+		//		return _registerUserAsyncCommand;
+		//	}
+		//}
+		public RelayCommand RegisterUserCommand{get;set;}
+		public RelayCommand BackRedirectCommand { get; set; }
 		#endregion
 
 		#region Constructor
-		public RegisterViewModel(INavigationService navigationService, IUserDataService userDataService, IAuthenticationService authenticationService, IDialogService dialogService)
+		public RegisterViewModel(INavigationService navigationService, IUserDataService userDataService, IAuthenticationService authenticationService, IDialogService dialogService, IPopUpService popUpService)
 			:base(userDataService)
 		{
 			_authenticationService = authenticationService;
 			_navigationService = navigationService;
 			_dialogService = dialogService;
+			_popUpService = popUpService;
 
 			Init();
 		}
@@ -158,35 +77,24 @@ namespace ComPact
 
 		void RegisterCommands()
 		{
-
+			RegisterUserCommand = new RelayCommand(async () =>
+			{
+				await RegisterUser();
+			});
+			BackRedirectCommand = new RelayCommand(BackRedirect);
 		}
 		#endregion
 
 		#region Methods
-		/**
-		 * Normaal gezien wil ik dat deze functie een registeration parameter krijgt dat doorgegeven wordt pas op de onclick
-		 * Dit blijkt niet mogelijk te zijn aangezien enkel een binding dynamisch zijn waarden aanpast in een setCommand 
-		 * Een binding is enkel mogelijk door visuals te koppelen aan waarden imo
-		 */
-		async Task RegisterUserAsync()
+		async Task RegisterUser()
 		{
-			_registration = new Registration()
+			if (!(string.IsNullOrEmpty(Registration.Email) && string.IsNullOrEmpty(Registration.FirstName) && string.IsNullOrEmpty(Registration.LastName) && string.IsNullOrEmpty(Registration.Password) && string.IsNullOrEmpty(Registration.ConfirmPassword))) // && admin != null)
 			{
-				FirstName = FirstName,
-				LastName = LastName,
-				Email = Email,
-				Password = Password,
-				ConfirmPassword = ConfirmPassword,
-				Admin = true
-			};
-			if (_registration.Email != null && _registration.FirstName != null && _registration.LastName != null && _registration.Password != null && _registration.ConfirmPassword != null) // && admin != null)
-			{
-				if (EmailIsValid(_registration.Email))
+				if (EmailIsValid(Registration.Email))
 				{
-
-					if (_registration.Password == _registration.ConfirmPassword)
+					if (Registration.Password == Registration.ConfirmPassword)
 					{
-						bool isSuccessful = await _authenticationService.Register(_registration.FirstName, _registration.LastName, _registration.Email, _registration.Password, _registration.Admin);
+						bool isSuccessful = await _authenticationService.Register(Registration.FirstName, Registration.LastName, Registration.Email, Registration.Password, Registration.Admin);
 						if (isSuccessful)
 						{
 							_popUpService.Show("You succesfully created an account!", "long"); 

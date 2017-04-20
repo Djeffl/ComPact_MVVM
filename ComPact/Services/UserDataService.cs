@@ -42,6 +42,5 @@ namespace ComPact
 		{
 			return _repositoryMapper.Map((await _userRepository.All())?.FirstOrDefault());
 		}
-
 	}
 }
