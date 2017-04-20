@@ -84,7 +84,7 @@ namespace ComPact.Payments
 					Id = memberId
 				};
 				await _paymentDataService.Create(Payment);
-				_popUpService.Show("Payment succesfully created", "long");
+				_popUpService.Show("Payment succesfully created", PopUpLength.Long);
 			}
 			catch (ArgumentException)
 			{

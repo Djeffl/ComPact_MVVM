@@ -85,7 +85,7 @@ namespace ComPact.Payments
 			try
 			{
 				await _paymentDataService.Update(Payment);
-				_popUpService.Show("Payment successfully updated!", "long");
+				_popUpService.Show("Payment successfully updated!", PopUpLength.Long);
 				//TODO NAVIGEER TERUG
 				_navigationService.GoBack();
 			}

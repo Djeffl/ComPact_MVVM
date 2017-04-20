@@ -3,6 +3,6 @@ namespace ComPact.Helpers
 {
 	public interface IPopUpService
 	{
-		void Show(string message, string length);
+		void Show(string message, PopUpLength length);
 	}
 }

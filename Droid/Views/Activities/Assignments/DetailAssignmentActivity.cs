@@ -16,7 +16,7 @@ using Microsoft.Practices.ServiceLocation;
 
 namespace ComPact.Droid
 {
-	[Activity(Label = "DetailAssignmentActivity")]
+	[Activity]
 	public class DetailAssignmentActivity : BaseActivity
 	{
 
@@ -43,7 +43,6 @@ namespace ComPact.Droid
 			}
 			set
 			{
-				bindings.Add(this.SetBinding(() => ViewModel.Member, () => Member));
 				_user = value;
 				bindings.Add(this.SetBinding(() => ViewModel.User.Admin, () => _editTaskFloatingActionButton.Visibility).ConvertSourceToTarget((arg) =>
 				{
@@ -59,23 +58,6 @@ namespace ComPact.Droid
 				}));
 			}
 		}
-		Member _member;
-		public Member Member
-		{
-			get
-			{
-				return _member;
-			}
-			set
-			{
-				_member = value;
-				if (_member != null)
-				{
-					_PersonNameTextView.Text = Member.FullName();
-					_PersonEmailTextView.Text = Member.Email;
-				}
-			}
-		}
 		Assignment _assignment;
 		public Assignment Assignment
 		{
@@ -86,6 +68,7 @@ namespace ComPact.Droid
 			set
 			{
 				_assignment = value;
+				FillView();
 			}
 		}
 		ImageView _backImageView;
@@ -96,7 +79,6 @@ namespace ComPact.Droid
 		TextView _itemNameTextView;
 		ImageView _deleteImageView;
 		TextView _descriptionTextView;
-
 
 		TextView _memberTextView;
 		LinearLayout _memberLinearLayout;
@@ -111,6 +93,7 @@ namespace ComPact.Droid
 				return App.Locator.DetailAssignmentViewModel;
 			}
 		}
+
 		#region OnCreate
 		protected override void OnCreate(Bundle savedInstanceState)
 		{
@@ -118,25 +101,28 @@ namespace ComPact.Droid
 			//Set Lay out
 			SetContentView(Resource.Layout.ActivityDetailAssignment);
 
-
-			Assignment = Nav.GetAndRemoveParameter<Assignment>(Intent);
-			ViewModel.GetUserCommand.Execute(null);
-			ViewModel.GetMemberCommand.Execute(Assignment.Member.Id);
-			ViewModel.Assignment = Assignment;
-
-			//Init elements
+			//Find views elements
+			FindViews();
+			//Init Elements
 			Init();
-			_optionsImageView.Visibility = ViewStates.Gone;
-			_titleTextView.Text = "Task";
+
 			//bindings
 			SetBindings();
 			//Use Commands
 			SetCommands();
 		}
+
+		protected override void OnResume()
+		{
+			base.OnResume();
+
+			ViewModel.LoadDataCommand.Execute(null);
+		}
+
 		/**
 		 * Init Views
 		 */
-		void Init()
+		void FindViews()
 		{
 			_backImageView = FindViewById<ImageView>(Resource.Id.customToolbarBackImageView);
 			_optionsImageView = FindViewById<ImageView>(Resource.Id.customToolbarOptionsImageView);
@@ -152,39 +138,17 @@ namespace ComPact.Droid
 			_PersonEmailTextView = FindViewById<TextView>(Resource.Id.activityDetailAssignmentPersonEmailTextView);
 			_editTaskFloatingActionButton = FindViewById<FloatingActionButton>(Resource.Id.activityDetailAssignmentEditTaskFloatingActionButton);
 			_deleteImageView = FindViewById<ImageView>(Resource.Id.activityDetailAssignmentDeleteImageView);
-
-			//FILL UP 
-			_itemNameTextView.Text = Assignment.ItemName;
-			_descriptionTextView.Text = Assignment.Description != null ? Assignment.Description : "No description was given.";
-			_iconImageView.SetImageResource(_iconList.FindByName(Assignment.IconName).IconId);
-
-
-
-			//SET MEMBERS & ASSIGNMENTS ITEMS
-			/**
-			 * this will execute an async method
-			 * when async finished, create+set listadapter
-			 */
-			ViewModel.GetUserCommand?.Execute(null);
-
-
-			//Create custom adapter and assign to listview
-			//_membersListView.ItemSelected += (sender, e) =>
-			//{
-			//	//ViewModel.ItemNameCommand?.Execute(e.Position);
-
-			//};
-
-			// ListView Item Click Listener
-			//_membersListView.ItemClick += (object sender, AdapterView.ItemClickEventArgs e) =>
-			//{
-			//	String selectedFromList = (string)_membersListView.GetItemAtPosition(e.Position);
-			//	Toast.MakeText(Application.Context, selectedFromList, ToastLength.Long).Show();
-			//};
-
 		}
 
+		void Init()
+		{
+			//Get Payment from previous screen & pass to viewmodel
+			Assignment assignment = Nav.GetAndRemoveParameter<Assignment>(Intent);
+			ViewModel.SetAssignmentCommand.Execute(assignment);
 
+			_optionsImageView.Visibility = ViewStates.Gone;
+			_titleTextView.Text = "Task";
+		}
 
 		/**
 		 * Set the bindings of this activity
@@ -192,9 +156,6 @@ namespace ComPact.Droid
 		void SetBindings()
 		{
 			bindings.Add(this.SetBinding(() => ViewModel.Assignment, () => Assignment, BindingMode.TwoWay));
-			bindings.Add(this.SetBinding(() => ViewModel.User, () => User));
-
-			//binding = this.SetBinding(() => ViewModel.User, () => items[_membersListView.SelectedItemPosition], BindingMode.TwoWay);
 		}
 
 		/**
@@ -205,19 +166,15 @@ namespace ComPact.Droid
 			_editTaskFloatingActionButton.SetCommand("Click", ViewModel.EditRedirectCommand);
 			_backImageView.SetCommand("Click", ViewModel.BackRedirectCommand);
 			_deleteImageView.SetCommand("Click", ViewModel?.DeleteAssignmentCommand);
-			//_membersListView.SetCommand("Click", ViewModel.CreateUserCommand, binding);
-			//_itemNameSpinner.SetCommand("OnItemSelectedListener", ViewModel.Test?.Execute(
-			//	(TextView)_itemNameSpinner.SelectedView).Text
-			//);
-
 		}
-
-		//void Test()
-		//{
-		//	ViewModel.ItemNameCommand?.Execute(
-		//		 ((TextView)_itemNameSpinner.SelectedView).Text
-		//	);
-		//}
+		void FillView()
+		{
+			_PersonNameTextView.Text = Assignment.Member.FullName();
+			_PersonEmailTextView.Text = Assignment.Member.Email;
+			_itemNameTextView.Text = Assignment.ItemName;
+			_descriptionTextView.Text = Assignment.Description != null ? Assignment.Description : "No description was given.";
+			_iconImageView.SetImageResource(_iconList.FindByName(Assignment.IconName).IconId);
+		}
 		#endregion
 	}
 }

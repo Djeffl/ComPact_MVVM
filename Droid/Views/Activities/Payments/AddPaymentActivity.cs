@@ -111,11 +111,12 @@ namespace ComPact.Droid
 			_addPictureImageView.Click += BtnCamera_click;
 
 			//Directory for image
-			//_imageDirectory = new File(Android.OS.Environment.GetExternalStoragePublicDirectory(Android.OS.Environment.DirectoryPictures), "payments");
-			//if (!_imageDirectory.Exists())
-			//{
-			//	_imageDirectory.Mkdirs();
-			//}s
+			_imageDirectory = new File(Android.OS.Environment.GetExternalStoragePublicDirectory(Android.OS.Environment.DirectoryPictures), "payments");
+			if (!_imageDirectory.Exists())
+			{
+				_imageDirectory.Mkdirs();
+
+			}
 		}
 
 
@@ -221,11 +222,11 @@ namespace ComPact.Droid
 				// Continue only if the File was successfully created
 				if (photoFile != null)
 				{
-					//var photoURI = FileProvider.GetUriForFile(this, "be.x3factr.compact.fileprovider", photoFile);
-					Java.Net.URI photoUri = photoFile.ToURI();
+					var photoURI = FileProvider.GetUriForFile(this, this.PackageName + ".fileprovider", photoFile);
+					//Java.Net.URI photoUri = photoFile.ToURI();
 					FileSystem system = new FileSystem();
 
-					takePictureIntent.PutExtra(MediaStore.ExtraOutput, _currentImageFilePath);//photoUri); //photoURI);
+					takePictureIntent.PutExtra(MediaStore.ExtraOutput, photoURI);//_currentImageFilePath);//photoUri); //photoURI);
 
 					StartActivityForResult(takePictureIntent, 1);
 				}

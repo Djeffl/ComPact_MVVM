@@ -203,7 +203,7 @@ namespace ComPact.Members
 			//catch (Exception ex)
 			//{
 			//}
-			_popUpService.Show("Task succesfully created!", "long");
+			_popUpService.Show("Task succesfully created!", PopUpLength.Long);
 		}
 
 		async Task CreateAssignment(Assignment assignment)
@@ -219,7 +219,7 @@ namespace ComPact.Members
 			{
 				Debug.WriteLine(ex);
 			}
-			_popUpService.Show("Task succesfully created!", "long");
+			_popUpService.Show("Task succesfully created!", PopUpLength.Long);
 		}
 
 		public async Task GetMembers()

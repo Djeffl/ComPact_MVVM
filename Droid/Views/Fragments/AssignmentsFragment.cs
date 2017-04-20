@@ -33,7 +33,7 @@ namespace ComPact.Droid.Fragments
 			set
 			{
 				_assignments = value;
-				SetMemberListView();
+				SetAssignmentsListView();
 
 			}
 		}
@@ -77,74 +77,42 @@ namespace ComPact.Droid.Fragments
 
 			HandleEvents();
 
-
 			//Data & services
 			SetBindings();
 			SetCommands();
 
-			//items = new List<Assignment>();
-			//items.Add(new Assignment() { ItemName = "item 1" });
-			//items.Add(new Assignment() { ItemName = "item 2" });
-			//items.Add(new Assignment() { ItemName = "item 3" });
-
-			//var adapter = new AdapterAssignment(Application.Context, items);
-			// Assign adapter to ListView
-			//_tasksListView.Adapter = adapter;
-
-		
-
 			// ListView Item Click Listener
-			_tasksListView.ItemClick += (object sender, AdapterView.ItemClickEventArgs e) =>
-			{
-				String selectedFromList = (string)_tasksListView.GetItemAtPosition(e.Position);
-				Toast.MakeText(Application.Context, selectedFromList, ToastLength.Long).Show();
-				ViewModel.AssignmentsPostionCommand?.Execute(e.Position);
-			};
+			//_tasksListView.ItemClick += (object sender, AdapterView.ItemClickEventArgs e) =>
+			//{
+			//	String selectedFromList = (string)_tasksListView.GetItemAtPosition(e.Position);
+			//	Toast.MakeText(Application.Context, selectedFromList, ToastLength.Long).Show();
+			//	ViewModel.AssignmentsPostionCommand?.Execute(e.Position);
+			//};
 		}
 	
 
 		public override void OnResume()
 		{
 			base.OnResume();
-			ViewModel.GetAssignmentsCommand?.Execute(null);
+			ViewModel.LoadDataCommand?.Execute(null);
 		}
 
 
 
 		protected void Init()
 		{
-			//_itemNameEditText = View.FindViewById<EditText>(Resource.Id.FragmentTasksNameItemTextView);
-			//_describtionEditText = View.FindViewById<EditText>(Resource.Id.FragmentTasksDescribtionTextView);
-			//_createTaskButton = View.FindViewById<Button>(Resource.Id.FragmentTasksCreateTaskButton);
 			_addTaskFloatingActionButton = View.FindViewById<FloatingActionButton>(Resource.Id.activityTasksAddTaskFloatingActionButton);
 			_tasksListView = View.FindViewById<ListView>(Resource.Id.activityTasksTasksListView);
-
-			//FILL UP 
-			//SET MEMBERS & ASSIGNMENTS ITEMS
-			/**
-			 * this will execute an async method
-			 * when async finished, create+set listadapter
-			 */
-			ViewModel.GetAssignmentsCommand?.Execute(null);
-			ViewModel.GetUserCommand?.Execute(null);
 		}
 
 		void SetBindings()
 		{
 			bindings.Add(this.SetBinding(() => ViewModel.Assignments, () => Assignments));
 			bindings.Add(this.SetBinding(() => ViewModel.User, () => User));
-			//this.SetBindings(() => ViewModel.Done, () => _tasksListView, BindingMode.TwoWay);
-			//this.SetBinding(() => ViewModel.ItemName, () => _itemNameEditText.Text, BindingMode.TwoWay);
-			//Binding itemPosition = this.SetBinding(() => ViewModel., () => _describtionEditText.Text, BindingMode.TwoWay);
 		}
 		void SetCommands()
 		{
-			//_createTaskButton.SetCommand("Click", ViewModel.CreateTaskAsyncCommand);
-			//ViewModel.CreateTaskAsyncCommand
 			_addTaskFloatingActionButton.SetCommand("Click", ViewModel.AddAssignmentRedirectCommand);
-			//_tasksListView.SetCommand("Click", ViewModel.AssignmentDetailRedirectCommand); // Bind nog met item, list 
-
-
 		}
 
 		public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -155,118 +123,54 @@ namespace ComPact.Droid.Fragments
 			return inflater.Inflate(Resource.Layout.FragmentTasks, container, false);
 		}
 
+		void SetAssignmentsListView()
+		{
+			_tasksListView.Adapter = ViewModel.Assignments.GetAdapter(GetAssignmentsAdapter);
+		}
 
 		private View GetAssignmentsAdapter(int position, Assignment assignment, View convertView)
 		{
-			// Not reusing views here
+			// Not reusing views
 			LayoutInflater inflater = LayoutInflater.From(Application.Context);
 			convertView = inflater.Inflate(Resource.Layout.ListViewAssignment, null);
+
 			ImageView iconImageView = convertView.FindViewById<ImageView>(Resource.Id.listViewTaskImageImageView);
+			TextView nameTextView = convertView.FindViewById<TextView>(Resource.Id.listViewTaskNameTextView);
+			CheckBox checkBox = convertView.FindViewById<CheckBox>(Resource.Id.listViewTaskDoneCheckBox);
+
+			//Icon Image
 			if (ViewModel.User.Admin)
 			{
 				iconImageView.SetImageResource(Resource.Drawable.Profile_placeholderImage);
-				//iconImageView.SetImageBitmap();
 			}
 			else
 			{
 				iconImageView.SetImageResource(_iconList.FindByName(assignment.IconName).IconId);
 			}
-			//iconImageView.SetImageResource(_iconList.FindByName(assignment.IconName).IconId);
-			TextView nameTextView = convertView.FindViewById<TextView>(Resource.Id.listViewTaskNameTextView);
+
+			//Name Assignment
 			nameTextView.Text = assignment.ItemName;
 
 			//TextView emailTextView = convertView.FindViewById<TextView>(Resource.Id.listViewTaskDoneCheckBox);
 			//emailTextView.Text = members.Email;
 
-			CheckBox checkBox = convertView.FindViewById<CheckBox>(Resource.Id.listViewTaskDoneCheckBox);
-			checkBox.Click += (sender, e) =>
+			//CheckBox Assignment Done
+			checkBox.SetCommand("Click", ViewModel.AssignmentDoneCommand, assignment);
+
+			if (assignment.Description != null && assignment.Description != "")
 			{
-
-				//TODO Verwijder
-				/**
-				 * Command met binding
-				 * * Promp "are you sure"
-				 * Remove data VM
-				 * API call Task -> done
-				 */
-				//new AlertDialog.Builder()
-				//			   .SetTitle("Finished")
-				//               .SetMessage("Is this task finished?")
-	   //                        .SetNegativeButton(Android.Resource.String.No, (sender1, e1) =>{})
-	   //                        .SetPositiveButton(Android.Resource.String.Yes, (senderAlert, args) =>
-				//				{
-									ViewModel.AssignmentDoneCommand?.Execute(assignment);
-									
-								//}).Show();
-
-				// your remaining code
-			};
-			//if (ViewModel.User.Admin)
-			//{
-				//convertView.Click += (sender, e) =>
-				//{
-				//	ViewModel.DetailAssignmentRedirectCommand.Execute(assignment);
-				//	System.Diagnostics.Debug.WriteLine("clicked");
-				//};
-			//}
-			//else
-			//{
-
-				if (assignment.Description != null && assignment.Description != "")
+				convertView.SetCommand("Click", ViewModel.DetailAssignmentRedirectCommand, assignment);
+			}
+			else
+			{
+				if (ViewModel.User.Admin)
 				{
-					convertView.Click += (sender, e) =>
-					{
-						ViewModel.DetailAssignmentRedirectCommand.Execute(assignment);
-						System.Diagnostics.Debug.WriteLine("clicked");
-					};
+					convertView.SetCommand("Click", ViewModel.DetailAssignmentRedirectCommand, assignment);
 				}
-				else
-				{
-					if (ViewModel.User.Admin)
-					{
-						convertView.Click += (sender, e) =>
-						{
-							ViewModel.DetailAssignmentRedirectCommand.Execute(assignment);
-							System.Diagnostics.Debug.WriteLine("clicked");
-						};
-					}
-			
-					convertView.SetBackgroundColor(new Android.Graphics.Color(238, 238, 238));
-				}
-			//}
-
-
+				convertView.SetBackgroundColor(new Color(238, 238, 238));
+			}
 
 			return convertView;
 		}
-		void SetMemberListView()
-		{
-			_tasksListView.Adapter = ViewModel.Assignments.GetAdapter(GetAssignmentsAdapter);
-
-		}
-
-
-
-		//          // ListView Item Click Listener
-		//          listView.setOnItemClickListener(new OnItemClickListener()
-		//{
-
-		//	@Override
-
-		//		  public void onItemClick(AdapterView<?> parent, View view,
-		//			 int position, long id)
-		//{
-
-		//	// ListView Clicked item index
-		//	int itemPosition = position;
-
-		//	// ListView Clicked item value
-		//	String itemValue = (String)listView.getItemAtPosition(position);
-
-		//	// Show Alert 
-		//	Toast.makeText(getApplicationContext(),
-		//	  "Position :" + itemPosition + "  ListItem : " + itemValue, Toast.LENGTH_LONG)
-		//	  .show();
-
 	}
 }

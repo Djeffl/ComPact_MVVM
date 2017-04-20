@@ -119,6 +119,7 @@
     <Compile Include="Services\IFileDownloadService.cs" />
     <Compile Include="Helpers\IFileSystem.cs" />
     <Compile Include="ViewModel\HomeViewModel.cs" />
+    <Compile Include="Helpers\PopUpLength.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Contracts\" />

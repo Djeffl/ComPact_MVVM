@@ -58,9 +58,24 @@ namespace ComPact.Services
 			await _assignmentRepository.Insert(data);
 			return await GetAll(isAdmin);
 		}
-		public async Task<IEnumerable<Assignment>> GetAllUnfinished()
+		public async Task<IEnumerable<Assignment>> GetAllUnfinished(bool isAdmin)
 		{
-			return _mapper.Map(await _assignmentRepository.GetAllUnfinished());
+			IEnumerable<Assignment> assignments = _mapper.Map(await _assignmentRepository.GetAllUnfinished());
+			if (isAdmin)
+			{
+				IEnumerable<Member> members = _mapper.Map(await _memberRespository?.All());
+				foreach (var assignment in assignments)
+				{
+					foreach (var member in members)
+					{
+						if (assignment.Member.Id == member.Id)
+						{
+							assignment.Member = member;
+						}
+					}
+				}
+			}
+			return assignments;
 		}
 
 		public async Task<Assignment> Update(Assignment assignment)
@@ -70,9 +85,23 @@ namespace ComPact.Services
 			await _assignmentRepository.Update(data);
 			return response;
 		}
-		public async Task<Assignment> Get(string id)
+		public async Task<Assignment> Get(string id, bool isAdmin)
 		{
-			return _mapper.Map(await _assignmentRepository.Get(id));
+			Assignment assignment = _mapper.Map(await _assignmentRepository.Get(id));
+			if (isAdmin)
+			{
+				IEnumerable<Member> members = _mapper.Map(await _memberRespository?.All());
+
+				foreach (var member in members)
+				{
+					if (assignment.Member.Id == member.Id)
+					{
+						assignment.Member = member;
+					}
+				}
+
+			}
+			return assignment;
 		}
 
 		public async Task<bool> Delete(string id)

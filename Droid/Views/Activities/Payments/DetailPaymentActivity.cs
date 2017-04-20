@@ -76,13 +76,12 @@ namespace ComPact.Droid.Payments
 			//Init elements
 			FindViews();
 
-			//Get Payment from previous screen & pass to viewmodel
-			Payment payment = Nav.GetAndRemoveParameter<Payment>(Intent);
-			ViewModel.SetPaymentCommand.Execute(payment);
-			//bindings
-			SetBindings();
 			//Init
 			Init();
+
+			//bindings
+			SetBindings();
+
 			//Use Commands
 			SetCommands();
 
@@ -117,6 +116,10 @@ namespace ComPact.Droid.Payments
 
 		void Init()
 		{
+			//Get Payment from previous screen & pass to viewmodel
+			Payment payment = Nav.GetAndRemoveParameter<Payment>(Intent);
+			ViewModel.SetPaymentCommand.Execute(payment);
+
 			_optionsImageView.Visibility = ViewStates.Gone;
 			_titleTextView.Text = "Detail Payment";
 		}

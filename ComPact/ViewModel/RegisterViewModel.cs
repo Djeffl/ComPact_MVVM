@@ -97,7 +97,7 @@ namespace ComPact
 						bool isSuccessful = await _authenticationService.Register(Registration.FirstName, Registration.LastName, Registration.Email, Registration.Password, Registration.Admin);
 						if (isSuccessful)
 						{
-							_popUpService.Show("You succesfully created an account!", "long"); 
+							_popUpService.Show("You succesfully created an account!", PopUpLength.Long); 
 							_navigationService.NavigateTo(LocatorViewModel.HomePageKey);
 						}
 					}

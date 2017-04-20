@@ -97,7 +97,6 @@ namespace ComPact.WebServices
 		public async Task<Assignment> UpdateAssignment(Assignment assignment)
 		{
 			string url = ApiCalls.BaseAssignemntPath + String.Format("/{0}", assignment.Id);
-			assignment.Id = null;
 			WebAssignment data = _mapper.InvertMap(assignment);
 			WebAssignment response = await _assignmentWebService.Update(url, data);
 			return _mapper.Map(response);

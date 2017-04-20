@@ -418,6 +418,7 @@
     <AndroidResource Include="Resources\drawable-xxhdpi\ic_monetization_on_white_24dp.png" />
     <AndroidResource Include="Resources\drawable-xxxhdpi\ic_monetization_on_white_24dp.png" />
     <AndroidResource Include="Resources\layout\ListViewSimpleListview.axml" />
+    <AndroidResource Include="Resources\xml\file_paths.xml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\" />
@@ -434,6 +435,7 @@
     <Folder Include="Views\Activities\Assignments\" />
     <Folder Include="Views\Controls\Models\" />
     <Folder Include="Views\Activities\Payments\" />
+    <Folder Include="Resources\xml\" />
   </ItemGroup>
   <ItemGroup>
     <AndroidAsset Include="Assets\RobotoTTF\Roboto-Black.ttf" />

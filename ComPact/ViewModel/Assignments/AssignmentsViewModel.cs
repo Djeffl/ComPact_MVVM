@@ -109,9 +109,8 @@ namespace ComPact.ViewModel
 		public RelayCommand<Assignment> DetailAssignmentRedirectCommand { get; set; }
 		public RelayCommand<int> AssignmentsPostionCommand { get; set; }
 
-		public RelayCommand GetAssignmentsCommand { get; set; }
+		public RelayCommand LoadDataCommand { get; set; }
 
-		public RelayCommand GetUserCommand { get; private set; }
 		public RelayCommand<Assignment> AssignmentDoneCommand { get; set; }
 
 
@@ -146,22 +145,15 @@ namespace ComPact.ViewModel
 				Debug.WriteLine(pos);//Assignments[pos]);
 			});
 
-			GetAssignmentsCommand = new RelayCommand(async () =>
+			LoadDataCommand = new RelayCommand(async () =>
 			{
-				await GetAssignments();
-			});
-			GetUserCommand = new RelayCommand(async () =>
-			{
-				User = await GetUser();
+				await LoadData();
 			});
 			AssignmentDoneCommand = new RelayCommand<Assignment>(async (assignment) =>
 			{
 				await AssignmentDone(assignment);
-				Assignments.Remove(assignment);
 			});
 		}
-
-
 		#endregion
 
 		#region Methods
@@ -169,26 +161,37 @@ namespace ComPact.ViewModel
 		{
 			_navigationService.NavigateTo(LocatorViewModel.AddTaskPageKey);
 		}
+
 		void DetailAssignmentRedirect(Assignment assignment)
 		{
 			_navigationService.NavigateTo(LocatorViewModel.DetailAssignmentPageKey, assignment);
 		}
 
-		public async Task GetAssignments()
+		async Task LoadData()
 		{
-			User responseUser = await _userDataService.GetUser();
-			IEnumerable<Assignment> assignments = await _assignmentDataService?.GetAllUnfinished();
-			Assignments = Convert<Assignment>(assignments);
+			User = await GetUser();
+			Assignments = await GetAssignments();
 		}
-		public async Task AssignmentDone(Assignment assignment)
+
+		async Task<ObservableCollection<Assignment>> GetAssignments()
 		{
-			assignment.AdminId = null;
-			assignment.Description = null;
-			assignment.IconName = null;
-			assignment.ItemName = null;
-			assignment.Member = null;
-			assignment.Done = true;
-			await _assignmentDataService.Update(assignment);
+			IEnumerable<Assignment> assignments = await _assignmentDataService?.GetAllUnfinished(User.Admin);
+			return Convert<Assignment>(assignments);
+		}
+		async Task AssignmentDone(Assignment assignment)
+		{
+			bool isConfirmed = await _dialogService.ShowMessage("Are you sure?", "Finish Task");
+			if (isConfirmed)
+			{
+				Assignment data = new Assignment
+				{
+					Done = true,
+					Id = assignment.Id
+
+				};
+				await _assignmentDataService.Update(data);
+				Assignments.Remove(assignment);
+			}
 		}
 		#endregion
 	}

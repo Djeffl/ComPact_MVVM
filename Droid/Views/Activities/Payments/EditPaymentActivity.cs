@@ -75,9 +75,9 @@ namespace ComPact.Droid.Payments
 			//Find views
 			FindViews();
 
+			//Init elements
 			Init();
-			_optionsImageView.Visibility = ViewStates.Gone;
-			_titleTextView.Text = "Edit Payment";
+
 			//bindings
 			SetBindings();
 
@@ -102,6 +102,8 @@ namespace ComPact.Droid.Payments
 
 		void Init()
 		{
+			_optionsImageView.Visibility = ViewStates.Gone;
+			_titleTextView.Text = "Edit Payment";
 			Payment = Nav.GetAndRemoveParameter<Payment>(Intent);
 			ViewModel.SetPaymentCommand.Execute(Payment);
 		}

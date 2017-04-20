@@ -93,7 +93,7 @@ namespace ComPact.Payments
 			{
 				await _paymentDataService.Delete(Payment.Id);
 				_navigationService.GoBack();
-				_popUpService.Show("Payment successfully deleted!", "long");
+				_popUpService.Show("Payment successfully deleted!", PopUpLength.Long);
 			}
 		}
 		void SetPayment(Payment payment)

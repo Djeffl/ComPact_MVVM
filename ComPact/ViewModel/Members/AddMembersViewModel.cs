@@ -88,7 +88,7 @@ namespace ComPact.Members
 						bool isSuccessful = await CreateMember(Registration.FirstName, Registration.LastName, Registration.Email, Registration.Password);
 						if (isSuccessful)
 						{
-							_popUpService.Show("You succesfully created an account!", "long");
+							_popUpService.Show("You succesfully created an account!", PopUpLength.Long);
 							_navigationService.GoBack();
 						}
 					}

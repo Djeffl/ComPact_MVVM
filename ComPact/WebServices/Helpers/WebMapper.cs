@@ -30,7 +30,7 @@ namespace ComPact
 				Id = assignment.Id,
 				ItemName = assignment.ItemName,
 				Description = assignment.Description,
-				MemberId = assignment.Member.Id,
+				MemberId = assignment.Member != null ? assignment.Member.Id : "",
 				AdminId = assignment.AdminId,
 				IconName = assignment.IconName,
 				Done = assignment.Done

@@ -28,44 +28,31 @@ namespace ComPact.Assignments
 		/**
 		 * Parameters
 		 */
-		private string _itemName;
-		public string ItemName
-		{
-			get
-			{
-				return _itemName;
-			}
-			set
-			{
-				Set(ref _itemName, value);
-			}
-		}
-		private string _description;
-		public string Description
-		{
-			get
-			{
-				return _description;
-			}
-			set
-			{
-				Set(ref _description, value);
-			}
-		}
+		//private string _itemName;
+		//public string ItemName
+		//{
+		//	get
+		//	{
+		//		return _itemName;
+		//	}
+		//	set
+		//	{
+		//		Set(ref _itemName, value);
+		//	}
+		//}
+		//private string _description;
+		//public string Description
+		//{
+		//	get
+		//	{
+		//		return _description;
+		//	}
+		//	set
+		//	{
+		//		Set(ref _description, value);
+		//	}
+		//}
 
-		private Member _member;
-		public Member Member
-		{
-			get
-			{
-				return _member;
-			}
-			set
-			{
-				Debug.WriteLine(_member);
-				Set(ref _member, value);
-			}
-		}
 		User _user = new User();
 		public User User
 		{
@@ -99,10 +86,9 @@ namespace ComPact.Assignments
 		#region Commands
 		public RelayCommand EditRedirectCommand { get; set; }
 		public RelayCommand BackRedirectCommand { get; set; }
-		public RelayCommand<string> GetMemberCommand { get; set; }
 		public RelayCommand DeleteAssignmentCommand { get; set; }
-		public RelayCommand GetUserCommand { get; private set; }
-
+		public RelayCommand<Assignment> SetAssignmentCommand { get; set; }
+		public RelayCommand LoadDataCommand { get; set; }
 
 		#endregion
 		#region Constructor
@@ -133,20 +119,17 @@ namespace ComPact.Assignments
 		{
 			EditRedirectCommand = new RelayCommand(EditRedirect);
 			BackRedirectCommand = new RelayCommand(_navigationService.GoBack);
-
-			GetUserCommand = new RelayCommand(async () =>
-			{
-				User = await GetUser();
-			});
-			GetMemberCommand = new RelayCommand<string>(async(id) =>
-			{
-				await GetMember(id);
-			});
 			DeleteAssignmentCommand = new RelayCommand(async () =>
 			{
 				await DeleteAssignment();
-				_popUpService.Show("Succesfully deleted", "long");
-				_navigationService.GoBack();
+			});
+			LoadDataCommand = new RelayCommand(async () =>
+			{
+				await LoadData();
+			});
+			SetAssignmentCommand = new RelayCommand<Assignment>((assignment) =>
+			{
+				SetAssignment(assignment);
 			});
 		}
 
@@ -158,16 +141,25 @@ namespace ComPact.Assignments
 			_navigationService.NavigateTo(LocatorViewModel.EditAssignmentPageKey, Assignment);
 		}
 
-		async Task GetMember(string id)
+		async Task DeleteAssignment()
 		{
-			if (User.Admin)
+			var result = await _dialogService.ShowMessage("Are you sure?", "Delete Payment");
+
+			if (result)
 			{
-				Member = await _memberDataService?.Get(id);
+				await _assignmentDataService.Delete(Assignment.Id);
+				_popUpService.Show("Succesfully deleted", PopUpLength.Long);
+				_navigationService.GoBack();
 			}
 		}
-		async Task<bool> DeleteAssignment()
+		void SetAssignment(Assignment assignment)
 		{
-			return await _assignmentDataService.Delete(Assignment.Id);
+			Assignment = assignment;
+		}
+		async Task LoadData()
+		{
+			User = await GetUser();	
+			Assignment = await _assignmentDataService.Get(Assignment.Id, User.Admin);
 		}
 		#endregion
 	}

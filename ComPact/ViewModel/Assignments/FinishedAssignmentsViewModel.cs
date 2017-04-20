@@ -177,7 +177,7 @@ namespace ComPact.ViewModel
 		public async Task GetAssignments()
 		{
 			User responseUser = await _userDataService.GetUser();
-			IEnumerable<Assignment> assignments = await _assignmentDataService?.GetAllUnfinished();
+			IEnumerable<Assignment> assignments = await _assignmentDataService?.GetAllUnfinished(User.Admin);
 			Assignments = Convert<Assignment>(assignments);
 		}
 		public async Task AssignmentDone(Assignment assignment)

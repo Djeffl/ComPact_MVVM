@@ -28,44 +28,6 @@ namespace ComPact.Assignments
 		/**
 		 * Parameters
 		 */
-		private string _itemName;
-		public string ItemName
-		{
-			get
-			{
-				return _itemName;
-			}
-			set
-			{
-				Set(ref _itemName, value);
-			}
-		}
-		private string _description;
-		public string Description
-		{
-			get
-			{
-				return _description;
-			}
-			set
-			{
-				Set(ref _description, value);
-			}
-		}
-
-		private Member _user;
-		public Member User
-		{
-			get
-			{
-				return _user;
-			}
-			set
-			{
-				Debug.WriteLine(_user);
-				Set(ref _user, value);
-			}
-		}
 		Assignment _assignment;
 		public Assignment Assignment
 		{
@@ -77,7 +39,6 @@ namespace ComPact.Assignments
 			{
 				_assignment = value;
 				RaisePropertyChanged(nameof(Assignment));
-				//Set(ref _members, value);
 			}
 		}
 		private ObservableCollection<Member> _members = new ObservableCollection<Member>();
@@ -96,31 +57,15 @@ namespace ComPact.Assignments
 				//Set(ref _members, value);
 			}
 		}
-		string _iconName;
-		public string IconName
-		{
-			get
-			{
-				return _iconName;
-			}
-			set
-			{
-				_iconName = value;
-				RaisePropertyChanged(nameof(IconName));
-			}
-		}
-		private string memberEmail;
-		private string item;
-
 
 		#endregion
 		#region Commands
-		public RelayCommand<Assignment> GetAssignmentCommand { get; set; }
-		public RelayCommand<Assignment> UpdateAssignmentCommand { get; set; }
+		public RelayCommand<Assignment> SetAssignmentCommand { get; set; }
+		public RelayCommand UpdateAssignmentCommand { get; set; }
 		public RelayCommand BackRedirectCommand { get; set; }
 		public RelayCommand<Member> MemberSelectedCommand { get; set; }
 		public RelayCommand<int> AssignmentsOptionsCommand { get; set; }
-		public RelayCommand GetMembersCommand { get; set; }
+		public RelayCommand LoadDataCommand { get; set; }
 
 
 		#endregion
@@ -148,20 +93,21 @@ namespace ComPact.Assignments
 		}
 		void RegisterCommands()
 		{
-			GetAssignmentCommand = new RelayCommand<Assignment>(assignment =>
+			BackRedirectCommand = new RelayCommand(_navigationService.GoBack);
+
+			SetAssignmentCommand = new RelayCommand<Assignment>(assignment =>
 			{
 				Assignment = assignment;
 			});
-			UpdateAssignmentCommand = new RelayCommand<Assignment>(async (assignment) =>
+
+			UpdateAssignmentCommand = new RelayCommand(async () =>
 			{
-				await UpdateAssignment(assignment);
+				await UpdateAssignment(Assignment);
 			});
-			BackRedirectCommand = new RelayCommand(_navigationService.GoBack);
 
 			MemberSelectedCommand = new RelayCommand<Member>(user =>
 			{
 				System.Diagnostics.Debug.WriteLine(user.Email);
-				memberEmail = user.Email;
 			});
 
 			//Returns position itemSelected
@@ -171,12 +117,10 @@ namespace ComPact.Assignments
 			//	item = AssignmentsOptions[pos];
 			//});
 
-			GetMembersCommand = new RelayCommand(async () =>
+			LoadDataCommand = new RelayCommand(async () =>
 			{
-				await GetMembers();
+				await LoadData();
 			});
-
-
 		}
 
 		async
@@ -187,12 +131,10 @@ namespace ComPact.Assignments
 		{
 			try
 			{
-				string adminId = (await UserDataService?.GetUser()).Id;
-				assignment.AdminId = adminId;
 				await _assignmentDataService.Update(assignment);
-				_popUpService.Show("Task successfully updated!", "long");
+				_popUpService.Show("Task successfully updated!", PopUpLength.Long);
 				//TODO NAVIGEER TERUG
-				_navigationService.NavigateTo(LocatorViewModel.HomePageKey);
+				_navigationService.GoBack();
 			}
 			catch (Exception ex)
 			{
@@ -200,7 +142,12 @@ namespace ComPact.Assignments
 			}
 		}
 
-		public async Task GetMembers()
+		async Task LoadData()
+		{
+			await LoadMembers();
+		}
+
+		async Task LoadMembers()
 		{
 			IEnumerable<Member> list = await _memberDataService?.GetAll();
 			Members = Convert<Member>(list);

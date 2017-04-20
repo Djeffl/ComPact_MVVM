@@ -118,16 +118,17 @@ namespace ComPact.Droid.Assignments
 			//Set Lay out
 			SetContentView(Resource.Layout.ActivityAddAssignment);
 
-			Assignment = Nav.GetAndRemoveParameter<Assignment>(Intent);
-			ViewModel.GetMembersCommand.Execute(null);
 			//_membersListView.ItemSelected += (sender, e) =>
 			//{
 			//	Console.WriteLine("clicked");
 			//	var checkbox = e.View.FindViewById<CheckBox>(Resource.Id.listViewTaskDoneCheckBox);
 			//};
 			SetIconRecyclerView();
-			//Init elements
+
+			//Find views elements
 			FindViews();
+
+			//Init Elements
 			Init();
 
 			//bindings
@@ -150,23 +151,6 @@ namespace ComPact.Droid.Assignments
 			_membersListView = FindViewById<ListView>(Resource.Id.activityAddTaskListView);
 			_addTaskFloatingActionButton = FindViewById<FloatingActionButton>(Resource.Id.activityTasksAddTaskFloatingActionButton);
 
-
-			_colorFilter = new Color(ContextCompat.GetColor(this, Resource.Color.yellow_accent_color));
-			_resetColorFilter = new Color(ContextCompat.GetColor(this, Resource.Color.accent_color));
-
-			//ViewModel.Description = Assignment.Description;
-			//_membersListView.
-			//FILL UP 
-			//SET MEMBERS & ASSIGNMENTS ITEMS
-			/**
-			 * this will execute an async method
-			 * when async finished, create+set listadapter
-			 */
-			ViewModel.GetMembersCommand?.Execute(null);
-			Assignments = ViewModel.Assignment;
-			_descriptionEditText.Text = Assignment.Description;
-			_itemNameEditText.Text = Assignment.ItemName;
-
 			_membersListView.ItemSelected += (sender, e) =>
 			{
 				Console.WriteLine("clicked");
@@ -188,13 +172,20 @@ namespace ComPact.Droid.Assignments
 			//};
 
 		}
+		/**
+		 * Init the views with the wanted data
+		 */
 		void Init()
 		{
+			ViewModel.LoadDataCommand?.Execute(null);
+			Assignment = Nav.GetAndRemoveParameter<Assignment>(Intent);
+			ViewModel.SetAssignmentCommand.Execute(Assignment);
 			//Edit header
 			_optionsImageView.Visibility = ViewStates.Gone;
 			_titleTextView.Text = "Edit Task";
-			//
-			ViewModel.GetAssignmentCommand.Execute(Assignment);
+
+			_colorFilter = new Color(ContextCompat.GetColor(this, Resource.Color.yellow_accent_color));
+			_resetColorFilter = new Color(ContextCompat.GetColor(this, Resource.Color.accent_color));
 		}
 
 
@@ -205,9 +196,9 @@ namespace ComPact.Droid.Assignments
 		{
 			bindings.Add(this.SetBinding(() => ViewModel.Members, () => Members));
 
+			bindings.Add(this.SetBinding(() => ViewModel.Assignment.ItemName, () => _itemNameEditText.Text, BindingMode.TwoWay));
 			bindings.Add(this.SetBinding(() => ViewModel.Assignment.Description, () => _descriptionEditText.Text, BindingMode.TwoWay));
 			bindings.Add(this.SetBinding(() => ViewModel.Assignment.IconName, () => IconName));
-			bindings.Add(this.SetBinding(() => ViewModel.Assignment.ItemName, () => _itemNameEditText.Text, BindingMode.TwoWay));
 			//bindings.Add(this.SetBinding(() => ViewModel.Assignment.Member, () => Member, BindingMode.TwoWay));
 
 			//binding = this.SetBinding(() => ViewModel.User, () => items[_membersListView.SelectedItemPosition], BindingMode.TwoWay);
@@ -219,43 +210,24 @@ namespace ComPact.Droid.Assignments
 		void SetCommands()
 		{
 			_addTaskFloatingActionButton.SetCommand("Click", ViewModel.UpdateAssignmentCommand);
-			//_addTaskFloatingActionButton.Click += (sender, e) =>
-			//{
-			//	var assignment = new Assignment()
-			//	{
-			//		//MemberId = Assignment.MemberId,
-			//		ItemName = _itemNameEditText.Text,
-			//		Description = _descriptionEditText.Text,
-			//		IconName = ViewModel.IconName,
-			//		Id = Assignment.Id
-			//	//};
-			//	ViewModel.UpdateAssignmentCommand.Execute(assignment);
-			//};
 			_backImageView.SetCommand("Click", ViewModel.BackRedirectCommand);
-			//_addTaskFloatingActionButton.SetCommand("Click", ViewModel.UpdateAssignmentCommand);
-			//_itemNameSpinner.SetCommand("OnItemSelectedListener", ViewModel.Test?.Execute(
-			//	(TextView)_itemNameSpinner.SelectedView).Text
-			//);
-
 		}
 
-		void SetMemberListView()
-		{
-			//AdapterMember adapterMember = new AdapterMember(this, Members.ToList());
-			//adapterMember.GetView(0, LayoutInflater.From(Application.Context).Inflate(Resource.Layout.ListViewPerson, null, false), );
-			_membersListView.Adapter = ViewModel.Members.GetAdapter(GetMemberAdapter); //adapterMember;//new AdapterMember(Application.Context, Members.ToList());
-
-		}
 		void SetIconRecyclerView()
 		{
 			iconList = new IconList();
 			_recyclerView = FindViewById<RecyclerView>(Resource.Id.recyclerView);
-			RecyclerView.LayoutManager _layoutManager = new GridLayoutManager(this, 4);//new LinearLayoutManager(this)
+			RecyclerView.LayoutManager _layoutManager = new GridLayoutManager(this, 4);
 			_recyclerView.SetLayoutManager(_layoutManager);
 
 			CustomRecyclerViewAdapter iconAdapter = new CustomRecyclerViewAdapter(iconList);
 			iconAdapter.ItemClick += OnIconClick;
 			_recyclerView.SetAdapter(iconAdapter);
+		}
+
+		void SetMemberListView()
+		{
+			_membersListView.Adapter = ViewModel.Members.GetAdapter(GetMemberAdapter);
 		}
 
 		private View GetMemberAdapter(int position, Member member, View convertView)
@@ -284,7 +256,7 @@ namespace ComPact.Droid.Assignments
 		}
 		void OnIconClick(object sender, int position)
 		{
-			ViewModel.IconName = new IconList()[position].Name;
+			ViewModel.Assignment.IconName = new IconList()[position].Name;
 			// Display a toast that briefly shows the enumeration of the selected photo:
 			int photoNum = position + 1;
 			//Toast.MakeText(this, "This is photo number " + photoNum, ToastLength.Short).Show();
@@ -295,12 +267,12 @@ namespace ComPact.Droid.Assignments
 			}
 			((ImageView)((LinearLayout)_recyclerView.GetChildAt(position)).GetChildAt(0)).SetColorFilter(_colorFilter);
 		}
+
+		#endregion
+		protected override void OnStop()
+		{
+			base.OnStop();
+			Finish();
+		}
 	}
-	//void Test()
-	//{
-	//	ViewModel.ItemNameCommand?.Execute(
-	//		 ((TextView)_itemNameSpinner.SelectedView).Text
-	//	);
-	//}
-	#endregion
 }

@@ -74,7 +74,7 @@ namespace ComPact
 				Email = Email
 			};
 			//_userDataService.Forgot(user);
-			_popUpService.Show("Please check your mail", "long");
+			_popUpService.Show("Please check your mail", PopUpLength.Long);
 			_backService.GoBack();
 		}
 		#endregion

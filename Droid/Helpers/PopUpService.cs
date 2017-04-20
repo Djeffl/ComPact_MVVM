@@ -8,9 +8,9 @@ namespace ComPact.Droid.Helpers
 	public class PopUpService: IPopUpService
 	{
 		ToastLength toastLength;
-		public void Show(string message, string length)
+		public void Show(string message, PopUpLength length)
 		{
-			if (length == "long")
+			if (length == PopUpLength.Long)
 			{
 				toastLength = ToastLength.Long;
 			}
