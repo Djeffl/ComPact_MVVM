@@ -1,18 +1,19 @@
 ﻿using ComPact.Helpers;
-using GalaSoft.MvvmLight;
+using ComPact.Services;
+using ComPact.ViewModel;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Views;
 
 namespace ComPact
 {
-	public class SettingsViewModel: ViewModelBase
+	public class SettingsViewModel: BaseViewModel
 	{
 		/**
 		 * Declare Services
 		 */
 		readonly INavigationService _navigationService;
 		readonly IBackService _backService;
-		readonly IUserDataService _userDataService;
+		readonly IAuthenticationService _authenticationService;
 
 		#region Parameters
 		/**
@@ -33,7 +34,7 @@ namespace ComPact
 		#endregion
 		#region Commands
 		public RelayCommand BackRedirectCommand { get; set; }
-		public RelayCommand LogOutCommand { get; private set; }
+		public RelayCommand LogOutCommand { get; set; }
 		public RelayCommand MembersRedirectCommand { get; set; }
 
 		#endregion
@@ -41,12 +42,12 @@ namespace ComPact
 		/**
 		 * Init services & Init() & RegisterCommands();
 		 */
-		public SettingsViewModel(INavigationService navigationService, IBackService backService, IUserDataService userDataService)
+		public SettingsViewModel(INavigationService navigationService, IUserDataService userDataService, IAuthenticationService authenticationService)
+			:base(userDataService)
 		{
 			//Init Services
 			_navigationService = navigationService;
-			_backService = backService;
-			_userDataService = userDataService;
+			_authenticationService = authenticationService;
 
 			Init();
 
@@ -67,12 +68,17 @@ namespace ComPact
 		#region Methods
 		void BackRedirect()
 		{
-			_backService.GoBack();
+			_navigationService.GoBack();
 		}
-		void LogOut()
+
+		async void LogOut()
 		{
-			_userDataService.LogOut();
-			_navigationService.NavigateTo(LocatorViewModel.LoginPageKey);
+			bool isSuccessful = await _authenticationService.LogOut();
+			if (isSuccessful)
+			{
+				_navigationService.NavigateTo(LocatorViewModel.LoginPageKey);
+			}
+
 		}
 		void MembersPageRedirect()
 		{

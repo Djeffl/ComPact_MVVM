@@ -1,29 +1,83 @@
-﻿using System;
-using GalaSoft.MvvmLight;
+﻿using ComPact.Helpers;
+using ComPact.ViewModel;
+using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Views;
 
 namespace ComPact
 {
-	public class PasswordRetrievalViewModel: ViewModelBase
+	public class PasswordRetrievalViewModel: BaseViewModel
 	{
-		private readonly INavigationService _navigationService;
-
-		void RegisterRedirect()
-		{
-			_navigationService.NavigateTo(LocatorViewModel.RegisterPageKey);
-		}
-		void PasswordRedirect()
-		{
-			_navigationService.NavigateTo(LocatorViewModel.PasswordRetrievalPageKey);
-		}
 		/**
-		 * 
+		 * Declare Services
 		 */
-		public PasswordRetrievalViewModel(INavigationService navigationService)
+		private readonly INavigationService _navigationService;
+		private readonly IBackService _backService;
+		readonly IMemberDataService _userDataService;
+		readonly IPopUpService _popUpService;
+		#region Parameters
+		/**
+		 * Parameters
+		 */
+		private string _email;
+		public string Email
 		{
-			_navigationService = navigationService;
-			//Commands
+			get
+			{
+				return _email;
+			}
+			set
+			{
+				Set(ref _email, value);
+			}
 		}
+		#endregion
+		#region Commands
+		public RelayCommand BackRedirectCommand { get; set; }
+		public RelayCommand PasswordResetCommand { get; set; }
+		#endregion
+		#region Constructor
+		/**
+		 * Init services & Init() & RegisterCommands();
+		 */
+		public PasswordRetrievalViewModel(INavigationService navigationService, IUserDataService userDataService, IBackService backService, IMemberDataService memberDataService, IPopUpService popUpService)
+			:base(userDataService)
+		{
+			//Init Services
+			_navigationService = navigationService;
+			_backService = backService;
+			_popUpService = popUpService;
+
+			Init();
+
+			RegisterCommands();
+		}
+		void Init()
+		{
+			//Register values
+		}
+		void RegisterCommands()
+		{
+			BackRedirectCommand = new RelayCommand(BackRedirect);
+			PasswordResetCommand = new RelayCommand(PasswordReset);
+		}
+		#endregion
+
+		#region Methods
+		void BackRedirect()
+		{
+			_backService.GoBack();
+		}
+		void PasswordReset()
+		{
+			var user = new Member
+			{
+				Email = Email
+			};
+			//_userDataService.Forgot(user);
+			_popUpService.Show("Please check your mail", PopUpLength.Long);
+			_backService.GoBack();
+		}
+		#endregion
 		
 	}
 }

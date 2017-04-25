@@ -1,18 +1,18 @@
 ﻿using System;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using System.Windows.Input;
 using ComPact.Helpers;
-using GalaSoft.MvvmLight;
+using ComPact.Services;
+using ComPact.ViewModel;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Views;
 
 namespace ComPact
 {
-	public class RegisterViewModel : ViewModelBase
+	public class RegisterViewModel : BaseViewModel
 	{
 		private readonly INavigationService _navigationService;
-		private readonly IUserDataService _userDataService;
+		private readonly IAuthenticationService _authenticationService;
 		private readonly IDialogService _dialogService;
 		private readonly IBackService _backService;
 		private readonly IPopUpService _popUpService;
@@ -20,79 +20,7 @@ namespace ComPact
 		/**
 		 * Parameters
 		 */
-		private string _firstName;
-		public string FirstName
-		{
-			get
-			{
-				return _firstName;
-			}
-			set
-			{
-				Set(ref _firstName, value);
-			}
-		}
-		private string _lastName;
-		public string LastName
-		{
-			get
-			{
-				return _lastName;
-			}
-			set
-			{
-				Set(ref _lastName, value);
-			}
-		}
-		private string _email;
-		public string Email
-		{
-			get
-			{
-				return _email;
-			}
-			set
-			{
-				Set(ref _email, value);
-			}
-		}
-		private string _password;
-		public string Password
-		{
-			get
-			{
-				return _password;
-			}
-			set
-			{
-				Set(ref _password, value);
-			}
-		}
-		private string _confirmPassword;
-		public string ConfirmPassword
-		{
-			get
-			{
-				return _confirmPassword;
-			}
-			set
-			{
-				Set(ref _confirmPassword, value);
-			}
-		}
-		private bool _admin;
-		public bool Admin
-		{
-			get
-			{
-				return _admin;
-			}
-			set
-			{
-				Set(ref _admin, value);
-			}
-		}
-		private Registration _registration;
+		Registration _registration = new Registration();
 		public Registration Registration
 		{
 			get
@@ -101,54 +29,43 @@ namespace ComPact
 			}
 			set
 			{
-				Set(ref _registration, value);
+				_registration = value;
+                RaisePropertyChanged(nameof(Registration));
 			}
 		}
 		#endregion
 		#region Commands
-		private RelayCommand _registerUserAsyncCommand;
-		public RelayCommand RegisterUserAsyncCommand
-		{
-			get
-			{
-				if (_registerUserAsyncCommand == null)
-				{
-					return _registerUserAsyncCommand
-						?? (_registerUserAsyncCommand = new RelayCommand(
-							async () =>
-							{
-								await RegisterUserAsync();
-							}));
-				}
-				return _registerUserAsyncCommand;
-			}
-		}
-
-		private RelayCommand _backRedirectCommand;
-		public RelayCommand BackRedirectCommand
-		{
-			get
-			{
-				if (_backRedirectCommand == null)
-				{
-					return _backRedirectCommand = new RelayCommand(BackRedirect);
-				}
-				return _backRedirectCommand;
-			}
-		}
+		//private RelayCommand _registerUserAsyncCommand;
+		//public RelayCommand RegisterUserAsyncCommand
+		//{
+		//	get
+		//	{
+		//		if (_registerUserAsyncCommand == null)
+		//		{
+		//			return _registerUserAsyncCommand
+		//				?? (_registerUserAsyncCommand = new RelayCommand(
+		//					async () =>
+		//					{
+		//						await RegisterUser();
+		//					}));
+		//		}
+		//		return _registerUserAsyncCommand;
+		//	}
+		//}
+		public RelayCommand RegisterUserCommand{get;set;}
+		public RelayCommand BackRedirectCommand { get; set; }
 		#endregion
 
 		#region Constructor
-		public RegisterViewModel(INavigationService navigationService, IUserDataService userDataService, IDialogService dialogService, IBackService backService, IPopUpService popUpService)
+		public RegisterViewModel(INavigationService navigationService, IUserDataService userDataService, IAuthenticationService authenticationService, IDialogService dialogService, IPopUpService popUpService)
+			:base(userDataService)
 		{
-			_userDataService = userDataService;
+			_authenticationService = authenticationService;
 			_navigationService = navigationService;
 			_dialogService = dialogService;
-			_backService = backService;
 			_popUpService = popUpService;
 
 			Init();
-
 		}
 
 		void Init()
@@ -160,60 +77,28 @@ namespace ComPact
 
 		void RegisterCommands()
 		{
-
+			RegisterUserCommand = new RelayCommand(async () =>
+			{
+				await RegisterUser();
+			});
+			BackRedirectCommand = new RelayCommand(BackRedirect);
 		}
 		#endregion
 
 		#region Methods
-		/**
-		 * Normaal gezien wil ik dat deze functie een registeration parameter krijgt dat doorgegeven wordt pas op de onclick
-		 * Dit blijkt niet mogelijk te zijn aangezien enkel een binding dynamisch zijn waarden aanpast in een setCommand 
-		 * Een binding is enkel mogelijk door visuals te koppelen aan waarden imo
-		 */
-		async Task RegisterUserAsync()
+		async Task RegisterUser()
 		{
-			Admin = true;
-			_registration = new Registration(FirstName, LastName, Email, Password, ConfirmPassword, Admin);
-			string firstName = _registration.FirstName;
-			string lastName = _registration.LastName;
-			string email = _registration.Email;
-			string password = _registration.Password;
-			string confirmPassword = _registration.ConfirmPassword;
-			bool admin = _registration.Admin;
-			if (firstName != null && lastName != null && email != null && password != null && confirmPassword != null && admin != null)
+			if (!(string.IsNullOrEmpty(Registration.Email) && string.IsNullOrEmpty(Registration.FirstName) && string.IsNullOrEmpty(Registration.LastName) && string.IsNullOrEmpty(Registration.Password) && string.IsNullOrEmpty(Registration.ConfirmPassword))) // && admin != null)
 			{
-
-				if (EmailIsValid(email))
+				if (EmailIsValid(Registration.Email))
 				{
-
-					if (password == confirmPassword)
+					if (Registration.Password == Registration.ConfirmPassword)
 					{
-
-						try
+						bool isSuccessful = await _authenticationService.Register(Registration.FirstName, Registration.LastName, Registration.Email, Registration.Password, Registration.Admin);
+						if (isSuccessful)
 						{
-							User user = await _userDataService.Get(email);
-							_dialogService.ShowMessage("Email already taken!");
-						}
-						catch (Exception)
-						{
-							try
-							{
-								var newUser = new User
-								{
-									Id = null,
-									FirstName = firstName,
-									LastName = lastName,
-									Email = email,
-									Password = password,
-									Admin = admin,
-								};
-								//User response = await _userDataService.Create(newUser);
-								_popUpService.Show("Account created!", "long");
-							}
-							catch (Exception)
-							{
-								_dialogService.ShowMessage("Oops! Something went wrong, please try again later");
-							}
+							_popUpService.Show("You succesfully created an account!", PopUpLength.Long); 
+							_navigationService.NavigateTo(LocatorViewModel.HomePageKey);
 						}
 					}
 					else
@@ -234,21 +119,7 @@ namespace ComPact
 
 		void BackRedirect()
 		{
-			//_navigationService.
-			_backService.GoBack();
-		}
-
-		void LoginRedirect()
-		{
-			_navigationService.NavigateTo(LocatorViewModel.LoginPageKey);
-		}
-
-		async Task<User> CreateUserAsync(User user)
-		{
-			//1)Responsecode 2)UserObject
-			User response = await _userDataService.Create(user);
-
-			return response;
+			_navigationService.GoBack();
 		}
 
 		bool EmailIsValid(string email)

@@ -1,50 +1,53 @@
 ﻿using System;
+using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Views;
 
 namespace ComPact.ViewModel.Members
 {
-	public class MembersViewModel: ViewModelBase
+	public class MembersViewModel: BaseViewModel
 	{
 		/**
 		 * Declare Services
 		 */
 		readonly INavigationService _navigationService;
-		//private readonly IUserDataService _userDataService;
-		//private readonly IDialogService _dialogService;
+		readonly IMemberDataService _memberDataService;
 		#region Parameters
 		/**
 		 * Parameters
 		 */
-		private string _example;
-		public string Example
+		ObservableCollection<Member> _members = new ObservableCollection<Member>();
+		public ObservableCollection<Member> Members
 		{
 			get
 			{
-				return _example;
+				return _members;
 			}
 			set
 			{
-				Set(ref _example, value);
+				_members = value;
+                RaisePropertyChanged(nameof(Members));
 			}
 		}
 		#endregion
 		#region Commands
 		public RelayCommand BackRedirectCommand { get; set; }
 		public RelayCommand AddMembersRedirectCommand { get; set; }
+		public RelayCommand LoadDataCommand { get; set; }
 
 		#endregion
 		#region Constructor
 		/**
 		 * Init services & Init() & RegisterCommands();
 		 */
-		public MembersViewModel(INavigationService navigationService)
+		public MembersViewModel(INavigationService navigationService, IUserDataService userDataService, IMemberDataService memberDataService)
+			:base(userDataService)
 		{
 			//Init Services
 			_navigationService = navigationService;
-			//_userDataService = userDataService;
-			//_dialogService = dialogService;
+			_memberDataService = memberDataService;
 
 			Init();
 
@@ -58,6 +61,10 @@ namespace ComPact.ViewModel.Members
 		{
 			BackRedirectCommand = new RelayCommand(BackRedirect);
 			AddMembersRedirectCommand = new RelayCommand(AddMembersRedirect);
+			LoadDataCommand = new RelayCommand(async () =>
+			{
+				await LoadData();
+			});
 		}
 		#endregion
 
@@ -69,6 +76,10 @@ namespace ComPact.ViewModel.Members
 		void AddMembersRedirect()
 		{
 			_navigationService.NavigateTo(LocatorViewModel.AddMembersPageKey);
+		}
+		async Task LoadData()
+		{
+			Members = Convert<Member>(await _memberDataService.GetAll());
 		}
 		#endregion
 	}

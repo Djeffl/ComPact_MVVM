@@ -3,9 +3,18 @@
     android:id="@+id/fab_rootLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <include
-        android:id="@+id/toolbarHeader"
-        layout="@layout/ToolbarHeader" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <include
+            android:id="@+id/toolbarHeader"
+            layout="@layout/ToolbarHeader" />
+        <ListView
+            android:id="@+id/activityMembersMemberListView"
+            android:layout_width="match_parent"
+            android:layout_height="525dp" />
+    </LinearLayout>
     <android.support.design.widget.FloatingActionButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

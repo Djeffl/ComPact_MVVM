@@ -1,19 +1,14 @@
-﻿using System;
-using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using GalaSoft.MvvmLight;
+﻿using ComPact.Services;
+using ComPact.ViewModel;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Views;
-using Newtonsoft.Json;
 
 namespace ComPact
 {
-	public class LoginViewModel : ViewModelBase
+	public class LoginViewModel : BaseViewModel
 	{
 		private readonly INavigationService _navigationService;
-		private readonly IUserDataService _userDataService;
+		private readonly IAuthenticationService _authenticationService;
 		private readonly IDialogService _dialogService;
 		#region Parameters
 		/**
@@ -43,37 +38,39 @@ namespace ComPact
 				Set(ref _password, value);
 			}
 		}
-		private RelayCommand _loginUserAsyncCommand;
-		public RelayCommand LoginUserAsyncCommand
-		{
-			get
-			{
-				if (_loginUserAsyncCommand == null)
-				{
-					return _loginUserAsyncCommand
-						?? (_loginUserAsyncCommand = new RelayCommand(
-							async () =>
-							{
-						await LoginUserAsync();
-							}));
-				}
-				return _loginUserAsyncCommand;
-			}
-		}
+		//private RelayCommand _loginUserAsyncCommand;
+		//public RelayCommand LoginUserAsyncCommand
+		//{
+		//	get
+		//	{
+		//		if (_loginUserAsyncCommand == null)
+		//		{
+		//			return _loginUserAsyncCommand
+		//				?? (_loginUserAsyncCommand = new RelayCommand(
+		//					async () =>
+		//					{
+		//				await LoginUserAsync();
+		//					}));
+		//		}
+		//		return _loginUserAsyncCommand;
+		//	}
+		//}
 		#endregion
 		#region Commands
 		public RelayCommand RegisterRedirectCommand { get; set; }
 		public RelayCommand PasswordRetrievalRedirectCommand { get; set; }
 		public RelayCommand QrLoginRedirectCommand { get; set; }
+		public RelayCommand LoginCommand { get; set; }
 		#endregion
 		#region Constructor
 		/**
 		 * 
 		 */
-		public LoginViewModel(INavigationService navigationService, IUserDataService userDataService, IDialogService dialogService)
+		public LoginViewModel(INavigationService navigationService, IUserDataService userDataService, IAuthenticationService authenticationService, IDialogService dialogService)
+			:base(userDataService)
 		{
 			_navigationService = navigationService;
-			_userDataService = userDataService;
+			_authenticationService = authenticationService;
 			_dialogService = dialogService;
 
 			RegisterCommands();
@@ -91,6 +88,7 @@ namespace ComPact
 			RegisterRedirectCommand = new RelayCommand(RegisterRedirect);
 			PasswordRetrievalRedirectCommand = new RelayCommand(PasswordRedirect);
 			QrLoginRedirectCommand = new RelayCommand(QrLoginRedirect);
+			LoginCommand = new RelayCommand(Login);
 		}
 		#endregion
 
@@ -103,54 +101,24 @@ namespace ComPact
 		{
 			_navigationService.NavigateTo(LocatorViewModel.PasswordRetrievalPageKey);
 		}
-		void HomeRedirect()
-		{
-			_navigationService.NavigateTo(LocatorViewModel.HomePageKey);
-		}
 		void QrLoginRedirect()
 		{
 			_navigationService.NavigateTo(LocatorViewModel.LoginQrPageKey);
 		}
 
-		async Task LoginUserAsync()
+		async void Login()
 		{
-			string email = Email;
-			string password = Password;
-			if (email != "" && password != "" && email != null && password != null)
+			bool isSuccessful = await _authenticationService.Login(Email, Password);
+			ClearFields();
+			if (isSuccessful)
 			{
-				try
-				{
-					User user = new User
-					{
-						Email = email,
-						Password = password
-					};
-					bool response = await _userDataService.Login(user);
-
-
-					if (response)
-					{
-						HomeRedirect();
-						//_dialogService.ShowMessage("okey!");
-					}
-
-					else
-					{
-						_dialogService.ShowMessage("Your email and password do not match!");
-					}
-				}
-				catch (Exception err)
-				{
-					//comment me
-					_dialogService.ShowMessage(err.ToString());
-
-					_dialogService.ShowMessage("Oops something went wrong");
-				}
+				_navigationService.NavigateTo(LocatorViewModel.HomePageKey);
 			}
-			else
-			{
-				_dialogService.ShowMessage("Please fill in the fields.");
-			}
+		}
+		void ClearFields()
+		{
+			Email = "";
+			Password = "";
 		}
 		#endregion
 	}

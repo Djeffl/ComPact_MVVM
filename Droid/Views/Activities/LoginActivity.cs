@@ -80,7 +80,7 @@ namespace ComPact.Droid
 		{
 			_passwordRetrievalRedirectTextView.SetCommand("Click", ViewModel.PasswordRetrievalRedirectCommand);
 			_registerRedirectTextView.SetCommand("Click", ViewModel.RegisterRedirectCommand);
-			_loginButton.SetCommand("Click", ViewModel.LoginUserAsyncCommand);
+			_loginButton.SetCommand("Click", ViewModel.LoginCommand);
 			_qrCodeLoginButton.SetCommand("Click", ViewModel.QrLoginRedirectCommand);
 		}
 	}

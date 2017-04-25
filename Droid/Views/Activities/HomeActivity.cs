@@ -15,7 +15,7 @@ using GalaSoft.MvvmLight.Helpers;
 
 namespace ComPact.Droid.Activities
 {
-	[Activity(Label = "HomeActivity", MainLauncher = true)]
+	[Activity]
 	public class HomeActivity : BaseActivity
 	{
 		//Local variables
@@ -26,13 +26,13 @@ namespace ComPact.Droid.Activities
 		//Elements
 		ImageView _backImageView;
 		ImageView _optionsImageView;
-			//Botom nav
+		//Botom nav
 		ImageView _tasksImageView;
 		ImageView _locationsImageView;
 		ImageView _messagesImageView;
 		ImageView _paymentsImageView;
 
-		Fragment _tasksFragment;
+		Fragment _assignmentsFragment;
 		Fragment _messagesFragment;
 		Fragment _locationsFragment;
 		Fragment _paymentsFragment;
@@ -51,7 +51,7 @@ namespace ComPact.Droid.Activities
 				return App.Locator.HomeViewModel;
 			}
 		}
-		TasksViewModel TasksViewModel
+		AssignmentsViewModel TasksViewModel
 		{
 			get
 			{
@@ -67,7 +67,7 @@ namespace ComPact.Droid.Activities
 			//Init elements
 			Init();
 			_backImageView.Visibility = ViewStates.Gone;
-			_titleTextView.Text = "Home";
+			_titleTextView.Text = "Tasks";
 			//bindings
 			SetBindings();
 
@@ -75,7 +75,7 @@ namespace ComPact.Droid.Activities
 			SetCommands();
 			//Start Fragment
 			_tasksImageView.SetColorFilter(_colorFilter);
-			ChangeFragment(null, null, typeof(TasksFragment), _tasksFragment);
+			ChangeFragment(null, null, typeof(AssignmentsFragment), _assignmentsFragment);
 			//-----
 			//Ask Bruno
 			menu = new MenuDialogService();
@@ -95,7 +95,7 @@ namespace ComPact.Droid.Activities
 				{
 					ViewModel.HelpRedirectCommand.Execute(null);
 				}
-				else if(arg1.Item.ItemId == Resource.Id.menu_settings)
+				else if (arg1.Item.ItemId == Resource.Id.menu_settings)
 				{
 					ViewModel.SettingsRedirectCommand.Execute(null);
 				}
@@ -131,26 +131,31 @@ namespace ComPact.Droid.Activities
 			{
 				ResetColors();
 				_tasksImageView.SetColorFilter(_colorFilter);
-				ChangeFragment(sender, e, typeof(TasksFragment), _tasksFragment);
+				ChangeFragment(sender, e, typeof(AssignmentsFragment), _assignmentsFragment);
+				_titleTextView.Text = "Tasks";
 			};
-			_locationsImageView.Click += new EventHandler((sender, e) => 
+			_locationsImageView.Click += (sender, e) =>
 			{
 				ResetColors();
 				_locationsImageView.SetColorFilter(_colorFilter);
-				ChangeFragment(sender, e, typeof(LocationFragment) , _locationsFragment); 
-			});
-			_messagesImageView.Click += new EventHandler((sender, e) =>
+				ChangeFragment(sender, e, typeof(LocationFragment), _locationsFragment);
+				_titleTextView.Text = "Locations";
+
+			};
+			_messagesImageView.Click += (sender, e) =>
 			{
 				ResetColors();
 				_messagesImageView.SetColorFilter(_colorFilter);
 				ChangeFragment(sender, e, typeof(MessagesFragment), _messagesFragment);
-			});
-			_paymentsImageView.Click += new EventHandler((sender, e) =>
+				_titleTextView.Text = "Messages";
+			};
+			_paymentsImageView.Click += (sender, e) =>
 			{
 				ResetColors();
 				_paymentsImageView.SetColorFilter(_colorFilter);
-				ChangeFragment(sender, e, typeof(PaymentFragments), _paymentsFragment);
-			});
+				ChangeFragment(sender, e, typeof(PaymentFragment), _paymentsFragment);
+				_titleTextView.Text = "Payments";
+			};
 		}
 		/**
 		 * Set the bindings of this activity
@@ -167,9 +172,10 @@ namespace ComPact.Droid.Activities
 			//_helpView.SetCommand("Click", ViewModel.HelpRedirectCommand);
 			//_settingsView.SetCommand("Click", ViewModel.SettingsRedirectCommand);
 		}
-		void ChangeFragment(Object sender, EventArgs e, Type fragmentType ,Fragment frag)
+		void ChangeFragment(Object sender, EventArgs e, Type fragmentType, Fragment frag)
 		{
 			var fragment = GetFragment(fragmentType, frag);
+
 			if (_fragmentManager == null)
 			{
 				_fragmentManager = FragmentManager;
@@ -184,33 +190,31 @@ namespace ComPact.Droid.Activities
 
 		Fragment GetFragment(Type type, Fragment fragment)
 		{
-			//if (fragment != null)
-			//{
-			//	return fragment;
-			//}
-			//else
-			//{
-			if (type == typeof(TasksFragment))
-				{
-					fragment = new TasksFragment();
-					return fragment;
-				}
-				else if (type == typeof(MessagesFragment))
-				{
-					fragment =  new MessagesFragment();
-					return fragment;
-				}
-				else if (type == typeof(LocationFragment))
-				{
-					fragment = new LocationFragment();
-					return fragment;
-				}
-				else if (type == typeof(PaymentFragments))
-				{
-					fragment = new PaymentFragments();
-					return fragment;
+			if (type == typeof(AssignmentsFragment))
+			{
+				fragment = _assignmentsFragment == null ? new AssignmentsFragment() : _assignmentsFragment;
 
-				}
+				return fragment;
+			}
+			else if (type == typeof(MessagesFragment))
+			{
+				fragment = _messagesFragment == null ? new MessagesFragment() : _messagesFragment;
+
+				return fragment;
+			}
+			else if (type == typeof(LocationFragment))
+			{
+				fragment = _locationsFragment == null ? new LocationFragment() : _locationsFragment;
+
+				return fragment;
+			}
+			else if (type == typeof(PaymentFragment))
+			{
+				fragment = _paymentsFragment == null ? new PaymentFragment() : _paymentsFragment;
+
+				return fragment;
+
+			}
 			//}
 			throw new Exception("Something is wrong with your fragments!");
 		}

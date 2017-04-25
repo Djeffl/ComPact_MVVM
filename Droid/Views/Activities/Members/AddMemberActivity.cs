@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using Android.App;
 using Android.OS;
+using Android.Widget;
+using ComPact.Members;
 using GalaSoft.MvvmLight.Helpers;
 
 namespace ComPact.Droid.Members
@@ -12,17 +14,30 @@ namespace ComPact.Droid.Members
 		//Local variables
 
 		//Keep track of bindings to avoid premature garbage collection
-		private readonly List<Binding> bindings = new List<Binding>();
+		readonly List<Binding> bindings = new List<Binding>();
+
 		//Elements
+		ImageView _backImageView;
+		TextView _titleTextView;
+		ImageView _optionsImageView;
+
+		EditText _firstNameEditText;
+		EditText _lastNameEditText;
+		EditText _emailEditText;
+		EditText _passwordEditText;
+		EditText _confirmEditText;
+		Button _registerButton;
+
 
 		//Bind Viewmodel to activity
-		//ViewModel ViewModel
-		//{
-		//	get
-		//	{
-		//		return App.Locator.ViewModel;
-		//	}
-		//}
+		AddMembersViewModel ViewModel
+		{
+			get
+			{
+				return App.Locator.AddMembersViewModel;
+			}
+		}
+
 		#region OnCreate
 		protected override void OnCreate(Bundle savedInstanceState)
 		{
@@ -31,6 +46,7 @@ namespace ComPact.Droid.Members
 			SetContentView(Resource.Layout.ActivityAddMember);
 
 			//Init elements
+			FindViews();
 			Init();
 
 			//bindings
@@ -42,9 +58,25 @@ namespace ComPact.Droid.Members
 		/**
 		 * Init Views
 		 */
+		void FindViews()
+		{
+			//Header
+			_backImageView = FindViewById<ImageView>(Resource.Id.customToolbarBackImageView);
+			_titleTextView = FindViewById<TextView>(Resource.Id.customToolbarTitleTextView);
+			_optionsImageView = FindViewById<ImageView>(Resource.Id.customToolbarOptionsImageView);
+			//Rest
+			_firstNameEditText = FindViewById<EditText>(Resource.Id.activityAddMemberFirstNameEditText);
+			_lastNameEditText = FindViewById<EditText>(Resource.Id.activityAddMemberLastNameEditText);
+			_emailEditText = FindViewById<EditText>(Resource.Id.activityAddMemberEmailEditText);
+			_passwordEditText = FindViewById<EditText>(Resource.Id.activityAddMemberPasswordEditText);
+			_confirmEditText = FindViewById<EditText>(Resource.Id.activityAddMemberConfirmPasswordEditText);
+
+			_registerButton = FindViewById<Button>(Resource.Id.activityAddMemberRegisterButton);
+		}
+
 		void Init()
 		{
-
+			
 		}
 
 		/**
@@ -52,7 +84,11 @@ namespace ComPact.Droid.Members
 		 */
 		void SetBindings()
 		{
-
+            this.SetBinding(() => ViewModel.Registration.FirstName, () => _firstNameEditText.Text, BindingMode.TwoWay);
+			this.SetBinding(() => ViewModel.Registration.LastName, () => _lastNameEditText.Text, BindingMode.TwoWay);
+			this.SetBinding(() => ViewModel.Registration.Email, () => _emailEditText.Text, BindingMode.TwoWay);
+			this.SetBinding(() => ViewModel.Registration.Password, () => _passwordEditText.Text, BindingMode.TwoWay);
+			this.SetBinding(() => ViewModel.Registration.ConfirmPassword, () => _confirmEditText.Text, BindingMode.TwoWay);
 		}
 
 		/**
@@ -60,7 +96,7 @@ namespace ComPact.Droid.Members
 		 */
 		void SetCommands()
 		{
-
+			_registerButton.SetCommand("Click", ViewModel.CreateMemberCommand);
 		}
 		#endregion
 	}

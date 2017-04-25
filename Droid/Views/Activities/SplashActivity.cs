@@ -1,12 +1,15 @@
 ﻿using System.Collections.Generic;
+using System.Globalization;
+using System.Threading;
 using Android.App;
 using Android.OS;
+using Android.Views;
 using ComPact.ViewModel;
 using GalaSoft.MvvmLight.Helpers;
 
 namespace ComPact.Droid.Activities
 {
-	[Activity(Label = "ComPact", Icon = "@mipmap/icon")]
+	[Activity(Label = "ComPact", Icon = "@mipmap/icon", MainLauncher=true)]
 	public class SplashActivity: BaseActivity
 	{
 		//Local variables
@@ -31,6 +34,7 @@ namespace ComPact.Droid.Activities
 			//Set Lay out
 			SetContentView(Resource.Layout.ActivitySplash);
 
+
 			//Init elements
 			Init();
 
@@ -44,7 +48,7 @@ namespace ComPact.Droid.Activities
 		protected override void OnResume()
 		{
 			base.OnResume();
-			ViewModel.LoginStartCommand.Execute(null);
+			ViewModel.LoginCommand.Execute(null);
 		}
 		/**
 		 * Init Views

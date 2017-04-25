@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -92,11 +91,11 @@ namespace ComPact.Droid
 		 */
 		void SetBindings()
 		{
-			this.SetBinding(() => ViewModel.FirstName, () => _firstNameEditText.Text, BindingMode.TwoWay);
-			this.SetBinding(() => ViewModel.LastName, () => _lastNameEditText.Text, BindingMode.TwoWay);
-			this.SetBinding(() => ViewModel.Email, () => _emailEditText.Text, BindingMode.TwoWay);
-			this.SetBinding(() => ViewModel.Password, () => _passwordEditText.Text, BindingMode.TwoWay);
-			this.SetBinding(() => ViewModel.ConfirmPassword, () => _confirmEditText.Text, BindingMode.TwoWay);
+			this.SetBinding(() => ViewModel.Registration.FirstName, () => _firstNameEditText.Text, BindingMode.TwoWay);
+			this.SetBinding(() => ViewModel.Registration.LastName, () => _lastNameEditText.Text, BindingMode.TwoWay);
+			this.SetBinding(() => ViewModel.Registration.Email, () => _emailEditText.Text, BindingMode.TwoWay);
+			this.SetBinding(() => ViewModel.Registration.Password, () => _passwordEditText.Text, BindingMode.TwoWay);
+			this.SetBinding(() => ViewModel.Registration.ConfirmPassword, () => _confirmEditText.Text, BindingMode.TwoWay);
 		}
 		/**
 		 * Register the commands from the ViewModel to the View
@@ -104,7 +103,7 @@ namespace ComPact.Droid
 		 */
 		void SetCommands()
 		{
-			_registerButton.SetCommand("Click", ViewModel.RegisterUserAsyncCommand);
+			_registerButton.SetCommand("Click", ViewModel.RegisterUserCommand);
 			_backImageView.SetCommand("Click", ViewModel.BackRedirectCommand);
 
 		}

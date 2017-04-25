@@ -28,5 +28,37 @@ namespace ComPact.Droid
 					}).Show();
 			});
 		}
+
+		public Task<bool> ShowMessage(string message, string title)
+		{
+			var tcs = new TaskCompletionSource<bool>();
+			new Handler(Looper.MainLooper).Post(() =>
+			{
+				new AlertDialog.Builder(CrossCurrentActivity.Current.Activity)
+							   .SetTitle(title).SetMessage(message)
+							   .SetNegativeButton(Android.Resource.String.No, (sender, e) => { tcs.SetResult(false); })
+							   .SetPositiveButton(Android.Resource.String.Yes, (senderAlert, args) =>
+								{
+									tcs.SetResult(true);
+								}).Show();
+			});
+			return tcs.Task;
+		}
+		public Task<bool> ShowMessage(string message, string title, string negativeTextButton, string positiveTextButton)
+		{
+			var tcs = new TaskCompletionSource<bool>();
+			new Handler(Looper.MainLooper).Post(() =>
+			{
+				new AlertDialog.Builder(CrossCurrentActivity.Current.Activity)
+							   .SetTitle(title).SetMessage(message)
+				               .SetNegativeButton(negativeTextButton, (sender, e) => { tcs.SetResult(false); })
+				               .SetPositiveButton(positiveTextButton, (senderAlert, args) =>
+								{
+									tcs.SetResult(true);
+								}).Show();
+			});
+			return tcs.Task;
+		}
+
 	}
 }

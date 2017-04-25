@@ -1,47 +1,33 @@
 ﻿using System;
-using GalaSoft.MvvmLight;
+using System.Diagnostics;
+using System.Threading.Tasks;
+using ComPact.Models;
+using ComPact.Services;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Views;
 
 namespace ComPact.ViewModel
 {
-	public class SplashViewModel : ViewModelBase
+	public class SplashViewModel : BaseViewModel
 	{
 		/**
 		 * Declare Services
 		 */
 		private readonly INavigationService _navigationService;
-		private readonly IUserDataService _userDataService;
-
-		#region Parameters
-		/**
-		 * Parameters
-		 */
-		private string _example;
-		public string Example
-		{
-			get
-			{
-				return _example;
-			}
-			set
-			{
-				Set(ref _example, value);
-			}
-		}
-		#endregion
+		private readonly IAuthenticationService _authenticationService;
 		#region Commands
-		public RelayCommand LoginStartCommand { get; set; }
+		public RelayCommand LoginCommand { get; set; }
 		#endregion
 		#region Constructor
 		/**
 		 * Init services & Init() & RegisterCommands();
 		 */
-		public SplashViewModel(INavigationService navigationService, IUserDataService userDataService)
+		public SplashViewModel(INavigationService navigationService, IUserDataService userDataService, IAuthenticationService authenticationService)
+			:base(userDataService)
 		{
 			//Init Services
 			_navigationService = navigationService;
-			_userDataService = userDataService;
+			_authenticationService = authenticationService;
 
 			Init();
 
@@ -53,16 +39,28 @@ namespace ComPact.ViewModel
 		}
 		void RegisterCommands()
 		{
-			LoginStartCommand = new RelayCommand(LoginStart);
+			LoginCommand = new RelayCommand(Login);
 		}
 
 
 		#endregion
 
 		#region Methods
-		async void LoginStart()
+		async void Login()
 		{
-			if (await _userDataService.ControlToken())
+			bool LoggedIn = false;
+			User user = await GetUser();
+			if (user != null)
+			{
+				try
+				{
+					LoggedIn = await _authenticationService.Login(user.RefreshToken);
+				}
+				catch (Exception)
+				{
+				}
+			}
+			if (LoggedIn)
 			{
 				HomeRedirect();
 			}

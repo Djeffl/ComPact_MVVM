@@ -8,11 +8,11 @@ namespace ComPact.Repositories
 {
 	public interface IBaseRepository<TEntity, TKey>
 	{
-		IEnumerable<TEntity> All();
+		Task<IEnumerable<TEntity>> All();
 
-		IQueryable<TEntity> Where(Expression<Func<TEntity, bool>> filter);
+		Task<IQueryable<TEntity>> Where(Expression<Func<TEntity, bool>> filter);
 
-		int Count();
+		Task<int> Count();
 
 		Task<TEntity> Get(TKey key);
 
@@ -35,5 +35,7 @@ namespace ComPact.Repositories
 		Task Delete(TKey key);
 
 		Task Truncate();
+
+		Task DropTable();
 	}
 }

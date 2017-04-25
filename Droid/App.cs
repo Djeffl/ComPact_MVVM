@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using GalaSoft.MvvmLight.Ioc;
 using GalaSoft.MvvmLight.Views;
 using Microsoft.Practices.ServiceLocation;
@@ -11,7 +11,10 @@ using ComPact.Droid.Helpers;
 using ComPact.Droid.Activities;
 using Onboarding.Droid.Helpers;
 using ComPact.Droid.Members;
+using ComPact.Droid.Assignments;
 using ComPact.Droid.Tasks;
+using ComPact.Droid.Payments;
+using ComPact.Services;
 
 namespace ComPact.Droid
 {
@@ -48,27 +51,38 @@ namespace ComPact.Droid
 		 */
 		private static void RegisterViews(NavigationService nav)
 		{
-			//nav.Configure(LocatorViewModel.SplashPageKey, typeof(SplashActivity));
+			nav.Configure(LocatorViewModel.SplashPageKey, typeof(SplashActivity));
 			nav.Configure(LocatorViewModel.LoginPageKey, typeof(LoginActivity));
 			nav.Configure(LocatorViewModel.LoginQrPageKey, typeof(LoginQrActivity));
 			nav.Configure(LocatorViewModel.RegisterPageKey, typeof(RegisterActivity));
 			nav.Configure(LocatorViewModel.PasswordRetrievalPageKey, typeof(PasswordRetrievalActivity));
+
 			nav.Configure(LocatorViewModel.HomePageKey, typeof(HomeActivity));
+
 			nav.Configure(LocatorViewModel.HelpPageKey, typeof(HelpActivity));
 			nav.Configure(LocatorViewModel.SettingsPageKey, typeof(SettingsActivity));
-			nav.Configure(LocatorViewModel.TasksPageKey, typeof(Fragments.TasksFragment));
-			nav.Configure(LocatorViewModel.AddTaskPageKey, typeof(AddTaskActivity));
+
+			nav.Configure(LocatorViewModel.TasksPageKey, typeof(Fragments.AssignmentsFragment));
+			nav.Configure(LocatorViewModel.AddTaskPageKey, typeof(AddAssignmentActivity));
+			nav.Configure(LocatorViewModel.DetailAssignmentPageKey, typeof(DetailAssignmentActivity));
+			nav.Configure(LocatorViewModel.EditAssignmentPageKey, typeof(EditAssignmentActivity));
+
 			nav.Configure(LocatorViewModel.MembersPageKey, typeof(MembersActivity));
 			nav.Configure(LocatorViewModel.AddMembersPageKey, typeof(AddMembersActivity));
+
+			nav.Configure(LocatorViewModel.PaymentsPageKey, typeof(Fragments.PaymentFragment));
+			nav.Configure(LocatorViewModel.AddPaymentPageKey, typeof(AddPaymentActivity));
+			nav.Configure(LocatorViewModel.DetailPaymentPageKey, typeof(DetailPaymentActivity));
+			nav.Configure(LocatorViewModel.EditPaymentPageKey, typeof(EditPaymentActivity));
 		}
 
 		private static void RegisterIoc()
 		{
 			SimpleIoc.Default.Register<IDialogService, DialogService>();
-			SimpleIoc.Default.Register<IBackService, BackService>();
 			SimpleIoc.Default.Register<IPopUpService, PopUpService>();
 			SimpleIoc.Default.Register<IDatabase, Database>();
 			SimpleIoc.Default.Register<IMenuDialogService, MenuDialogService>();
+			SimpleIoc.Default.Register<IFileSystem, FileSystem>();
 		}
 	}
 }

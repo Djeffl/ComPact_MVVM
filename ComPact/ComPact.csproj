@@ -29,43 +29,99 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WebServices\UserWebservice.cs" />
-    <Compile Include="Services\UserDataService.cs" />
+    <Compile Include="WebServices\MemberWebService.cs" />
+    <Compile Include="Services\MemberDataService.cs" />
     <Compile Include="Repositories\BaseRepository.cs" />
-    <Compile Include="Repositories\UserRepository.cs" />
+    <Compile Include="Repositories\MemberRepository.cs" />
     <Compile Include="Models\BaseModel.cs" />
-    <Compile Include="Models\User.cs" />
-    <Compile Include="WebServices\BaseWebservice.cs" />
+    <Compile Include="Models\Member.cs" />
+    <Compile Include="WebServices\BaseWebService.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\LocatorViewModel.cs" />
     <Compile Include="ViewModel\RegisterViewModel.cs" />
     <Compile Include="Contracts\Library\IDeviceInfo.cs" />
     <Compile Include="ViewModel\PasswordRetrievalViewModel.cs" />
     <Compile Include="Models\Registration.cs" />
-    <Compile Include="WebServices\IUserWebservice.cs" />
-    <Compile Include="Services\IUserDataService.cs" />
-    <Compile Include="Repositories\IUserRepository.cs" />
+    <Compile Include="WebServices\IMemberWebService.cs" />
+    <Compile Include="Services\IMemberDataService.cs" />
+    <Compile Include="Repositories\IMemberRepository.cs" />
     <Compile Include="Helpers\IDialogService.cs" />
     <Compile Include="Helpers\IBackService.cs" />
     <Compile Include="Helpers\IPopUpService.cs" />
-    <Compile Include="ViewModel\HomeViewModel.cs" />
     <Compile Include="ViewModel\TemplateViewModel.cs" />
     <Compile Include="Helpers\IMenuDialogService.cs" />
     <Compile Include="ViewModel\HelpViewModel.cs" />
     <Compile Include="ViewModel\SettingsViewModel.cs" />
-    <Compile Include="Models\Task.cs" />
+    <Compile Include="Models\Assignment.cs" />
     <Compile Include="ViewModel\LoginQrViewModel.cs" />
-    <Compile Include="Helpers\ISQLitePlatform.cs" />
     <Compile Include="Helpers\IDatabase.cs" />
     <Compile Include="Repositories\IBaseRepository.cs" />
-    <Compile Include="WebServices\IBaseWebservice.cs" />
+    <Compile Include="WebServices\IBaseWebService.cs" />
     <Compile Include="WebServices\IRefitService.cs" />
-    <Compile Include="WebServices\models\CallResult.cs" />
     <Compile Include="ViewModel\SplashViewModel.cs" />
     <Compile Include="ViewModel\Members\MembersViewModel.cs" />
-    <Compile Include="ViewModel\Tasks\TasksViewModel.cs" />
+    <Compile Include="ViewModel\Assignments\AssignmentsViewModel.cs" />
     <Compile Include="ViewModel\Members\AddMembersViewModel.cs" />
-    <Compile Include="ViewModel\Tasks\AddTaskViewModel.cs" />
+    <Compile Include="ViewModel\Assignments\AddAssignmentViewModel.cs" />
+    <Compile Include="Services\AssignmentDataService.cs" />
+    <Compile Include="WebServices\IAssignmentWebService.cs" />
+    <Compile Include="Helpers\IConnectionException.cs" />
+    <Compile Include="WebServices\Exceptions\WebException.cs" />
+    <Compile Include="Helpers\Settings.cs" />
+    <Compile Include="Services\AuthenticationService.cs" />
+    <Compile Include="Services\IAuthenticationService.cs" />
+    <Compile Include="WebServices\Data\ApiCalls.cs" />
+    <Compile Include="Models\TaskEnum.cs" />
+    <Compile Include="Repositories\IUserRepository.cs" />
+    <Compile Include="Repositories\UserRepository.cs" />
+    <Compile Include="Models\User.cs" />
+    <Compile Include="WebServices\IUserWebService.cs" />
+    <Compile Include="WebServices\UserWebService.cs" />
+    <Compile Include="Services\IUserDataService.cs" />
+    <Compile Include="Services\UserDataService.cs" />
+    <Compile Include="Repositories\IAssignmentRepository.cs" />
+    <Compile Include="Repositories\AssignmentRepository.cs" />
+    <Compile Include="Services\IAssignmentDataService.cs" />
+    <Compile Include="ViewModel\Assignments\DetailAssignmentViewModel.cs" />
+    <Compile Include="ViewModel\Assignments\EditAssignmentViewModel.cs" />
+    <Compile Include="ViewModel\BaseViewModel.cs" />
+    <Compile Include="WebServices\Models\WebAssignment.cs" />
+    <Compile Include="WebServices\AssignmentWebService.cs" />
+    <Compile Include="WebServices\IApiService.cs" />
+    <Compile Include="WebServices\ApiService.cs" />
+    <Compile Include="WebServices\Models\WebUser.cs" />
+    <Compile Include="WebServices\Models\WebMember.cs" />
+    <Compile Include="WebServices\Models\CallResult.cs" />
+    <Compile Include="Repositories\Models\RepoMember.cs" />
+    <Compile Include="Repositories\Models\RepoUser.cs" />
+    <Compile Include="Repositories\Helpers\IRepositoryMapper.cs" />
+    <Compile Include="Repositories\Helpers\RepositoryMapper.cs" />
+    <Compile Include="WebServices\Helpers\IWebMapper.cs" />
+    <Compile Include="WebServices\Helpers\WebMapper.cs" />
+    <Compile Include="Repositories\Models\RepoAssignment.cs" />
+    <Compile Include="Services\IBaseDataService.cs" />
+    <Compile Include="Services\BaseDataService.cs" />
+    <Compile Include="ViewModel\Assignments\FinishedAssignmentsViewModel.cs" />
+    <Compile Include="Models\Payment.cs" />
+    <Compile Include="WebServices\Models\WebPayment.cs" />
+    <Compile Include="Repositories\Models\RepoPayment.cs" />
+    <Compile Include="WebServices\paymentWebService.cs" />
+    <Compile Include="Repositories\IPaymentRepository.cs" />
+    <Compile Include="Repositories\PaymentRepository.cs" />
+    <Compile Include="Services\IPaymentDataService.cs" />
+    <Compile Include="WebServices\IPaymentWebService.cs" />
+    <Compile Include="Services\PaymentDataService.cs" />
+    <Compile Include="ViewModel\Payments\AddPaymentViewModel.cs" />
+    <Compile Include="ViewModel\Payments\PaymentsViewModel.cs" />
+    <Compile Include="ViewModel\Payments\DetailPaymentViewModel.cs" />
+    <Compile Include="ViewModel\Payments\EditPaymentViewModel.cs" />
+    <Compile Include="Services\FileDownloadService.cs" />
+    <Compile Include="Services\IFileDownloadService.cs" />
+    <Compile Include="Helpers\IFileSystem.cs" />
+    <Compile Include="ViewModel\HomeViewModel.cs" />
+    <Compile Include="Helpers\PopUpLength.cs" />
+    <Compile Include="Helpers\IUploadImage.cs" />
+    <Compile Include="Models\Image.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Contracts\" />
@@ -80,10 +136,15 @@
     <Folder Include="Contracts\Webservices\" />
     <Folder Include="Contracts\Library\" />
     <Folder Include="Helpers\" />
-    <Folder Include="Models\WebServices\" />
-    <Folder Include="WebServices\models\" />
+    <Folder Include="WebServices\Models\" />
     <Folder Include="ViewModel\Members\" />
-    <Folder Include="ViewModel\Tasks\" />
+    <Folder Include="ViewModel\Assignments\" />
+    <Folder Include="WebServices\Exceptions\" />
+    <Folder Include="WebServices\Data\" />
+    <Folder Include="WebServices\Helpers\" />
+    <Folder Include="Repositories\Models\" />
+    <Folder Include="Repositories\Helpers\" />
+    <Folder Include="ViewModel\Payments\" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json">
@@ -112,6 +173,18 @@
     </Reference>
     <Reference Include="Refit">
       <HintPath>..\packages\refit.2.4.1\lib\Portable-Net45+NetCore45+WP8+WPA81\Refit.dll</HintPath>
+    </Reference>
+    <Reference Include="Plugin.Settings.Abstractions">
+      <HintPath>..\packages\Xam.Plugins.Settings.2.5.4\lib\portable-net45+wp80+win8+wpa81\Plugin.Settings.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Plugin.Settings">
+      <HintPath>..\packages\Xam.Plugins.Settings.2.5.4\lib\portable-net45+wp80+win8+wpa81\Plugin.Settings.dll</HintPath>
+    </Reference>
+    <Reference Include="Plugin.Media.Abstractions">
+      <HintPath>..\packages\Xam.Plugin.Media.2.6.2\lib\portable-net45+wp80+win8+wpa81\Plugin.Media.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Plugin.Media">
+      <HintPath>..\packages\Xam.Plugin.Media.2.6.2\lib\portable-net45+wp80+win8+wpa81\Plugin.Media.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

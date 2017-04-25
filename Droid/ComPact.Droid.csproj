@@ -138,6 +138,27 @@
     <Reference Include="SQLite-net">
       <HintPath>..\packages\sqlite-net-pcl.1.1.2\lib\portable-net45+wp8+wpa81+win8+MonoAndroid10+MonoTouch10+Xamarin.iOS10\SQLite-net.dll</HintPath>
     </Reference>
+    <Reference Include="Plugin.Settings.Abstractions">
+      <HintPath>..\packages\Xam.Plugins.Settings.2.5.4\lib\MonoAndroid10\Plugin.Settings.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Plugin.Settings">
+      <HintPath>..\packages\Xam.Plugins.Settings.2.5.4\lib\MonoAndroid10\Plugin.Settings.dll</HintPath>
+    </Reference>
+    <Reference Include="GalaSoft.MvvmLight.Platform.AndroidSupport">
+      <HintPath>..\packages\MvvmLightAndroidSupport.5.3.0.0\lib\monoandroid1\GalaSoft.MvvmLight.Platform.AndroidSupport.dll</HintPath>
+    </Reference>
+    <Reference Include="Plugin.Permissions.Abstractions">
+      <HintPath>..\packages\Plugin.Permissions.1.2.1\lib\MonoAndroid10\Plugin.Permissions.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Plugin.Permissions">
+      <HintPath>..\packages\Plugin.Permissions.1.2.1\lib\MonoAndroid10\Plugin.Permissions.dll</HintPath>
+    </Reference>
+    <Reference Include="Plugin.Media.Abstractions">
+      <HintPath>..\packages\Xam.Plugin.Media.2.6.2\lib\MonoAndroid10\Plugin.Media.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Plugin.Media">
+      <HintPath>..\packages\Xam.Plugin.Media.2.6.2\lib\MonoAndroid10\Plugin.Media.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ComPact\ComPact.csproj">
@@ -171,7 +192,7 @@
     <Compile Include="Views\Fragments\LocationFragment.cs" />
     <Compile Include="Views\Fragments\MessagesFragment.cs" />
     <Compile Include="Views\Fragments\PaymentsFragment.cs" />
-    <Compile Include="Views\Fragments\TasksFragment.cs" />
+    <Compile Include="Views\Fragments\AssignmentsFragment.cs" />
     <Compile Include="Views\Activities\LoginQrActivity.cs" />
     <Compile Include="Helpers\Database.cs" />
     <Compile Include="Views\Controls\CustTextView.cs" />
@@ -179,7 +200,26 @@
     <Compile Include="Views\Activities\SplashActivity.cs" />
     <Compile Include="Views\Activities\Members\AddMemberActivity.cs" />
     <Compile Include="Views\Activities\Members\MembersActivity.cs" />
-    <Compile Include="Views\Activities\Tasks\AddTaskActivity.cs" />
+    <Compile Include="Views\Activities\Assignments\AddAssignmentActivity.cs" />
+    <Compile Include="Helpers\Settings.cs" />
+    <Compile Include="Views\Controls\Models\AdapterBase.cs" />
+    <Compile Include="Views\Controls\Models\AdapterAssignment.cs" />
+    <Compile Include="Views\Controls\Models\AdapterTaskItemNameSpinner.cs" />
+    <Compile Include="Views\Controls\Models\AdapterMember.cs" />
+    <Compile Include="Helpers\CustomBinding.cs" />
+    <Compile Include="ViewModel\ViewModelLocator.cs" />
+    <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="Views\Activities\Assignments\DetailAssignmentActivity.cs" />
+    <Compile Include="Views\Activities\Assignments\EditAssignmentActivity.cs" />
+    <Compile Include="Views\Controls\CustomRecyclerViewAdapter.cs" />
+    <Compile Include="Views\Controls\Models\Icon.cs" />
+    <Compile Include="Views\Controls\Models\Icono.cs" />
+    <Compile Include="Views\Activities\Assignments\FinishedAssignmentsActivity.cs" />
+    <Compile Include="Views\Activities\Payments\AddPaymentActivity.cs" />
+    <Compile Include="Views\Activities\Payments\DetailPaymentActivity.cs" />
+    <Compile Include="Views\Activities\Payments\EditPaymentActivity.cs" />
+    <Compile Include="Helpers\FileSystem.cs" />
+    <Compile Include="Helpers\UploadImage.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
@@ -210,19 +250,16 @@
     <AndroidResource Include="Resources\drawable-hdpi\ic_message_white_24dp.png" />
     <AndroidResource Include="Resources\drawable-hdpi\ic_payment_white_24dp.png" />
     <AndroidResource Include="Resources\drawable-ldpi\ic_arrow_left.png" />
-    <AndroidResource Include="Resources\drawable-mdpi\.DS_Store" />
     <AndroidResource Include="Resources\drawable-mdpi\ic_arrow_left.png" />
     <AndroidResource Include="Resources\drawable-mdpi\ic_assignment_white_24dp.png" />
     <AndroidResource Include="Resources\drawable-mdpi\ic_location_on_white_24dp.png" />
     <AndroidResource Include="Resources\drawable-mdpi\ic_message_white_24dp.png" />
     <AndroidResource Include="Resources\drawable-mdpi\ic_payment_white_24dp.png" />
-    <AndroidResource Include="Resources\drawable-xhdpi\.DS_Store" />
     <AndroidResource Include="Resources\drawable-xhdpi\ic_arrow_left.png" />
     <AndroidResource Include="Resources\drawable-xhdpi\ic_assignment_white_24dp.png" />
     <AndroidResource Include="Resources\drawable-xhdpi\ic_location_on_white_24dp.png" />
     <AndroidResource Include="Resources\drawable-xhdpi\ic_message_white_24dp.png" />
     <AndroidResource Include="Resources\drawable-xhdpi\ic_payment_white_24dp.png" />
-    <AndroidResource Include="Resources\drawable-xxhdpi\.DS_Store" />
     <AndroidResource Include="Resources\drawable-xxhdpi\ic_arrow_left.png" />
     <AndroidResource Include="Resources\drawable-xxhdpi\ic_assignment_white_24dp.png" />
     <AndroidResource Include="Resources\drawable-xxhdpi\ic_location_on_white_24dp.png" />
@@ -234,7 +271,6 @@
     <AndroidResource Include="Resources\drawable-xxxhdpi\ic_location_on_white_24dp.png" />
     <AndroidResource Include="Resources\drawable-xxxhdpi\ic_message_white_24dp.png" />
     <AndroidResource Include="Resources\drawable-xxxhdpi\ic_payment_white_24dp.png" />
-    <AndroidResource Include="Resources\drawable\.DS_Store" />
     <AndroidResource Include="Resources\drawable\PasswordRetrievalImage.png" />
     <AndroidResource Include="Resources\drawable\ic_arrow_left.png" />
     <AndroidResource Include="Resources\drawable\logo_compact.png" />
@@ -267,7 +303,123 @@
     <AndroidResource Include="Resources\drawable-xxxhdpi\ic_add_white_24dp.png" />
     <AndroidResource Include="Resources\drawable-mdpi\ic_add_white_24dp.png" />
     <AndroidResource Include="Resources\layout\ActivityAddMember.axml" />
-    <AndroidResource Include="Resources\layout\ActivityAddTask.axml" />
+    <AndroidResource Include="Resources\layout\ListViewAssignment.axml" />
+    <AndroidResource Include="Resources\layout\ListViewPerson.axml" />
+    <AndroidResource Include="Resources\drawable-hdpi\ic_check_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\ic_check_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_check_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\ic_check_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\ic_check_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable\Profile_placeholderImage.png" />
+    <AndroidResource Include="Resources\layout\ActivityAddAssignment.axml" />
+    <AndroidResource Include="Resources\layout\ActivityDetailAssignment.axml" />
+    <AndroidResource Include="Resources\drawable-hdpi\ic_mode_edit_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\ic_mode_edit_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_mode_edit_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\ic_mode_edit_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\ic_mode_edit_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable\border.xml" />
+    <AndroidResource Include="Resources\drawable\magnify.png" />
+    <AndroidResource Include="Resources\drawable\silverware.png" />
+    <AndroidResource Include="Resources\drawable\sleep.png" />
+    <AndroidResource Include="Resources\drawable\tennis.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\ic_alarm_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\ic_camera_roll_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\ic_child_friendly_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\ic_color_lens_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\ic_delete_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\ic_folder_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\ic_healing_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\ic_local_printshop_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\ic_local_taxi_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\ic_pan_tool_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\ic_pets_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\ic_power_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\ic_priority_high_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\ic_restaurant_menu_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\ic_school_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\ic_store_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\ic_time_to_leave_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\ic_alarm_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\ic_camera_roll_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\ic_child_friendly_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\ic_color_lens_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\ic_delete_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\ic_folder_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\ic_healing_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\ic_local_printshop_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\ic_local_taxi_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\ic_pan_tool_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\ic_pets_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\ic_power_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\ic_priority_high_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\ic_restaurant_menu_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\ic_school_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\ic_store_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\ic_time_to_leave_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_alarm_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_camera_roll_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_child_friendly_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_color_lens_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_delete_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_folder_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_healing_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_local_printshop_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_local_taxi_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_pan_tool_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_pets_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_power_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_priority_high_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_restaurant_menu_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_school_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_store_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_time_to_leave_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\ic_alarm_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\ic_camera_roll_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\ic_child_friendly_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\ic_color_lens_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\ic_delete_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\ic_folder_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\ic_healing_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\ic_local_printshop_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\ic_local_taxi_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\ic_pan_tool_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\ic_pets_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\ic_power_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\ic_priority_high_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\ic_restaurant_menu_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\ic_school_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\ic_store_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\ic_time_to_leave_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\ic_alarm_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\ic_camera_roll_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\ic_child_friendly_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\ic_color_lens_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\ic_delete_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\ic_folder_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\ic_healing_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\ic_local_printshop_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\ic_local_taxi_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\ic_pan_tool_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\ic_pets_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\ic_power_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\ic_priority_high_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\ic_restaurant_menu_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\ic_school_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\ic_store_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\ic_time_to_leave_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable\Recyclerview_item.xml" />
+    <AndroidResource Include="Resources\layout\ActivityAddPayment.axml" />
+    <AndroidResource Include="Resources\layout\PaymentItemView.axml" />
+    <AndroidResource Include="Resources\layout\ActivityDetailPayment.axml" />
+    <AndroidResource Include="Resources\drawable\placeholderPicture.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\ic_monetization_on_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\ic_monetization_on_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_monetization_on_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\ic_monetization_on_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\ic_monetization_on_white_24dp.png" />
+    <AndroidResource Include="Resources\layout\ListViewSimpleListview.axml" />
+    <AndroidResource Include="Resources\xml\file_paths.xml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\" />
@@ -281,7 +433,10 @@
     <Folder Include="Helpers\" />
     <Folder Include="menu\" />
     <Folder Include="Views\Activities\Members\" />
-    <Folder Include="Views\Activities\Tasks\" />
+    <Folder Include="Views\Activities\Assignments\" />
+    <Folder Include="Views\Controls\Models\" />
+    <Folder Include="Views\Activities\Payments\" />
+    <Folder Include="Resources\xml\" />
   </ItemGroup>
   <ItemGroup>
     <AndroidAsset Include="Assets\RobotoTTF\Roboto-Black.ttf" />

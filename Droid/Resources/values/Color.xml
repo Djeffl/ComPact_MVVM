@@ -5,4 +5,5 @@
 	<color name="accent_color"> #70A5D4</color>
     <color name="black_color">#212121</color>
 	<color name="white_color">#ffffff</color>
+	<color name="accent_email_color">#96999c</color>
 </resources>

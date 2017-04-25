@@ -1,10 +1,11 @@
-﻿using System;
-using ComPact;
-using ComPact.Helpers;
+﻿using ComPact.Assignments;
 using ComPact.Members;
+using ComPact.Payments;
 using ComPact.Repositories;
+using ComPact.Services;
 using ComPact.ViewModel;
 using ComPact.ViewModel.Members;
+using ComPact.WebServices;
 using GalaSoft.MvvmLight.Ioc;
 using Microsoft.Practices.ServiceLocation;
 
@@ -22,11 +23,20 @@ namespace ComPact
 		public const string PasswordRetrievalPageKey = "PasswordRetrievalPage";
 		public const string HomePageKey = "HomePagekey";
 		public const string HelpPageKey = "HelpPageKey";
-		public const string SettingsPageKey = "SettingsPageKey";
+		public const string SettingsPageKey = "SettingsPageKey"
+			;
 		public const string TasksPageKey = "TasksPageKey";
 		public const string AddTaskPageKey = "AddTaskPageKey";
+		public const string DetailAssignmentPageKey = "DetailAssignmentPageKey";
+		public const string EditAssignmentPageKey = "EditAssignmentPageKey";
+
 		public const string MembersPageKey = "MembersPageKey";
 		public const string AddMembersPageKey = "AddMembersPagekey";
+
+		public const string PaymentsPageKey = "PaymentsPageKey";
+		public const string AddPaymentPageKey = "AddPaymentPageKey";
+		public const string DetailPaymentPageKey = "DetailPaymentPageKey";
+		public const string EditPaymentPageKey = "EditPaymentPageKey";
 
 		public LoginViewModel LoginViewModel
 		{
@@ -36,13 +46,13 @@ namespace ComPact
 			}
 		}
 
-		public LoginQrViewModel LoginQrViewModel
-		{
-			get
-			{
-				return ServiceLocator.Current.GetInstance<LoginQrViewModel>();
-			}
-		}
+		//public LoginQrViewModel LoginQrViewModel
+		//{
+		//	get
+		//	{
+		//		return ServiceLocator.Current.GetInstance<LoginQrViewModel>();
+		//	}
+		//}
 
 		public RegisterViewModel RegisterViewModel
 		{
@@ -84,18 +94,34 @@ namespace ComPact
 			}
 		}
 
-		public TasksViewModel TasksViewModel
+		public AssignmentsViewModel TasksViewModel
 		{
 			get
 			{
-				return ServiceLocator.Current.GetInstance<TasksViewModel>();
+				return ServiceLocator.Current.GetInstance<AssignmentsViewModel>();
 			}
 		}
-		public AddTaskViewModel AddTaskViewModel
+		public AddAssignmentViewModel AddTaskViewModel
 		{
 			get
 			{
-				return ServiceLocator.Current.GetInstance<AddTaskViewModel>();
+				return ServiceLocator.Current.GetInstance<AddAssignmentViewModel>();
+			}
+		}
+
+		public DetailAssignmentViewModel DetailAssignmentViewModel
+		{
+			get
+			{
+				return ServiceLocator.Current.GetInstance<DetailAssignmentViewModel>();
+			}
+		}
+
+		public EditAssignmentViewModel EditAssignmentViewModel
+		{
+			get
+			{
+				return ServiceLocator.Current.GetInstance<EditAssignmentViewModel>();
 			}
 		}
 
@@ -120,20 +146,49 @@ namespace ComPact
 				return ServiceLocator.Current.GetInstance<AddMembersViewModel>();
 			}
 		}
+		#region Payments
+		public PaymentsViewModel PaymentsViewModel
+		{
+			get
+			{
+				return ServiceLocator.Current.GetInstance<PaymentsViewModel>();
+			}
+		}
+		public AddPaymentViewModel AddPaymentViewModel
+		{
+			get
+			{
+				return ServiceLocator.Current.GetInstance<AddPaymentViewModel>();
+			}
+		}
+		public DetailPaymentViewModel DetailPaymentViewModel
+		{
+			get
+			{
+				return ServiceLocator.Current.GetInstance<DetailPaymentViewModel>();
+			}
+		}
+		public EditPaymentViewModel EditPaymentViewModel
+		{
+			get
+			{
+				return ServiceLocator.Current.GetInstance<EditPaymentViewModel>();
+			}
+		}
+		#endregion
 		/**
 		 * Register every ViewModel to the IOC container
 		 */
 		public LocatorViewModel()
 		{
 			ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
-
-			RegisterViewModels();
 			RegisterRepositories();
 			RegisterWebServices();
 			RegisterServices();
+			RegisterViewModels();
 		}
 
-		void RegisterViewModels() 
+		void RegisterViewModels()
 		{
 			SimpleIoc.Default.Register<SplashViewModel>();
 			SimpleIoc.Default.Register<LoginViewModel>();
@@ -143,24 +198,50 @@ namespace ComPact
 			SimpleIoc.Default.Register<HomeViewModel>();
 			SimpleIoc.Default.Register<HelpViewModel>();
 			SimpleIoc.Default.Register<SettingsViewModel>();
-			SimpleIoc.Default.Register<TasksViewModel>();
-			SimpleIoc.Default.Register<AddTaskViewModel>();
+
+			SimpleIoc.Default.Register<AssignmentsViewModel>();
+			SimpleIoc.Default.Register<AddAssignmentViewModel>();
+			SimpleIoc.Default.Register<DetailAssignmentViewModel>();
+			SimpleIoc.Default.Register<EditAssignmentViewModel>();
+
 			SimpleIoc.Default.Register<MembersViewModel>();
 			SimpleIoc.Default.Register<AddMembersViewModel>();
 
+			SimpleIoc.Default.Register<PaymentsViewModel>();
+			SimpleIoc.Default.Register<AddPaymentViewModel>();
+			SimpleIoc.Default.Register<DetailPaymentViewModel>();
+			SimpleIoc.Default.Register<EditPaymentViewModel>();
 		}
 
 		void RegisterServices()
 		{
+			SimpleIoc.Default.Register<IRepositoryMapper, RepositoryMapper>();
+			SimpleIoc.Default.Register<IWebMapper, WebMapper>();
+			SimpleIoc.Default.Register<IApiService, ApiService>();
+			SimpleIoc.Default.Register<IFileDownloadService, FileDownloadService>();
+
+			SimpleIoc.Default.Register<IMemberDataService, MemberDataService>();
+			SimpleIoc.Default.Register<IAssignmentDataService, AssignmentDataService>();
 			SimpleIoc.Default.Register<IUserDataService, UserDataService>();
+			SimpleIoc.Default.Register<IAuthenticationService, AuthenticationService>();
+			SimpleIoc.Default.Register<IPaymentDataService, PaymentDataService>();
+
 		}
 		void RegisterWebServices()
 		{
-			SimpleIoc.Default.Register<IUserWebservice, UserWebservice>();
+			SimpleIoc.Default.Register<IMemberWebService, MemberWebService>();
+			SimpleIoc.Default.Register<IAssignmentWebService, AssignmentWebService>();
+			SimpleIoc.Default.Register<IUserWebService, UserWebService>();
+			SimpleIoc.Default.Register<IPaymentWebService, paymentWebService>();
+
 		}
 		void RegisterRepositories()
 		{
 			SimpleIoc.Default.Register<IUserRepository, UserRepository>();
+			SimpleIoc.Default.Register<IMemberRepository, MemberRepository>();
+			SimpleIoc.Default.Register<IAssignmentRepository, AssignmentRepository>();
+			SimpleIoc.Default.Register<IPaymentRepository, PaymentRepository>();
+
 		}
 	}
 }

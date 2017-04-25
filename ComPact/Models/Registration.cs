@@ -12,16 +12,6 @@ namespace ComPact
 		/**
 		 * Params id, firstname, lastname, email, password
 		 */
-		public Registration(string firstName, string lastName, string email, string password, string confirmPassword, bool admin)
-		{
-			FirstName = firstName;
-			LastName = lastName;
-			Email = email;
-			Password = password;
-			ConfirmPassword = confirmPassword;
-			Admin = admin;
-		}
-
 		public static bool CanRegister(Registration registration)
 		{
 			bool response = false;

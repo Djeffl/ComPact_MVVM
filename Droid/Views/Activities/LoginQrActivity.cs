@@ -29,13 +29,13 @@ namespace ComPact.Droid
 		private ImageView _optionsImageView;
 
 		//Bind Viewmodel to activity
-		LoginQrViewModel ViewModel
-		{
-			get
-			{
-				return App.Locator.LoginQrViewModel;
-			}
-		}
+		//LoginQrViewModel ViewModel
+		//{
+		//	get
+		//	{
+		//		return App.Locator.LoginQrViewModel;
+		//	}
+		//}
 		#region OnCreate
 		protected override void OnCreate(Bundle savedInstanceState)
 		{
@@ -79,7 +79,7 @@ namespace ComPact.Droid
 		 */
 		void SetCommands()
 		{
-			_backImageView.SetCommand("Click", ViewModel.BackRedirectCommand);
+			//_backImageView.SetCommand("Click", ViewModel.BackRedirectCommand);
 		}
 
 
@@ -98,14 +98,14 @@ namespace ComPact.Droid
 				string _emailstr = emailAndPassword[0];
 				string _passStr = emailAndPassword[1];
 
-				ViewModel.ScanningFinishedCommand?.Execute(new User
-				{
-					Email = _emailstr,
-					Password = _passStr
+				//ViewModel.ScanningFinishedCommand?.Execute(new Member
+				//{
+				//	Email = _emailstr,
+				//	Password = _passStr
 					
-				});
+				//});
 
-				Toast.MakeText(this, ViewModel.Email + " " + ViewModel.Password, ToastLength.Long).Show();
+				//Toast.MakeText(this, ViewModel.Email + " " + ViewModel.Password, ToastLength.Long).Show();
 			}
 			catch (Exception ex)
 
@@ -115,7 +115,7 @@ namespace ComPact.Droid
 			finally
 			{
 				Console.WriteLine("okey we going to start");
-				await ViewModel.LoginUserAsync();
+				//await ViewModel.Login();
 			}
 		}
 		#endregion
