@@ -106,11 +106,12 @@ namespace ComPact.Services
 			{
 				User responseUser = await _userDataService?.Login(user);
 				IEnumerable<Assignment> assignments;
+				IEnumerable<Payment> payments;
 				if (responseUser.Admin == true)
 				{
 					IEnumerable<Member> members = await _memberDataService?.GetAll(responseUser.Id);
 					assignments = await _assignmentDataService?.GetAll(responseUser.Id, true);
-					await _paymentDataService?.GetAll(responseUser.Id, true);
+					payments = await _paymentDataService?.GetAll(responseUser.Id, true);
 				}
 				else
 				{

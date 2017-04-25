@@ -6,6 +6,7 @@ using System.Text;
 
 using Android.App;
 using Android.Content;
+using Android.Graphics;
 using Android.OS;
 using Android.Runtime;
 using Android.Support.Design.Widget;
@@ -15,6 +16,7 @@ using ComPact.Models;
 using ComPact.Payments;
 using GalaSoft.MvvmLight.Helpers;
 using GalaSoft.MvvmLight.Views;
+using Java.IO;
 using Microsoft.Practices.ServiceLocation;
 
 namespace ComPact.Droid.Payments
@@ -51,6 +53,7 @@ namespace ComPact.Droid.Payments
 		TextView _titleTextView;
 		ImageView _optionsImageView;
 
+		ImageView _picturePayment;
 		EditText _titleEditText;
 		EditText _priceEditText;
 		EditText _detailsEditText;
@@ -94,6 +97,7 @@ namespace ComPact.Droid.Payments
 			_optionsImageView = FindViewById<ImageView>(Resource.Id.customToolbarOptionsImageView);
 			_titleTextView = FindViewById<TextView>(Resource.Id.customToolbarTitleTextView);
 
+			_picturePayment = FindViewById<ImageView>(Resource.Id.activityAddPaymentAddPicture);
 			_titleEditText = FindViewById<EditText>(Resource.Id.activityAddPaymentWhatEditText);
 			_priceEditText = FindViewById<EditText>(Resource.Id.activityAddPaymentPriceEditText);
 			_detailsEditText = FindViewById<EditText>(Resource.Id.activityAddPaymentDetailsEditText);
@@ -106,6 +110,18 @@ namespace ComPact.Droid.Payments
 			_titleTextView.Text = "Edit Payment";
 			Payment = Nav.GetAndRemoveParameter<Payment>(Intent);
 			ViewModel.SetPaymentCommand.Execute(Payment);
+			try
+			{
+				File image = new File(ViewModel.Payment.Image.Path);
+				if (image.Exists())
+				{
+					Bitmap bitmap = BitmapFactory.DecodeFile(image.AbsolutePath);
+					_picturePayment.SetImageBitmap(bitmap);
+				}
+			}
+			catch (Exception)
+			{
+			}
 		}
 
 		/**
@@ -126,6 +142,7 @@ namespace ComPact.Droid.Payments
 			_backImageView.SetCommand("Click", ViewModel.BackRedirectCommand);
 			_SavePaymentFloatingActionButton.SetCommand("Click", ViewModel.UpdatePaymentCommand);
 		}
+
 		#endregion
 	}
 }

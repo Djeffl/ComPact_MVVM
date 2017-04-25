@@ -46,13 +46,13 @@ namespace ComPact
 			}
 		}
 
-		public LoginQrViewModel LoginQrViewModel
-		{
-			get
-			{
-				return ServiceLocator.Current.GetInstance<LoginQrViewModel>();
-			}
-		}
+		//public LoginQrViewModel LoginQrViewModel
+		//{
+		//	get
+		//	{
+		//		return ServiceLocator.Current.GetInstance<LoginQrViewModel>();
+		//	}
+		//}
 
 		public RegisterViewModel RegisterViewModel
 		{

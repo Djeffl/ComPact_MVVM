@@ -31,6 +31,18 @@ namespace ComPact.Payments
 				RaisePropertyChanged(nameof(Payments));
 			}
 		}
+		User _user = new User();
+		public User User
+		{
+			get
+			{
+				return _user;
+			}
+			set
+			{
+				Set(ref _user, value);
+			}
+		}
 		#endregion
 		#region Commands
 		public RelayCommand AddPaymentRedirectCommand { get; set; }
@@ -79,6 +91,7 @@ namespace ComPact.Payments
 
 		async Task LoadData()
 		{
+			User = await GetUser();
 			Payments = Convert(await _paymentDataService.GetAll((await GetUser()).Admin));
 		}
 		void DetailPaymentRedirect(Payment payment)

@@ -155,6 +155,7 @@ namespace ComPact.Droid
 		 */
 		void SetBindings()
 		{
+			bindings.Add(this.SetBinding(() => ViewModel.User, () => User));
 			bindings.Add(this.SetBinding(() => ViewModel.Assignment, () => Assignment, BindingMode.TwoWay));
 		}
 

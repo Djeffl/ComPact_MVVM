@@ -23,6 +23,7 @@ namespace ComPact
 		{
 			return await _connection.Table<TEntity>().ToListAsync();
 		}
+
 		public virtual Task DropTable()
 		{
 			return _connection.DropTableAsync<TEntity>();

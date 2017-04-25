@@ -57,6 +57,19 @@ namespace ComPact.Assignments
 				//Set(ref _members, value);
 			}
 		}
+		Member _selectedMember;
+		public Member SelectedMember
+		{
+			get
+			{
+				return _selectedMember;
+			}
+			set
+			{
+				_selectedMember = value;
+				RaisePropertyChanged(nameof(SelectedMember));
+			}
+		}
 
 		#endregion
 		#region Commands
@@ -105,9 +118,9 @@ namespace ComPact.Assignments
 				await UpdateAssignment(Assignment);
 			});
 
-			MemberSelectedCommand = new RelayCommand<Member>(user =>
+			MemberSelectedCommand = new RelayCommand<Member>(member =>
 			{
-				System.Diagnostics.Debug.WriteLine(user.Email);
+				SelectedMember = member;
 			});
 
 			//Returns position itemSelected

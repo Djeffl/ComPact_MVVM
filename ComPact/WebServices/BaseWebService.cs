@@ -41,7 +41,7 @@ namespace ComPact
 		/**
 		 * Reference for HttpClient.PostAsJsonAsync 'System.Net.Http.Formatting.dll'
 		 */
-		public async Task<T> Create(string urlExtend, T obj)
+		public virtual async Task<T> Create(string urlExtend, T obj)
 		{
 			var client = GetHttpClient();
 
@@ -72,6 +72,7 @@ namespace ComPact
 			var client = GetHttpClient();
 
 			var data = JsonConvert.SerializeObject(obj);
+			new MultipartFormDataContent();
 			var postContent = new StringContent(data, Encoding.UTF8, "application/json");
 			HttpResponseMessage response = await client.PostAsync(urlExtend, postContent);
 			if (response.StatusCode == HttpStatusCode.Conflict)

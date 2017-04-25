@@ -153,7 +153,11 @@ namespace ComPact
 				{
 					Id = payment.MemberId
 				},
-				CreatedAt = payment.CreatedAt
+				CreatedAt = payment.CreatedAt,
+				Image = new Image
+				{
+					Path = payment.ImagePath
+				}
 			};
 			return returnPayment;
 		}
@@ -168,8 +172,8 @@ namespace ComPact
 				Amount = payment.Price,
 				AdminId = payment.AdminId,
 				MemberId = payment.Member.Id,
-				CreatedAt = payment.CreatedAt
-
+				CreatedAt = payment.CreatedAt,
+				ImagePath = payment.Image.Path
 			};
 			return returnPayment;
 		}

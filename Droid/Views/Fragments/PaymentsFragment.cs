@@ -37,6 +37,22 @@ namespace ComPact.Droid.Fragments
                 SetListViewAdapter();
 			}
 		}
+		User _user;
+		public User User
+		{
+			get
+			{
+				return _user;
+			}
+			set
+			{
+				_user = value;
+				bindings.Add(this.SetBinding(() => ViewModel.User.Admin, () => _addPaymentFloatingActionButton.Visibility).ConvertSourceToTarget((arg) =>
+				{
+					return arg ? ViewStates.Gone : ViewStates.Visible;
+				}));
+			}
+		}
 		//Keep track of bindings to avoid premature garbage collection
 		readonly List<Binding> bindings = new List<Binding>();
 		//Elements
@@ -85,6 +101,8 @@ namespace ComPact.Droid.Fragments
 		void SetBindings()
 		{
 			bindings.Add(this.SetBinding(() => ViewModel.Payments, () => Payments, BindingMode.OneWay));
+			bindings.Add(this.SetBinding(() => ViewModel.User, () => User, BindingMode.OneWay));
+
 		}
 		void SetCommands()
 		{
@@ -106,7 +124,14 @@ namespace ComPact.Droid.Fragments
 			timeTextView.Text = payment.CreatedAt.TimeOfDay.ToString("c").Remove(5);
 			dateTextView.Text = payment.CreatedAt.ToShortDateString();
 
-			iconImageView.SetColorFilter(Color.Rgb(224, 71, 74));
+			if (User.Admin)
+			{
+				iconImageView.SetImageResource(Resource.Drawable.Profile_placeholderImage);
+			}
+			else
+			{
+				iconImageView.SetColorFilter(Color.Rgb(224, 71, 74));
+			}
 			convertView.SetCommand("Click", ViewModel.DetailPaymentRedirectCommand, payment);
 
 			return convertView;

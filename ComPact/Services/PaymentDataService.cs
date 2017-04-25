@@ -25,6 +25,8 @@ namespace ComPact
 		public async Task<Payment> Create(Payment payment)
 		{
 			Payment response = await _apiService.AddPayment(payment);
+			//TODO Fix dit, je moet het path opslagen die je terug krijgt van je webService
+			response.Image = payment.Image;
 			RepoPayment data = _mapper.InvertMap(response);
 			await _paymentRepository.Insert(data);
 			return response;
@@ -47,7 +49,6 @@ namespace ComPact
 			IEnumerable<Payment> payments = _mapper.Map(await _paymentRepository?.All());
 			if (isAdmin)
 			{
-
 				IEnumerable<Member> members = _mapper.Map(await _memberRespository?.All());
 				foreach (var payment in payments)
 				{

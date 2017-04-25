@@ -12,8 +12,8 @@
             android:layout_gravity="center_vertical"
             android:id="@+id/paymentItemViewImageView"
             android:tint="@color/accent_color"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
+            android:layout_height="24dp"
+            android:layout_width="24dp"
             android:src="@drawable/ic_monetization_on_white_24dp" />
         <LinearLayout
             android:layout_marginLeft="20dp"

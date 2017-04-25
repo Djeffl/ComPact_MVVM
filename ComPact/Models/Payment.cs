@@ -3,7 +3,6 @@ namespace ComPact.Models
 {
 	public class Payment
 	{
-		
 		public string Id { get; set; }
 		public string Name { get; set; }
 		public string Description { get; set; }
@@ -11,6 +10,7 @@ namespace ComPact.Models
 		public string AdminId { get; set; }
 		public DateTime CreatedAt { get; set; }
 		public Member Member { get; set; }
+		public Image Image { get; set; }
 
 		public override string ToString()
 		{

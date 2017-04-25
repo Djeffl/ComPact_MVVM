@@ -59,7 +59,7 @@ namespace ComPact.Droid.Assignments
 		Color _colorFilter;
 		Color _resetColorFilter;
 		IconList iconList;
-		List<RadioButton> radioButtons;
+		List<RadioButton> radioButtons = new List<RadioButton>();
 		string iconName;
 		ObservableCollection<Member> _members;
 		public ObservableCollection<Member> Members
@@ -84,9 +84,22 @@ namespace ComPact.Droid.Assignments
 			set
 			{
 				_assignments = value;
+
 			}
 		}
 		public string IconName { get; set; }
+		Member _member;
+		public Member Member
+		{ 
+			get
+			{
+				return _member;
+			}
+			set
+			{
+				_member = value;
+			}
+		}
 
 
 		//Keep track of bindings to avoid premature garbage collection
@@ -199,6 +212,7 @@ namespace ComPact.Droid.Assignments
 			bindings.Add(this.SetBinding(() => ViewModel.Assignment.ItemName, () => _itemNameEditText.Text, BindingMode.TwoWay));
 			bindings.Add(this.SetBinding(() => ViewModel.Assignment.Description, () => _descriptionEditText.Text, BindingMode.TwoWay));
 			bindings.Add(this.SetBinding(() => ViewModel.Assignment.IconName, () => IconName));
+			bindings.Add(this.SetBinding(() => ViewModel.Assignment.Member, () => Member, BindingMode.TwoWay));
 			//bindings.Add(this.SetBinding(() => ViewModel.Assignment.Member, () => Member, BindingMode.TwoWay));
 
 			//binding = this.SetBinding(() => ViewModel.User, () => items[_membersListView.SelectedItemPosition], BindingMode.TwoWay);
@@ -240,18 +254,18 @@ namespace ComPact.Droid.Assignments
 			TextView emailTextView = convertView.FindViewById<TextView>(Resource.Id.listViewPersonEmailTextView);
 			emailTextView.Text = member.Email;
 			var isSelectedRadioButton = convertView.FindViewById<RadioButton>(Resource.Id.listViewPersonRadioButton);
-			//radioButtons.Add(isSelectedRadioButton);
+			radioButtons.Add(isSelectedRadioButton);
 
-			//isSelectedRadioButton.SetCommand("Click", ViewModel.MemberSelectedCommand, member);
-			////TODO CLEAN ME UP
-			//isSelectedRadioButton.Click += (sender, e) =>
-			//{
-			//	foreach (RadioButton radioButton in radioButtons)
-			//	{
-			//		radioButton.Checked = false;
-			//	}
-			//	isSelectedRadioButton.Checked = true;
-			//};
+			isSelectedRadioButton.SetCommand("Click", ViewModel.MemberSelectedCommand, member);
+			//TODO CLEAN ME UP
+			isSelectedRadioButton.Click += (sender, e) =>
+			{
+				foreach (RadioButton radioButton in radioButtons)
+				{
+					radioButton.Checked = false;
+				}
+				isSelectedRadioButton.Checked = true;
+			};
 			return convertView;
 		}
 		void OnIconClick(object sender, int position)

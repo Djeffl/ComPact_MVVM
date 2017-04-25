@@ -1,4 +1,5 @@
 using System;
+using ComPact.Models;
 using Newtonsoft.Json;
 
 namespace ComPact
@@ -18,8 +19,13 @@ namespace ComPact
 		[JsonProperty("memberId")]
 		public string MemberId { get; set; }
 		[JsonProperty("createdAt")]
-		public DateTime CreatedAt;
+		public DateTime CreatedAt { get; set; }
+		[JsonProperty("image")]
+		public Image Image { get; set; }
 
-
+		public override string ToString()
+		{
+			return string.Format("[WebPayment: Id={0}, Name={1}, Description={2}, Price={3}, AdminId={4}, MemberId={5}, CreatedAt={6}, Image={7}]", Id, Name, Description, Price, AdminId, MemberId, CreatedAt, Image);
+		}
 	}
 }

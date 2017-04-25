@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-
 using Android.App;
 using Android.Content;
 using Android.Graphics;
@@ -12,13 +10,11 @@ using Android.Support.Design.Widget;
 using Android.Support.V4.Content;
 using Android.Views;
 using Android.Widget;
-using ComPact.Droid.Helpers;
-using ComPact.Helpers;
 using ComPact.Models;
 using ComPact.Payments;
 using GalaSoft.MvvmLight.Helpers;
 using Java.IO;
-using Java.Text;
+
 
 namespace ComPact.Droid
 {
@@ -28,6 +24,18 @@ namespace ComPact.Droid
 		//Local variables
 		File _imageDirectory;
 		string _currentImageFilePath;
+		Image _image = new Image();
+		public Image Image
+		{
+			get
+			{
+				return _image;
+			}
+			set
+			{
+				Image = value;
+			}
+		}
 		//Keep track of bindings to avoid premature garbage collection
 		readonly List<Binding> bindings = new List<Binding>();
 		//Elements
@@ -94,6 +102,9 @@ namespace ComPact.Droid
 			bindings.Add(this.SetBinding(() => ViewModel.Payment.Name, () => _whatEditText.Text, BindingMode.TwoWay));
 			bindings.Add(this.SetBinding(() => ViewModel.Payment.Price, () => _priceEditText.Text, BindingMode.TwoWay));
 			bindings.Add(this.SetBinding(() => ViewModel.Payment.Description, () => _detailsEditText.Text, BindingMode.TwoWay));
+			//bindings.Add(this.SetBinding(() => ViewModel.Payment.Image.ImageValue, () => Image.ImageValue, BindingMode.TwoWay));
+			//bindings.Add(this.SetBinding(() => ViewModel.Payment.Image.Path, () => Image.Path, BindingMode.TwoWay));
+
 		}
 
 		/**
@@ -109,16 +120,6 @@ namespace ComPact.Droid
 			_optionsImageView.Visibility = ViewStates.Gone;
 			_titleTextView.Text = "Add Payment";
 
-
-
-			//Directory for image
-			_imageDirectory = new File(Android.OS.Environment.GetExternalStoragePublicDirectory(Android.OS.Environment.DirectoryPictures), "payments");
-			if (!_imageDirectory.Exists())
-			{
-				_imageDirectory.Mkdirs();
-
-			}
-
 			_addPictureImageView.Click += BtnCamera_click;
 		}
 
@@ -128,32 +129,52 @@ namespace ComPact.Droid
 		{
 			base.OnActivityResult(requestCode, resultCode, data);
 
-
 			Bitmap bitmap;
 			int height = _addPictureImageView.Height;
 			int width = _addPictureImageView.Width;
 			bitmap = GetImageBitmapFromFilePath(_currentImageFilePath, height, width);
+
 			if (bitmap != null)
 			{
+				ViewModel
+					.SetImageCommand
+					.Execute(new Image
+					{
+						ImageValue = Convert(bitmap),
+						Path = _currentImageFilePath
+					});
+				//Image.ImageValue = Convert(bitmap);
+				//Image.Path = _currentImageFilePath;
+
 				_addPictureImageView.SetImageBitmap(bitmap);
 				bitmap = null;
 			}
-			//bitmap = (Bitmap)data.Extras.Get("data");
-			//_addPictureImageView.SetImageBitmap(bitmap);
+
 		}
 
-		private void BtnCamera_click(object sender, EventArgs e)
+		//TODO Extract me
+		byte[] Convert(Bitmap bitmap)
+		{
+
+			byte[] bitmapData;
+			using (var stream = new System.IO.MemoryStream())
+			{
+				bitmap.Compress(Bitmap.CompressFormat.Png, 0, stream);
+				bitmapData = stream.ToArray(); 
+			}
+			return bitmapData;
+		}
+
+		void BtnCamera_click(object sender, EventArgs e)
 		{
 			TakePictureIntent();
-			//Intent takePictureIntent = new Intent(MediaStore.ActionImageCapture);
-			//if (takePictureIntent.ResolveActivity(PackageManager) != null)
-			//{
-			//	_imageFile = new File(_imageDirectory, String.Format("payments_{0}.jpg", Guid.NewGuid()));
-			//	takePictureIntent.PutExtra(MediaStore.ExtraOutput, Android.Net.Uri.FromFile(_imageFile));
-			//	StartActivityForResult(takePictureIntent, 0);
-			//}
 		}
 
+
+
+
+
+		//TODO Extract me
 		Bitmap GetImageBitmapFromFilePath(string fileName, int width, int height)
 		{
 			//Get dimensions of the file on disk
@@ -176,7 +197,6 @@ namespace ComPact.Droid
 			Bitmap resizedBitMap = null;
 			try
 			{
-
 				resizedBitMap = BitmapFactory.DecodeFile(fileName);//,options
 			}
 			catch (Exception ex)
@@ -186,8 +206,6 @@ namespace ComPact.Droid
 
 			return resizedBitMap;
 		}
-
-
 
 		private File CreateImageFile()
 		{
@@ -204,10 +222,9 @@ namespace ComPact.Droid
 			return image;
 		}
 
-		//Android.Net.Uri _currentImageUri;
-
 		void TakePictureIntent()
 		{
+			//Filesystem interface System.io....
 			Intent takePictureIntent = new Intent(MediaStore.ActionImageCapture);
 			// Ensure that there's a camera activity to handle the intent
 			if (takePictureIntent.ResolveActivity(PackageManager) != null)
@@ -226,9 +243,8 @@ namespace ComPact.Droid
 				if (photoFile != null)
 				{
 					var photoURI = FileProvider.GetUriForFile(this, this.PackageName + ".fileprovider", photoFile);
-					FileSystem system = new FileSystem();
 
-					takePictureIntent.PutExtra(MediaStore.ExtraOutput, photoURI);//_currentImageFilePath);
+					takePictureIntent.PutExtra(MediaStore.ExtraOutput, photoURI);
 
 					StartActivityForResult(takePictureIntent, 1);
 				}

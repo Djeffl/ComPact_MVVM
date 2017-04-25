@@ -13,5 +13,6 @@ namespace ComPact
 		public string AdminId { get; set; }
 		public string MemberId { get; set; }
 		public DateTime CreatedAt { get; set; }
+		public string ImagePath { get; set; }
 	}
 }

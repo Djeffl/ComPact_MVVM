@@ -211,6 +211,13 @@ namespace ComPact.Members
 			//TODO Create dataService that 
 			try
 			{
+			//	//Member mem = assignment.Member;
+			//	//assignment.Member = new Member
+			//	//{
+			//	//	AdminId = mem.AdminId,
+			//	//	Id = "58f8688afa3bfe02e185b68c"
+			//	//}
+			//}
 			string adminId = (await UserDataService?.GetUser()).Id;
 			assignment.AdminId = adminId;
 			await _assignmentDataService.Create(assignment);

@@ -219,6 +219,7 @@
     <Compile Include="Views\Activities\Payments\DetailPaymentActivity.cs" />
     <Compile Include="Views\Activities\Payments\EditPaymentActivity.cs" />
     <Compile Include="Helpers\FileSystem.cs" />
+    <Compile Include="Helpers\UploadImage.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />

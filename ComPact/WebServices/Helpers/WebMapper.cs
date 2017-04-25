@@ -135,7 +135,6 @@ namespace ComPact
 				returnMembers.Add(Map(member));
 			}
 			return returnMembers;
-
 		}
 
 		public IEnumerable<WebMember> InvertMap(IEnumerable<Member> members)
@@ -157,11 +156,12 @@ namespace ComPact
 				Description = payment.Description,
 				Price = payment.Price,
 				AdminId = payment.AdminId,
-				Member = new Member {
+				Member = new Member
+				{
 					Id = payment.MemberId
 				},
-				CreatedAt = payment.CreatedAt
-
+				CreatedAt = payment.CreatedAt,
+				Image = payment.Image
 			};
 			return returnPayment;
 		}
@@ -176,8 +176,9 @@ namespace ComPact
 				Price = payment.Price,
 				AdminId = payment.AdminId,
 				MemberId = payment.Member.Id,
-				CreatedAt = payment.CreatedAt
-
+				CreatedAt = payment.CreatedAt,
+				//Path = payment.Image.Path,
+				Image = payment.Image
 			};
 			return returnPayment;
 		}

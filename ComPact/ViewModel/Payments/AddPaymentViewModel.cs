@@ -26,7 +26,8 @@ namespace ComPact.Payments
 		Payment _payment = new Payment
 		{
 			Name = null,
-			Description = null
+			Description = null,
+			Image = new Image()
 		};
 		public Payment Payment
 		{
@@ -44,6 +45,8 @@ namespace ComPact.Payments
 		#region Commands
 		public RelayCommand CreatePaymentCommand { get; set; }
 		public RelayCommand BackRedirectCommand { get; set; }
+		public RelayCommand<Image> SetImageCommand { get; set; }
+
 		#endregion
 		#region Constructor
 		public AddPaymentViewModel(INavigationService navigationService, IUserDataService userDataService, IPaymentDataService paymentDataService, IPopUpService popUpService, IDialogService dialogService)
@@ -70,6 +73,7 @@ namespace ComPact.Payments
 			{
 				await CreatePayment();
 			});
+			SetImageCommand = new RelayCommand<Image>(SetImage);
 		}
 		#endregion
 		#region Methods
@@ -78,13 +82,14 @@ namespace ComPact.Payments
 			try
 			{
 				Payment.CreatedAt = DateTime.Now.ToLocalTime();
-				string memberId = (await UserDataService?.GetUser()).Id;
-				Payment.Member = new Member
-				{
-					Id = memberId
-				};
+				Payment.Member = await UserDataService?.GetUser();
+
 				await _paymentDataService.Create(Payment);
 				_popUpService.Show("Payment succesfully created", PopUpLength.Long);
+				_payment.Description = null;
+				_payment.Name = null;
+
+				_navigationService.GoBack();
 			}
 			catch (ArgumentException)
 			{
@@ -94,13 +99,12 @@ namespace ComPact.Payments
 			{
 				_dialogService.ShowMessage(ex.ToString());
 			}
-			_payment.Description = null;
-			_payment.Name = null;
 
-			_navigationService.GoBack();
 		}
-
-
+		void SetImage(Image image)
+		{
+			Payment.Image = image;
+		}
 		#endregion
 	}
 	

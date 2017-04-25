@@ -120,6 +120,8 @@
     <Compile Include="Helpers\IFileSystem.cs" />
     <Compile Include="ViewModel\HomeViewModel.cs" />
     <Compile Include="Helpers\PopUpLength.cs" />
+    <Compile Include="Helpers\IUploadImage.cs" />
+    <Compile Include="Models\Image.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Contracts\" />

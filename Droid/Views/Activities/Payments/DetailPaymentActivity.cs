@@ -6,6 +6,7 @@ using System.Text;
 
 using Android.App;
 using Android.Content;
+using Android.Graphics;
 using Android.OS;
 using Android.Runtime;
 using Android.Support.Design.Widget;
@@ -15,6 +16,7 @@ using ComPact.Models;
 using ComPact.Payments;
 using GalaSoft.MvvmLight.Helpers;
 using GalaSoft.MvvmLight.Views;
+using Java.IO;
 using Microsoft.Practices.ServiceLocation;
 
 namespace ComPact.Droid.Payments
@@ -54,6 +56,7 @@ namespace ComPact.Droid.Payments
 		//__________________________Others______________________________
 
 		FloatingActionButton _editFloatingActionButton;
+		ImageView _picturePayment;
 		TextView _detailTextView;
 		TextView _paymentTitleTextView;
 		TextView _priceTextView;
@@ -93,6 +96,19 @@ namespace ComPact.Droid.Payments
 
 			ViewModel.LoadDataCommand.Execute(null);
 
+			try
+			{
+				File image = new File(ViewModel.Payment.Image.Path);
+				if (image.Exists())
+				{
+				Bitmap bitmap = BitmapFactory.DecodeFile(image.AbsolutePath);
+				_picturePayment.SetImageBitmap(bitmap);
+				}
+			}
+			catch (Exception)
+			{
+			}
+
 			_titleTextView.Text = Payment.Name;
 			_detailTextView.Text = Payment.Description;
 			_priceTextView.Text = String.Format(CultureInfo, "{0:C}", Payment.Price);
@@ -108,6 +124,7 @@ namespace ComPact.Droid.Payments
 			_optionsImageView = FindViewById<ImageView>(Resource.Id.customToolbarOptionsImageView);
 			//__________________________Others______________________________
 			_editFloatingActionButton = FindViewById<FloatingActionButton>(Resource.Id.activityDetailPaymentEditPaymentFloatingActionButton);
+			_picturePayment = FindViewById<ImageView>(Resource.Id.activityDetailPaymentPictureImageView);
 			_titleTextView = FindViewById<TextView>(Resource.Id.activityDetailPaymentTitleTextView);
 			_priceTextView = FindViewById<TextView>(Resource.Id.activityDetailPaymentPriceTextView);
 			_detailTextView = FindViewById<TextView>(Resource.Id.activityDetailPaymentDetailTextView);
