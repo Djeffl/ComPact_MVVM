@@ -8,7 +8,5 @@ namespace ComPact
 {
 	public interface IAssignmentRepository: IBaseRepository<RepoAssignment,string>
 	{
-		Task<IEnumerable<RepoAssignment>> GetAllUnfinished();
-
 	}
 }

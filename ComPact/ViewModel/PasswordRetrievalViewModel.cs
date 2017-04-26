@@ -10,8 +10,7 @@ namespace ComPact
 		/**
 		 * Declare Services
 		 */
-		private readonly INavigationService _navigationService;
-		private readonly IBackService _backService;
+		readonly INavigationService _navigationService;
 		readonly IMemberDataService _userDataService;
 		readonly IPopUpService _popUpService;
 		#region Parameters
@@ -39,12 +38,11 @@ namespace ComPact
 		/**
 		 * Init services & Init() & RegisterCommands();
 		 */
-		public PasswordRetrievalViewModel(INavigationService navigationService, IUserDataService userDataService, IBackService backService, IMemberDataService memberDataService, IPopUpService popUpService)
+		public PasswordRetrievalViewModel(INavigationService navigationService, IUserDataService userDataService, IMemberDataService memberDataService, IPopUpService popUpService)
 			:base(userDataService)
 		{
 			//Init Services
 			_navigationService = navigationService;
-			_backService = backService;
 			_popUpService = popUpService;
 
 			Init();
@@ -57,16 +55,12 @@ namespace ComPact
 		}
 		void RegisterCommands()
 		{
-			BackRedirectCommand = new RelayCommand(BackRedirect);
+			BackRedirectCommand = new RelayCommand(_navigationService.GoBack);
 			PasswordResetCommand = new RelayCommand(PasswordReset);
 		}
 		#endregion
 
 		#region Methods
-		void BackRedirect()
-		{
-			_backService.GoBack();
-		}
 		void PasswordReset()
 		{
 			var user = new Member
@@ -75,7 +69,7 @@ namespace ComPact
 			};
 			//_userDataService.Forgot(user);
 			_popUpService.Show("Please check your mail", PopUpLength.Long);
-			_backService.GoBack();
+			_navigationService.GoBack();
 		}
 		#endregion
 		

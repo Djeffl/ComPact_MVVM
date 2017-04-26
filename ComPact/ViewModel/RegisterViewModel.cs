@@ -11,11 +11,10 @@ namespace ComPact
 {
 	public class RegisterViewModel : BaseViewModel
 	{
-		private readonly INavigationService _navigationService;
-		private readonly IAuthenticationService _authenticationService;
-		private readonly IDialogService _dialogService;
-		private readonly IBackService _backService;
-		private readonly IPopUpService _popUpService;
+		readonly INavigationService _navigationService;
+		readonly IAuthenticationService _authenticationService;
+		readonly IDialogService _dialogService;
+		readonly IPopUpService _popUpService;
 		#region Parameters
 		/**
 		 * Parameters

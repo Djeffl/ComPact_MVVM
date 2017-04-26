@@ -12,7 +12,6 @@ namespace ComPact
 		 * Declare Services
 		 */
 		readonly INavigationService _navigationService;
-		readonly IBackService _backService;
 		readonly IAuthenticationService _authenticationService;
 
 		#region Parameters

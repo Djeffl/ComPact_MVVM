@@ -60,11 +60,11 @@ namespace ComPact.Services
 		}
 		public async Task<IEnumerable<Assignment>> GetAllUnfinished(bool isAdmin)
 		{
-			IEnumerable<Assignment> assignments = _mapper.Map(await _assignmentRepository.GetAllUnfinished());
+			IEnumerable<Assignment> UnFinishedAssignments = _mapper.Map(await _assignmentRepository.Where(x => x.Done == false));
 			if (isAdmin)
 			{
 				IEnumerable<Member> members = _mapper.Map(await _memberRespository?.All());
-				foreach (var assignment in assignments)
+				foreach (var assignment in UnFinishedAssignments)
 				{
 					foreach (var member in members)
 					{
@@ -75,7 +75,7 @@ namespace ComPact.Services
 					}
 				}
 			}
-			return assignments;
+			return UnFinishedAssignments;
 		}
 
 		public async Task<Assignment> Update(Assignment assignment)

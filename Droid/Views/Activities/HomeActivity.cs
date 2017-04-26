@@ -19,7 +19,6 @@ namespace ComPact.Droid.Activities
 	public class HomeActivity : BaseActivity
 	{
 		//Local variables
-		MenuDialogService menu;
 		Color _colorFilter;
 		Color _resetColor = new Color(255, 255, 255);
 		FragmentManager _fragmentManager;
@@ -78,7 +77,6 @@ namespace ComPact.Droid.Activities
 			ChangeFragment(null, null, typeof(AssignmentsFragment), _assignmentsFragment);
 			//-----
 			//Ask Bruno
-			menu = new MenuDialogService();
 			_optionsImageView.Click += PopupMenu;
 		}
 
