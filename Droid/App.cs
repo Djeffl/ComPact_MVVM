@@ -81,7 +81,7 @@ namespace ComPact.Droid
 			SimpleIoc.Default.Register<IDialogService, DialogService>();
 			SimpleIoc.Default.Register<IPopUpService, PopUpService>();
 			SimpleIoc.Default.Register<IDatabase, Database>();
-			SimpleIoc.Default.Register<IMenuDialogService, MenuDialogService>();
+			//SimpleIoc.Default.Register<IMenuDialogService, MenuDialogService>();
 			SimpleIoc.Default.Register<IFileSystem, FileSystem>();
 		}
 	}

@@ -11,8 +11,6 @@ namespace ComPact
 		 * Declare Services
 		 */
 		readonly INavigationService _navigationService;
-		readonly IBackService _backService;
-		//private readonly IDialogService _dialogService;
 		#region Parameters
 		/**
 		 * Parameters
@@ -37,12 +35,11 @@ namespace ComPact
 		/**
 		 * Init services & Init() & RegisterCommands();
 		 */
-		public HelpViewModel(INavigationService navigationService, IUserDataService userDataService, IBackService backService)
+		public HelpViewModel(INavigationService navigationService, IUserDataService userDataService)
 			:base(userDataService)
 		{
 			//Init Services
 			_navigationService = navigationService;
-			_backService = backService;
 
 			Init();
 
@@ -54,15 +51,12 @@ namespace ComPact
 		}
 		void RegisterCommands()
 		{
-			BackRedirectCommand = new RelayCommand(BackRedirect);
+			BackRedirectCommand = new RelayCommand(_navigationService.GoBack);
 		}
 		#endregion
 
 		#region Methods
-		void BackRedirect()
-		{
-			_backService.GoBack();
-		}
+
 		#endregion
 	}
 }

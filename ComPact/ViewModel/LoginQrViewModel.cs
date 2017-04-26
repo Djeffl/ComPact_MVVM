@@ -14,9 +14,8 @@ namespace ComPact.ViewModel
 		 * Declare Services
 		 */
 		readonly INavigationService _navigationService;
-		readonly IBackService _backService;
 		readonly IDialogService _dialogService;
-		private readonly IAuthenticationService _authenticationService;
+		readonly IAuthenticationService _authenticationService;
 		#region Parameters
 		/**
 		 * Parameters
@@ -55,14 +54,13 @@ namespace ComPact.ViewModel
 		/**
 		 * Init services & Init() & RegisterCommands();
 		 */
-		public LoginQrViewModel(INavigationService navigationService, IUserDataService userDataService, IDialogService dialogService, IBackService backService, IAuthenticationService authenticationService)
+		public LoginQrViewModel(INavigationService navigationService, IUserDataService userDataService, IDialogService dialogService, IAuthenticationService authenticationService)
 			:base(userDataService)
 		{
 			//Init Services
 			_navigationService = navigationService;
 			_authenticationService = authenticationService;
 			_dialogService = dialogService;
-			_backService = backService;
 
 			Init();
 
@@ -74,7 +72,7 @@ namespace ComPact.ViewModel
 		}
 		void RegisterCommands()
 		{
-			BackRedirectCommand = new RelayCommand(BackRedirect);
+			BackRedirectCommand = new RelayCommand(_navigationService.GoBack);
 			ScanningFinishedCommand = new RelayCommand<Member>(async (obj) => await Login(obj));
 
 		}
@@ -95,10 +93,6 @@ namespace ComPact.ViewModel
 
 				_dialogService.ShowMessage("Oops something went wrong");
 			}
-		}
-		void BackRedirect()
-		{
-			_backService.GoBack();
 		}
 		void HomeRedirect()
 		{

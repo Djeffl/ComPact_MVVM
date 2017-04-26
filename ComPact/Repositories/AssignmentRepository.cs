@@ -13,19 +13,5 @@ namespace ComPact
 			: base(database)
 		{
 		}
-
-		public async Task<IEnumerable<RepoAssignment>> GetAllUnfinished()
-		{
-			return await Where(Filter());
-		}
-
-
-		#region Private methods
-		Expression<Func<RepoAssignment, bool>> Filter()
-		{
-			return (x => x.Done == false);
-		}
-		#endregion
-
 	}
 }
