@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -65,8 +65,8 @@ namespace ComPact.ViewModel
 				Set(ref _done, value);
 			}
 		}
-		ObservableCollection<Assignment> _assignments;
-		public ObservableCollection<Assignment> Assignments
+		ObservableCollection<Models.Assignment> _assignments;
+		public ObservableCollection<Models.Assignment> Assignments
 		{
 			get
 			{
@@ -140,7 +140,7 @@ namespace ComPact.ViewModel
 		void RegisterCommands()
 		{
 			AddAssignmentRedirectCommand = new RelayCommand(AddTaskRedirect);
-			DetailAssignmentRedirectCommand = new RelayCommand<Assignment>(DetailAssignmentRedirect);
+			DetailAssignmentRedirectCommand = new RelayCommand<Models.Assignment>(this.DetailAssignmentRedirect);
 			AssignmentsPostionCommand = new RelayCommand<int>(pos =>
 			{
 				Debug.WriteLine(pos);//Assignments[pos]);
@@ -154,7 +154,7 @@ namespace ComPact.ViewModel
 			{
 				User = await GetUser();
 			});
-			AssignmentDoneCommand = new RelayCommand<Assignment>(async (assignment) =>
+			AssignmentDoneCommand = new RelayCommand<Models.Assignment>(async (assignment) =>
 			{
 				await AssignmentDone(assignment);
 				Assignments.Remove(assignment);
@@ -169,7 +169,7 @@ namespace ComPact.ViewModel
 		{
 			_navigationService.NavigateTo(LocatorViewModel.AddTaskPageKey);
 		}
-		void DetailAssignmentRedirect(Assignment assignment)
+		void DetailAssignmentRedirect(Models.Assignment assignment)
 		{
 			_navigationService.NavigateTo(LocatorViewModel.DetailAssignmentPageKey, assignment);
 		}
@@ -177,10 +177,10 @@ namespace ComPact.ViewModel
 		public async Task GetAssignments()
 		{
 			User responseUser = await _userDataService.GetUser();
-			IEnumerable<Assignment> assignments = await _assignmentDataService?.GetAllUnfinished(User.Admin);
-			Assignments = Convert<Assignment>(assignments);
+			IEnumerable<Models.Assignment> assignments = await _assignmentDataService?.GetAllUnfinished(User.Admin);
+			Assignments = Convert(assignments);
 		}
-		public async Task AssignmentDone(Assignment assignment)
+		public async Task AssignmentDone(Models.Assignment assignment)
 		{
 			assignment.AdminId = null;
 			assignment.Description = null;

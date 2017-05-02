@@ -12,10 +12,10 @@
             android:id="@+id/toolbarHeader"
             layout="@layout/ToolbarHeader" />
         <ImageView
-            android:id="@+id/activityDetailPaymentPictureImageView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:src="@drawable/placeholderpicture" />
+            android:layout_height="270dp"
+            android:id="@+id/activityDetailPaymentPictureImageView"
+            android:src="@drawable/placeholderPicture" />
         <View
             android:layout_width="match_parent"
             android:layout_height="2dp"

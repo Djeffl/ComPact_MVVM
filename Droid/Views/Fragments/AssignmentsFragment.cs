@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Android.App;
 using Android.OS;
 using Android.Support.Design.Widget;
@@ -23,8 +23,8 @@ namespace ComPact.Droid.Fragments
 		ListView _tasksListView;
 		IconList _iconList = new IconList();
 		//data
-		ObservableCollection<Assignment> _assignments;
-		public ObservableCollection<Assignment> Assignments
+		ObservableCollection<ComPact.Models.Assignment> _assignments;
+		public ObservableCollection<ComPact.Models.Assignment> Assignments
 		{
 			get
 			{
@@ -128,7 +128,7 @@ namespace ComPact.Droid.Fragments
 			_tasksListView.Adapter = ViewModel.Assignments.GetAdapter(GetAssignmentsAdapter);
 		}
 
-		private View GetAssignmentsAdapter(int position, Assignment assignment, View convertView)
+		private View GetAssignmentsAdapter(int position, ComPact.Models.Assignment assignment, View convertView)
 		{
 			// Not reusing views
 			LayoutInflater inflater = LayoutInflater.From(Application.Context);

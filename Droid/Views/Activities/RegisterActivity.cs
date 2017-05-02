@@ -17,7 +17,7 @@ using GalaSoft.MvvmLight.Views;
 
 namespace ComPact.Droid
 {
-	[Activity(Label = "RegisterActivity")]
+	[Activity]
 	public class RegisterActivity : BaseActivity
 	{
 		//Local variables

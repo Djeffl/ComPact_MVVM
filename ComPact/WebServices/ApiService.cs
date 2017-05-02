@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using ComPact.Models;
@@ -14,14 +14,18 @@ namespace ComPact.WebServices
 		IUserWebService _userWebService;
 		IMemberWebService _memberWebService;
 		IPaymentWebService _paymentWebService;
+		ILocationWebService _locationWebService;
 
-		public ApiService(IWebMapper mapper, IAssignmentWebService assignmentWebService, IUserWebService userWebService, IMemberWebService memberWebService, IPaymentWebService paymentWebService)
+		public ApiService(IWebMapper mapper, IAssignmentWebService assignmentWebService, 
+		                  IUserWebService userWebService, IMemberWebService memberWebService, 
+		                  IPaymentWebService paymentWebService, ILocationWebService locationWebService)
 		{
 			_mapper = mapper;
 			_assignmentWebService = assignmentWebService;
 			_userWebService = userWebService;
 			_memberWebService = memberWebService;
 			_paymentWebService = paymentWebService;
+			_locationWebService = locationWebService;
 		}
 
 		public async Task<User> AddUser(User user)
@@ -158,6 +162,50 @@ namespace ComPact.WebServices
 			string url = ApiCalls.BasePaymentPath + String.Format("/{0}", payment.Id);
 			WebPayment data = _mapper.InvertMap(payment);
 			WebPayment response = await _paymentWebService.Update(url, data);
+			return _mapper.Map(response);
+		}
+
+		public async Task<Location> AddLocation(Location location)
+		{
+			WebLocation data = _mapper.InvertMap(location);
+			WebLocation response = await _locationWebService.Create(ApiCalls.BaseLocationPath, data);
+			return _mapper.Map(response);
+		}
+
+		public async Task<Location> UpdateLocation(Location location)
+		{
+			string url = ApiCalls.BaseLocationPath + String.Format("/{0}", location.Id);
+			WebLocation data = _mapper.InvertMap(location);
+			WebLocation response = await _locationWebService.Update(url, data);
+			return _mapper.Map(response);
+		}
+
+		public async Task<bool> DeleteLocation(string locationId)
+		{
+			bool isSuccessful = false;
+			string url = ApiCalls.BaseLocationPath + String.Format("/{0}", locationId);
+			try
+			{
+				isSuccessful = (await _locationWebService.Delete(url)).success;
+			}
+			catch (Exception)
+			{
+			}
+			return isSuccessful;
+		}
+
+		public async Task<IEnumerable<Location>> GetLocations(string userId, bool isAdmin)
+		{
+			string url;
+			if (isAdmin)
+			{
+				url = ApiCalls.BaseLocationPath + String.Format("?adminId={0}", userId);
+			}
+			else
+			{
+				url = ApiCalls.BaseLocationPath + String.Format("?memberId={0}", userId);
+			}
+			IEnumerable<WebLocation> response = await _locationWebService.ReadAll(url);
 			return _mapper.Map(response);
 		}
 	}

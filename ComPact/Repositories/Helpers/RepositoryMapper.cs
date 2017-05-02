@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using ComPact.Extensions;
 using ComPact.Models;
 
 namespace ComPact
@@ -91,12 +92,13 @@ namespace ComPact
 
 		public Assignment Map(RepoAssignment assignment)
 		{
-			var returnAssignment = new Assignment
+			var returnAssignment = new Models.Assignment
 			{
 				Id = assignment.Id,
 				ItemName = assignment.ItemName,
 				Description = assignment.Description,
-				Member = new Member {
+				Member = new Member
+				{
 					Id = assignment.MemberId
 				},
 				IconName = assignment.IconName,
@@ -130,10 +132,10 @@ namespace ComPact
 
 		}
 
-		public IEnumerable<RepoAssignment> InvertMap(IEnumerable<Assignment> assignments)
+		public IEnumerable<RepoAssignment> InvertMap(IEnumerable<Models.Assignment> assignments)
 		{
 			List<RepoAssignment> returnAssignments = new List<RepoAssignment>();
-			foreach (Assignment assignment in assignments)
+			foreach (Models.Assignment assignment in assignments)
 			{
 				returnAssignments.Add(InvertMap(assignment));
 			}
@@ -197,6 +199,81 @@ namespace ComPact
 				returnPayments.Add(InvertMap(payment));
 			}
 			return returnPayments;
+		}
+
+		public Location Map(Tuple<RepoLocation, IEnumerable<RepoLocationMember>> locations)
+		{
+			RepoLocation location = locations.Item1;
+			IEnumerable<RepoLocationMember> locationMembers = locations.Item2;
+			List<Member> membersIds = new List<Member>();
+
+			foreach (RepoLocationMember locationMember in locationMembers)
+			{
+				
+				membersIds.Add(
+					new Member
+				{
+					Id = locationMember.MemberId
+				});
+			}
+
+			var returnLocation = new Location
+			{
+				Id = location.Id,
+				Name = location.Name,
+				City = location.City,
+				Street = location.Street,
+				Radius = location.Radius,
+				AdminId = location.AdminId,
+				Members = membersIds
+			};
+
+			return returnLocation;
+		}
+
+		public Tuple<RepoLocation, IEnumerable<RepoLocationMember>> InvertMap(Location location)
+		{
+			var returnLocation = new RepoLocation
+			{
+				Id = location.Id,
+				Name = location.Name,
+				City = location.City,
+				Street = location.Street,
+				Radius = location.Radius,
+				AdminId = location.AdminId
+			};
+			List<RepoLocationMember> returnLocationMembers = new List<RepoLocationMember>();
+			foreach (Member member in location.Members)
+			{
+				var returnLocationMember = new RepoLocationMember
+				{
+					Id = Guid.NewGuid(),
+					LocationId = location.Id,
+					MemberId = member.Id
+				};
+				returnLocationMembers.Add(returnLocationMember);
+			}
+			return new Tuple<RepoLocation, IEnumerable<RepoLocationMember>>(returnLocation, returnLocationMembers);
+		}
+
+		public IEnumerable<Location> Map(IEnumerable<Tuple<RepoLocation, IEnumerable<RepoLocationMember>>> tuples)
+		{
+			var returnLocation = new List<Location>();
+			foreach (Tuple<RepoLocation, IEnumerable<RepoLocationMember>> tuple in tuples)
+			{
+				returnLocation.Add(Map(tuple));
+			}
+			return returnLocation;
+		}
+
+		public IEnumerable<Tuple<RepoLocation, IEnumerable<RepoLocationMember>>> InvertMap(IEnumerable<Location> locations)
+		{
+			var returnTuple = new List<Tuple<RepoLocation, IEnumerable<RepoLocationMember>>>();
+			foreach (Location location in locations)
+			{
+				returnTuple.Add(InvertMap(location));
+			}
+			return returnTuple;
 		}
 	}
 }
