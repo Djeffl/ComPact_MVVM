@@ -167,7 +167,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Views\Activities\RegisterActivity.cs" />
     <Compile Include="App.cs" />
@@ -211,6 +210,9 @@
     <Compile Include="Views\Activities\Payments\EditPaymentActivity.cs" />
     <Compile Include="Helpers\FileSystem.cs" />
     <Compile Include="Helpers\UploadImage.cs" />
+    <Compile Include="Views\Activities\Locations\AddLocationActivity.cs" />
+    <Compile Include="Views\Activities\Locations\DetailLocationActivity.cs" />
+    <Compile Include="Views\Activities\Locations\EditLocationActivity.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
@@ -256,7 +258,6 @@
     <AndroidResource Include="Resources\drawable-xxhdpi\ic_location_on_white_24dp.png" />
     <AndroidResource Include="Resources\drawable-xxhdpi\ic_message_white_24dp.png" />
     <AndroidResource Include="Resources\drawable-xxhdpi\ic_payment_white_24dp.png" />
-    <AndroidResource Include="Resources\drawable-xxxhdpi\.DS_Store" />
     <AndroidResource Include="Resources\drawable-xxxhdpi\ic_arrow_left.png" />
     <AndroidResource Include="Resources\drawable-xxxhdpi\ic_assignment_white_24dp.png" />
     <AndroidResource Include="Resources\drawable-xxxhdpi\ic_location_on_white_24dp.png" />
@@ -411,6 +412,20 @@
     <AndroidResource Include="Resources\drawable-xxxhdpi\ic_monetization_on_white_24dp.png" />
     <AndroidResource Include="Resources\layout\ListViewSimpleListview.axml" />
     <AndroidResource Include="Resources\xml\file_paths.xml" />
+    <AndroidResource Include="Resources\layout\ActivityAddLocation.axml" />
+    <AndroidResource Include="Resources\drawable-hdpi\ic_keyboard_arrow_down_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\ic_keyboard_arrow_up_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\ic_keyboard_arrow_down_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\ic_keyboard_arrow_up_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_keyboard_arrow_down_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\ic_keyboard_arrow_down_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\ic_keyboard_arrow_up_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\ic_keyboard_arrow_down_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\ic_keyboard_arrow_up_white_24dp.png" />
+    <AndroidResource Include="Resources\layout\ListViewPersonCheckbox.axml" />
+    <AndroidResource Include="Resources\layout\ActivityDetailLocation.axml" />
+    <AndroidResource Include="Resources\layout\ListViewPersonNormal.axml" />
+    <AndroidResource Include="Resources\drawable\placeholder-image-wide.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\" />
@@ -428,11 +443,10 @@
     <Folder Include="Views\Controls\Models\" />
     <Folder Include="Views\Activities\Payments\" />
     <Folder Include="Resources\xml\" />
+    <Folder Include="Views\Activities\Locations\" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidAsset Include="Assets\RobotoTTF\Roboto-Black.ttf" />
     <AndroidAsset Include="Assets\RobotoTTF\Roboto-BlackItalic.ttf" />
-    <AndroidAsset Include="Assets\RobotoTTF\Roboto-Bold.ttf" />
     <AndroidAsset Include="Assets\RobotoTTF\Roboto-BoldItalic.ttf" />
     <AndroidAsset Include="Assets\RobotoTTF\Roboto-Italic.ttf" />
     <AndroidAsset Include="Assets\RobotoTTF\Roboto-Light.ttf" />
@@ -448,6 +462,8 @@
     <AndroidAsset Include="Assets\RobotoTTF\RobotoCondensed-Light.ttf" />
     <AndroidAsset Include="Assets\RobotoTTF\RobotoCondensed-LightItalic.ttf" />
     <AndroidAsset Include="Assets\RobotoTTF\RobotoCondensed-Regular.ttf" />
+    <AndroidAsset Include="Assets\RobotoTTF\Roboto-Black.ttf" />
+    <AndroidAsset Include="Assets\RobotoTTF\Roboto-Bold.ttf" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Import Project="..\packages\Xamarin.Build.Download.0.4.2\build\Xamarin.Build.Download.targets" Condition="Exists('..\packages\Xamarin.Build.Download.0.4.2\build\Xamarin.Build.Download.targets')" />

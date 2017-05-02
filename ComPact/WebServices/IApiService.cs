@@ -6,8 +6,8 @@ namespace ComPact.WebServices
 {
 	public interface IApiService
 	{
-		Task<Assignment> AddAssignment(Assignment assignment);
-		Task<Assignment> UpdateAssignment(Assignment assignment);
+		Task<ComPact.Models.Assignment> AddAssignment(ComPact.Models.Assignment assignment);
+		Task<ComPact.Models.Assignment> UpdateAssignment(ComPact.Models.Assignment assignment);
 
 		Task<User> AddUser(User user);
 		Task<User> LoginUser(User user);
@@ -16,12 +16,17 @@ namespace ComPact.WebServices
 		Task<Member> AddMember(Member member);
 		Task<Member> GetMember(string adminId);
 		Task<IEnumerable<Member>> GetMembers(string adminId);
-		Task<IEnumerable<Assignment>> GetAssignments(string userId, bool isAdmin);
+		Task<IEnumerable<ComPact.Models.Assignment>> GetAssignments(string userId, bool isAdmin);
 		Task<bool> DeleteAssignment(string assignmentId);
 
 		Task<Payment> AddPayment(Payment payment);
 		Task<IEnumerable<Payment>> GetPayments(string userId, bool isAdmin);
 		Task<bool> DeletePayment(string paymentId);
 		Task<Payment> UpdatePayment(Payment assignment);
+
+		Task<Location> AddLocation(Location location);
+		Task<Location> UpdateLocation(Location location);
+		Task<bool> DeleteLocation(string locationId);
+		Task<IEnumerable<Location>> GetLocations(string userId, bool isAdmin);
 	}
 }

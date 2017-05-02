@@ -129,7 +129,7 @@ namespace ComPact.Members
 		public RelayCommand<Member> MemberSelectedCommand { get; set; } 
 		public RelayCommand<int> AssignmentsOptionsCommand { get; set; }
 		public RelayCommand GetMembersCommand { get; set; }
-		public RelayCommand<Assignment> CreateAssignmentCommand { get; set; }
+		public RelayCommand<Models.Assignment> CreateAssignmentCommand { get; set; }
 
 
 		#endregion
@@ -169,7 +169,7 @@ namespace ComPact.Members
 			{
 				await GetMembers();
 			});
-			CreateAssignmentCommand = new RelayCommand<Assignment>(async (assignment) =>
+			CreateAssignmentCommand = new RelayCommand<Models.Assignment>(async (assignment) =>
 			{
 				await CreateAssignment(assignment);
 			});
@@ -206,7 +206,7 @@ namespace ComPact.Members
 			_popUpService.Show("Task succesfully created!", PopUpLength.Long);
 		}
 
-		async Task CreateAssignment(Assignment assignment)
+		async Task CreateAssignment(Models.Assignment assignment)
 		{
 			//TODO Create dataService that 
 			try

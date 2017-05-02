@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -87,7 +87,7 @@ namespace ComPact.Assignments
 		public RelayCommand EditRedirectCommand { get; set; }
 		public RelayCommand BackRedirectCommand { get; set; }
 		public RelayCommand DeleteAssignmentCommand { get; set; }
-		public RelayCommand<Assignment> SetAssignmentCommand { get; set; }
+		public RelayCommand<Models.Assignment> SetAssignmentCommand { get; set; }
 		public RelayCommand LoadDataCommand { get; set; }
 
 		#endregion
@@ -127,7 +127,7 @@ namespace ComPact.Assignments
 			{
 				await LoadData();
 			});
-			SetAssignmentCommand = new RelayCommand<Assignment>((assignment) =>
+			SetAssignmentCommand = new RelayCommand<Models.Assignment>((assignment) =>
 			{
 				SetAssignment(assignment);
 			});
@@ -147,19 +147,19 @@ namespace ComPact.Assignments
 
 			if (result)
 			{
-				await _assignmentDataService.Delete(Assignment.Id);
+				await _assignmentDataService.Delete((string)Assignment.Id);
 				_popUpService.Show("Succesfully deleted", PopUpLength.Long);
 				_navigationService.GoBack();
 			}
 		}
-		void SetAssignment(Assignment assignment)
+		void SetAssignment(Models.Assignment assignment)
 		{
 			Assignment = assignment;
 		}
 		async Task LoadData()
 		{
-			User = await GetUser();	
-			Assignment = await _assignmentDataService.Get(Assignment.Id, User.Admin);
+			User = await GetUser();
+			Assignment = await _assignmentDataService.Get((string)Assignment.Id, User.Admin);
 		}
 		#endregion
 	}

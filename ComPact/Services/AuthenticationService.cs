@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
@@ -17,19 +17,21 @@ namespace ComPact.Services
 		readonly IMemberDataService _memberDataService;
 		readonly IAssignmentDataService _assignmentDataService;
 		readonly IPaymentDataService _paymentDataService;
+		readonly ILocationDataService _locationDataService;
 
 
 		/**
 		 * Constructor
 		 */
 
-		public AuthenticationService(IUserDataService userDataService, IDialogService dialogService, IMemberDataService memberDataService, IAssignmentDataService assignmentDataService, IPaymentDataService paymentDataService)
+		public AuthenticationService(IUserDataService userDataService, IDialogService dialogService, IMemberDataService memberDataService, IAssignmentDataService assignmentDataService, IPaymentDataService paymentDataService, ILocationDataService locationDataService)
 		{
 			_userDataService = userDataService;
 			_dialogService = dialogService;
 			_memberDataService = memberDataService;
 			_assignmentDataService = assignmentDataService;
 			_paymentDataService = paymentDataService;
+			_locationDataService = locationDataService;
 		}
 
 		//public async Task<bool> AuthenticateEmailAndPassword(string email, string password)
@@ -105,13 +107,14 @@ namespace ComPact.Services
 			try
 			{
 				User responseUser = await _userDataService?.Login(user);
-				IEnumerable<Assignment> assignments;
+				IEnumerable<Models.Assignment> assignments;
 				IEnumerable<Payment> payments;
-				if (responseUser.Admin == true)
+				if (responseUser.Admin)
 				{
 					IEnumerable<Member> members = await _memberDataService?.GetAll(responseUser.Id);
 					assignments = await _assignmentDataService?.GetAll(responseUser.Id, true);
 					payments = await _paymentDataService?.GetAll(responseUser.Id, true);
+					await _locationDataService?.GetAll(responseUser.Id, true);
 				}
 				else
 				{
@@ -166,6 +169,7 @@ namespace ComPact.Services
 				await _memberDataService.LogOut();
 				await _assignmentDataService.LogOut();
 				await _paymentDataService.LogOut();
+				await _locationDataService.LogOut();
 
 				isSuccessful = true;
 			}
@@ -194,16 +198,19 @@ namespace ComPact.Services
 						RefreshToken = token
 					};
 					var responseUser = await _userDataService.Login(data);
-					//IEnumerable<Assignment> assignments;
-					//if (responseUser.Admin == true)
-					//{
-					//	IEnumerable<Member> members = await _memberDataService?.GetAll(responseUser.Id);
-					//	assignments = await _assignmentDataService?.GetAll(responseUser.Id, true);
-					//}
-					//else
-					//{
-					//	assignments = await _assignmentDataService?.GetAll(responseUser.Id, false);
-					//}
+					IEnumerable<Assignment> assignments;
+					if (responseUser.Admin == true)
+					{
+						//IEnumerable<Member> members = await _memberDataService?.GetAll(responseUser.Id);
+						//assignments = await _assignmentDataService?.GetAll(responseUser.Id, true);
+
+						//await _paymentDataService?.GetAll(responseUser.Id, true);
+					}
+					else
+					{
+						//assignments = await _assignmentDataService?.GetAll(responseUser.Id, false);
+						//await _paymentDataService?.GetAll(responseUser.Id, false);
+					}
 					isSuccesful = true;
 				}
 				catch (Exception)

@@ -10,6 +10,7 @@ using Android.Support.Design.Widget;
 using Android.Support.V4.Content;
 using Android.Views;
 using Android.Widget;
+using ComPact.Droid.Helpers;
 using ComPact.Models;
 using ComPact.Payments;
 using GalaSoft.MvvmLight.Helpers;
@@ -75,6 +76,8 @@ namespace ComPact.Droid
 			//Set Hint visible priceEditText
 			_priceEditText.Text = null;
 
+			//string path = new FileSystem().WritePath;
+
 
 		}
 		/**
@@ -102,9 +105,6 @@ namespace ComPact.Droid
 			bindings.Add(this.SetBinding(() => ViewModel.Payment.Name, () => _whatEditText.Text, BindingMode.TwoWay));
 			bindings.Add(this.SetBinding(() => ViewModel.Payment.Price, () => _priceEditText.Text, BindingMode.TwoWay));
 			bindings.Add(this.SetBinding(() => ViewModel.Payment.Description, () => _detailsEditText.Text, BindingMode.TwoWay));
-			//bindings.Add(this.SetBinding(() => ViewModel.Payment.Image.ImageValue, () => Image.ImageValue, BindingMode.TwoWay));
-			//bindings.Add(this.SetBinding(() => ViewModel.Payment.Image.Path, () => Image.Path, BindingMode.TwoWay));
-
 		}
 
 		/**
@@ -143,8 +143,6 @@ namespace ComPact.Droid
 						ImageValue = Convert(bitmap),
 						Path = _currentImageFilePath
 					});
-				//Image.ImageValue = Convert(bitmap);
-				//Image.Path = _currentImageFilePath;
 
 				_addPictureImageView.SetImageBitmap(bitmap);
 				bitmap = null;

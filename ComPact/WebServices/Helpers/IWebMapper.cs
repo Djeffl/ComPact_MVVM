@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using ComPact.Models;
 using ComPact.WebServices.Models;
@@ -8,9 +8,9 @@ namespace ComPact
 	public interface IWebMapper
 	{
 		Assignment Map(WebAssignment assignment);
-		WebAssignment InvertMap(Assignment assignment);
-		IEnumerable<Assignment> Map(IEnumerable<WebAssignment> assignments);
-		IEnumerable<WebAssignment> InvertMap(IEnumerable<Assignment> assignments);
+		WebAssignment InvertMap(Models.Assignment assignment);
+		IEnumerable<Models.Assignment> Map(IEnumerable<WebAssignment> assignments);
+		IEnumerable<WebAssignment> InvertMap(IEnumerable<Models.Assignment> assignments);
 
 
 		User Map(WebUser user);
@@ -25,6 +25,12 @@ namespace ComPact
 		WebPayment InvertMap(Payment payment);
 		IEnumerable<Payment> Map(IEnumerable<WebPayment> payments);
 		IEnumerable<WebPayment> InvertMap(IEnumerable<Payment> payments);
+
+		Location Map(WebLocation location);
+		WebLocation InvertMap(Location location);
+		IEnumerable<Location> Map(IEnumerable<WebLocation> locations);
+		IEnumerable<WebLocation> InvertMap(IEnumerable<Location> locations);
+
 
 	}
 }

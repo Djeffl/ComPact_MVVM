@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -73,7 +73,7 @@ namespace ComPact.Assignments
 
 		#endregion
 		#region Commands
-		public RelayCommand<Assignment> SetAssignmentCommand { get; set; }
+		public RelayCommand<Models.Assignment> SetAssignmentCommand { get; set; }
 		public RelayCommand UpdateAssignmentCommand { get; set; }
 		public RelayCommand BackRedirectCommand { get; set; }
 		public RelayCommand<Member> MemberSelectedCommand { get; set; }
@@ -108,10 +108,10 @@ namespace ComPact.Assignments
 		{
 			BackRedirectCommand = new RelayCommand(_navigationService.GoBack);
 
-			SetAssignmentCommand = new RelayCommand<Assignment>(assignment =>
+			SetAssignmentCommand = new RelayCommand<Models.Assignment>((Action<Models.Assignment>)(assignment =>
 			{
 				Assignment = assignment;
-			});
+			}));
 
 			UpdateAssignmentCommand = new RelayCommand(async () =>
 			{
@@ -140,7 +140,7 @@ namespace ComPact.Assignments
 		#endregion
 
 		#region Methods
-		Task UpdateAssignment(Assignment assignment)
+		Task UpdateAssignment(Models.Assignment assignment)
 		{
 			try
 			{

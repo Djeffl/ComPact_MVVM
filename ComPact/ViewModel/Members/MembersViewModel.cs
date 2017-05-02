@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
+using ComPact.Extensions;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Views;
@@ -79,7 +80,7 @@ namespace ComPact.ViewModel.Members
 		}
 		async Task LoadData()
 		{
-			Members = Convert<Member>(await _memberDataService.GetAll());
+			Members = (await _memberDataService.GetAll()).Convert<Member>();
 		}
 		#endregion
 	}

@@ -16,12 +16,11 @@
         android:scaleType="fitCenter"
         android:layout_centerVertical="true"
         android:layout_alignParentLeft="true" />
-<!--    be.3factr.ComPact.Droid.CustomTextView-->
     <TextView
         android:id="@+id/customToolbarTitleTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Register"
+        android:text="Detail Payment"
         android:textSize="24dp"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"

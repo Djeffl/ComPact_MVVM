@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Android.Content;
 using Android.Views;
@@ -7,10 +7,10 @@ using ComPact.Models;
 
 namespace ComPact.Droid.Models
 {
-	public class AdapterAssignment : AdapterBase<Assignment>, AdapterView.IOnItemClickListener
+	public class AdapterAssignment : AdapterBase<ComPact.Models.Assignment>, AdapterView.IOnItemClickListener
 	{
 		
-		public AdapterAssignment(Context context, List<Assignment> items) : base(context, items)
+		public AdapterAssignment(Context context, List<ComPact.Models.Assignment> items) : base(context, items)
 		{
 		}
 

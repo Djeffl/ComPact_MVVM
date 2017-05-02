@@ -26,10 +26,9 @@ namespace ComPact.Services
 
 		public async Task<Assignment> Create(Assignment assignment)
 		{
-			Assignment response = await _apiService.AddAssignment(assignment);
+			Models.Assignment response = await _apiService.AddAssignment(assignment);
 			RepoAssignment data = _mapper.InvertMap(response);
 			return _mapper.Map(await _assignmentRepository.Insert(data));
-			
 		}
 		public async Task<IEnumerable<Assignment>> GetAll(bool isAdmin)
 		{
@@ -51,16 +50,16 @@ namespace ComPact.Services
 			return assignments;
 		}
 
-		public async Task<IEnumerable<Assignment>> GetAll(string userId, bool isAdmin)
+		public async Task<IEnumerable<Models.Assignment>> GetAll(string userId, bool isAdmin)
 		{
-			IEnumerable<Assignment> response = await _apiService.GetAssignments(userId, isAdmin);
+			IEnumerable<Models.Assignment> response = await _apiService.GetAssignments(userId, isAdmin);
 			IEnumerable<RepoAssignment> data = _mapper.InvertMap(response);
 			await _assignmentRepository.Insert(data);
 			return await GetAll(isAdmin);
 		}
-		public async Task<IEnumerable<Assignment>> GetAllUnfinished(bool isAdmin)
+		public async Task<IEnumerable<Models.Assignment>> GetAllUnfinished(bool isAdmin)
 		{
-			IEnumerable<Assignment> UnFinishedAssignments = _mapper.Map(await _assignmentRepository.Where(x => x.Done == false));
+			IEnumerable<Models.Assignment> UnFinishedAssignments = _mapper.Map(await _assignmentRepository.Where(x => x.Done == false));
 			if (isAdmin)
 			{
 				IEnumerable<Member> members = _mapper.Map(await _memberRespository?.All());
@@ -78,16 +77,16 @@ namespace ComPact.Services
 			return UnFinishedAssignments;
 		}
 
-		public async Task<Assignment> Update(Assignment assignment)
+		public async Task<Models.Assignment> Update(Models.Assignment assignment)
 		{
-			Assignment response = await _apiService.UpdateAssignment(assignment);
+			Models.Assignment response = await _apiService.UpdateAssignment(assignment);
 			RepoAssignment data = _mapper.InvertMap(response);
 			await _assignmentRepository.Update(data);
 			return response;
 		}
-		public async Task<Assignment> Get(string id, bool isAdmin)
+		public async Task<Models.Assignment> Get(string id, bool isAdmin)
 		{
-			Assignment assignment = _mapper.Map(await _assignmentRepository.Get(id));
+			Models.Assignment assignment = _mapper.Map(await _assignmentRepository.Get(id));
 			if (isAdmin)
 			{
 				IEnumerable<Member> members = _mapper.Map(await _memberRespository?.All());

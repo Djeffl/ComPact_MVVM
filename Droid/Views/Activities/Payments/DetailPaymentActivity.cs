@@ -2,11 +2,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 
 using Android.App;
 using Android.Content;
 using Android.Graphics;
+using Android.Graphics.Drawables;
 using Android.OS;
 using Android.Runtime;
 using Android.Support.Design.Widget;
@@ -14,9 +16,11 @@ using Android.Views;
 using Android.Widget;
 using ComPact.Models;
 using ComPact.Payments;
+using ComPact.WebServices.Data;
 using GalaSoft.MvvmLight.Helpers;
 using GalaSoft.MvvmLight.Views;
 using Java.IO;
+using Java.Net;
 using Microsoft.Practices.ServiceLocation;
 
 namespace ComPact.Droid.Payments
@@ -96,17 +100,36 @@ namespace ComPact.Droid.Payments
 
 			ViewModel.LoadDataCommand.Execute(null);
 
+
 			try
 			{
 				File image = new File(ViewModel.Payment.Image.Path);
 				if (image.Exists())
 				{
-				Bitmap bitmap = BitmapFactory.DecodeFile(image.AbsolutePath);
-				_picturePayment.SetImageBitmap(bitmap);
+					Bitmap bitmap = BitmapFactory.DecodeFile(image.AbsolutePath);
+					_picturePayment.SetImageBitmap(bitmap);
+				}
+				else
+				{
+					//string uri = "file:///Users/jeff/stage/Stage/uploads/payments/payments_0f76c96a-edd3-4b00-b1ca-fa2cc3e8d9c7-1508039419.jpg";// + ViewModel.Payment.Image.Path;// payments_0f76c96a-edd3-4b00-b1ca-fa2cc3e8d9c7-1508039419.jpg;
+					//Bitmap bitmap = BitmapFactory.DecodeFile(uri);
+					//_picturePayment.SetImageBitmap(bitmap);
+					Bitmap imageBitma = null;
+					using (var webClient = new WebClient())
+					{
+string url = "http://192.168.56.1:8080" + ApiCalls.ImageFilePaymentPath +  ViewModel.Payment.Image.Path;
+						var imageBytes = webClient.DownloadData(url);
+						if (imageBytes != null && imageBytes.Length > 0)
+						{
+							imageBitma = BitmapFactory.DecodeByteArray(imageBytes, 0, imageBytes.Length);
+						}
+					}
+					_picturePayment.SetImageBitmap(imageBitma);
 				}
 			}
-			catch (Exception)
+			catch (Exception ex)
 			{
+				System.Console.WriteLine(ex);
 			}
 
 			_titleTextView.Text = Payment.Name;

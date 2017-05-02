@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using ComPact.Models;
 using ComPact.WebServices.Models;
@@ -39,7 +39,7 @@ namespace ComPact
 		}
 		public IEnumerable<Assignment> Map(IEnumerable<WebAssignment> assignments)
 		{
-			List<Assignment> returnAssignments = new List<Assignment>();
+			List<Models.Assignment> returnAssignments = new List<Assignment>();
 			foreach (WebAssignment assignment in assignments)
 			{
 				returnAssignments.Add(Map(assignment));
@@ -48,10 +48,10 @@ namespace ComPact
 
 		}
 
-		public IEnumerable<WebAssignment> InvertMap(IEnumerable<Assignment> assignments)
+		public IEnumerable<WebAssignment> InvertMap(IEnumerable<Models.Assignment> assignments)
 		{
 			List<WebAssignment> returnAssignments = new List<WebAssignment>();
-			foreach (Assignment assignment in assignments)
+			foreach (Models.Assignment assignment in assignments)
 			{
 				returnAssignments.Add(InvertMap(assignment));
 			}
@@ -202,6 +202,73 @@ namespace ComPact
 				returnPayments.Add(InvertMap(payment));
 			}
 			return returnPayments;
+		}
+
+		public Location Map(WebLocation location)
+		{
+			List<Member> members = new List<Member>();
+			foreach (string memberId in location.MembersIds)
+			{
+				Member member = new Member
+				{
+					Id = memberId
+				};
+				members.Add(member);
+			}
+			var returnLocation = new Location
+			{
+				Id = location.Id,
+				Name = location.Name,
+				City = location.City,
+				Street = location.Street,
+				Radius = location.Radius,
+				AdminId = location.AdminId,
+				Members = members
+			};
+
+			return returnLocation;
+		}
+
+		public WebLocation InvertMap(Location location)
+		{
+			List<string> membersIds = new List<string>();
+			foreach (Member member in location.Members)
+			{
+				string memberId = member.Id;
+				membersIds.Add(memberId);
+			}
+			var returnLocation = new WebLocation
+			{
+				Id = location.Id,
+				Name = location.Name,
+				City = location.City,
+				Street = location.Street,
+				Radius = location.Radius,
+				AdminId = location.AdminId,
+				MembersIds = membersIds
+			};
+
+			return returnLocation;
+		}
+
+		public IEnumerable<Location> Map(IEnumerable<WebLocation> locations)
+		{
+			var returnLocations = new List<Location>();
+			foreach (WebLocation location in locations)
+			{
+				returnLocations.Add(Map(location));
+			}
+			return returnLocations;
+		}
+
+		public IEnumerable<WebLocation> InvertMap(IEnumerable<Location> locations)
+		{
+			var returnLocations = new List<WebLocation>();
+			foreach (Location location in locations)
+			{
+				returnLocations.Add(InvertMap(location));
+			}
+			return returnLocations;
 		}
 	}
 }

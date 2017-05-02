@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -11,7 +11,7 @@ using GalaSoft.MvvmLight.Views;
 
 namespace ComPact.ViewModel
 {
-	public class AssignmentsViewModel: BaseViewModel, INotifyPropertyChanged
+	public class AssignmentsViewModel: BaseViewModel
 	{
 		/**
 		 * Declare Services
@@ -65,8 +65,8 @@ namespace ComPact.ViewModel
 				Set(ref _done, value);
 			}
 		}
-		ObservableCollection<Assignment> _assignments;
-		public ObservableCollection<Assignment> Assignments
+		ObservableCollection<Models.Assignment> _assignments;
+		public ObservableCollection<Models.Assignment> Assignments
 		{
 			get
 			{
@@ -139,7 +139,7 @@ namespace ComPact.ViewModel
 		void RegisterCommands()
 		{
 			AddAssignmentRedirectCommand = new RelayCommand(AddTaskRedirect);
-			DetailAssignmentRedirectCommand = new RelayCommand<Assignment>(DetailAssignmentRedirect);
+			DetailAssignmentRedirectCommand = new RelayCommand<Models.Assignment>(this.DetailAssignmentRedirect);
 			AssignmentsPostionCommand = new RelayCommand<int>(pos =>
 			{
 				Debug.WriteLine(pos);//Assignments[pos]);
@@ -149,7 +149,7 @@ namespace ComPact.ViewModel
 			{
 				await LoadData();
 			});
-			AssignmentDoneCommand = new RelayCommand<Assignment>(async (assignment) =>
+			AssignmentDoneCommand = new RelayCommand<Models.Assignment>(async (assignment) =>
 			{
 				await AssignmentDone(assignment);
 			});
@@ -162,7 +162,7 @@ namespace ComPact.ViewModel
 			_navigationService.NavigateTo(LocatorViewModel.AddTaskPageKey);
 		}
 
-		void DetailAssignmentRedirect(Assignment assignment)
+		void DetailAssignmentRedirect(Models.Assignment assignment)
 		{
 			_navigationService.NavigateTo(LocatorViewModel.DetailAssignmentPageKey, assignment);
 		}
@@ -173,17 +173,17 @@ namespace ComPact.ViewModel
 			Assignments = await GetAssignments();
 		}
 
-		async Task<ObservableCollection<Assignment>> GetAssignments()
+		async Task<ObservableCollection<Models.Assignment>> GetAssignments()
 		{
-			IEnumerable<Assignment> assignments = await _assignmentDataService?.GetAllUnfinished(User.Admin);
-			return Convert<Assignment>(assignments);
+			IEnumerable<Models.Assignment> assignments = await _assignmentDataService?.GetAllUnfinished(User.Admin);
+			return Convert(assignments);
 		}
-		async Task AssignmentDone(Assignment assignment)
+		async Task AssignmentDone(Models.Assignment assignment)
 		{
 			bool isConfirmed = await _dialogService.ShowMessage("Are you sure?", "Finish Task");
 			if (isConfirmed)
 			{
-				Assignment data = new Assignment
+				Models.Assignment data = new Models.Assignment
 				{
 					Done = true,
 					Id = assignment.Id
