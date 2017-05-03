@@ -1,11 +1,18 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
+using System.Linq;
+using System.Text;
+
 using Android.App;
+using Android.Content;
 using Android.OS;
+using Android.Runtime;
 using Android.Support.Design.Widget;
 using Android.Views;
 using Android.Widget;
+using ComPact.Locations;
+using ComPact.Models;
 using GalaSoft.MvvmLight.Helpers;
 using GalaSoft.MvvmLight.Views;
 using Microsoft.Practices.ServiceLocation;
@@ -36,7 +43,7 @@ namespace ComPact.Droid.Locations
 			{
 				_location = value;
 				//SET LIST
-                FillView();
+				FillView();
 			}
 		}
 
@@ -68,7 +75,6 @@ namespace ComPact.Droid.Locations
 			base.OnCreate(savedInstanceState);
 			//Set Lay out
 			SetContentView(Resource.Layout.ActivityDetailLocation);
-
 			//Init elements
 			FindViews();
 			//init

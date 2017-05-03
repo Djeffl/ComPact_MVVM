@@ -4,10 +4,10 @@ using ComPact.Models;
 
 namespace ComPact.Repositories
 {
-	public class LocationMemberRepository: BaseRepository<RepoLocationMember, Guid>, ILocationMemberRepository
+	public class LocationMemberRepository : BaseRepository<RepoLocationMember, Guid>, ILocationMemberRepository
 	{
 		public LocationMemberRepository(IDatabase database)
-			:base(database)
+				: base(database)
 		{
 		}
 	}

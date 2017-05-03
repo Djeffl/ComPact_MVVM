@@ -37,23 +37,20 @@ namespace ComPact.ViewModel
 			string first = input[0].ToString();
 			return first.ToUpper() + input.Substring(1);
 		}
-		public ObservableCollection<object> Convert(IEnumerable original)
+		//If you're working with non-generic IEnumerable you can do it this way:
+		protected ObservableCollection<object> Convert(IEnumerable original)
 		{
 			return new ObservableCollection<object>(original.Cast<object>());
 		}
-
 		//If you're working with generic IEnumerable<T> you can do it this way:
-		public ObservableCollection<T> Convert<T>(IEnumerable<T> original)
+		protected ObservableCollection<T> Convert<T>(IEnumerable<T> original)
 		{
 			return new ObservableCollection<T>(original);
 		}
-
 		//If you're working with non-generic IEnumerable but know the type of elements, you can do it this way:
-		public ObservableCollection<T> Convert<T>(IEnumerable original)
+		protected ObservableCollection<T> Convert<T>(IEnumerable original)
 		{
 			return new ObservableCollection<T>(original.Cast<T>());
 		}
-
-
 	}
 }

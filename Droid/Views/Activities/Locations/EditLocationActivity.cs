@@ -13,6 +13,7 @@ using Android.Support.Design.Widget;
 using Android.Views;
 using Android.Widget;
 using ComPact.Locations;
+using ComPact.Models;
 using GalaSoft.MvvmLight.Helpers;
 using GalaSoft.MvvmLight.Views;
 using Microsoft.Practices.ServiceLocation;
@@ -214,6 +215,7 @@ namespace ComPact.Droid.Locations
 			_showImageView.SetCommand("Click", ViewModel.ChangeVisibilityCommand);
 			_createFloatingActionButton.SetCommand("Click", ViewModel.UpdateLocationCommand);
 		}
+
 		void Init()
 		{
 			Location location = Nav.GetAndRemoveParameter<Location>(base.Intent);
@@ -243,33 +245,35 @@ namespace ComPact.Droid.Locations
 		{
 			Street = e.Text.ToString();
 		}
+
 		void SetMemberListView()
 		{
 			_membersListView.Adapter = ViewModel.Members.GetAdapter(GetMemberAdapter);
 		}
+
 		private View GetMemberAdapter(int position, Member member, View convertView)
 		{
 			// Not reusing views here
-			convertView = LayoutInflater.Inflate(Resource.Layout.ListViewPersonCheckbox, null);
+			convertView = LayoutInflater.Inflate(Resource.Layout.ListViewPersonCheckBox, null);
 
 			TextView nameTextView = convertView.FindViewById<TextView>(Resource.Id.listViewPersonCheckBoxNameTextView);
 			nameTextView.Text = member.FullName();
 			TextView emailTextView = convertView.FindViewById<TextView>(Resource.Id.listViewPersonCheckBoxEmailTextView);
 			emailTextView.Text = member.Email;
+
 			CheckBox memberCheckbox = convertView.FindViewById<CheckBox>(Resource.Id.listViewPersonCheckBoxCheckBox);
-			for (int i = ViewModel.Location.Members.Count - 1; i >= 0; i--)
+
+			foreach (Member locMember in ViewModel.Location.Members)
 			{
-				if (ViewModel.Location.Members[i].Id == member.Id)
+				if (locMember.Id == member.Id)
 				{
 					memberCheckbox.Checked = true;
-					ViewModel.AddMemberCommand.Execute(member);
 				}
 			}
+
 			memberCheckbox.SetCommand("Click", ViewModel.AddMemberCommand, member);
 
 			return convertView;
 		}
 	}
 }
-
-

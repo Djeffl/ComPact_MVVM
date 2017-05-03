@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using ComPact.Models;
 using ComPact.WebServices.Models;
@@ -39,7 +39,7 @@ namespace ComPact
 		}
 		public IEnumerable<Assignment> Map(IEnumerable<WebAssignment> assignments)
 		{
-			List<Models.Assignment> returnAssignments = new List<Assignment>();
+			List<Assignment> returnAssignments = new List<Assignment>();
 			foreach (WebAssignment assignment in assignments)
 			{
 				returnAssignments.Add(Map(assignment));
@@ -48,10 +48,10 @@ namespace ComPact
 
 		}
 
-		public IEnumerable<WebAssignment> InvertMap(IEnumerable<Models.Assignment> assignments)
+		public IEnumerable<WebAssignment> InvertMap(IEnumerable<Assignment> assignments)
 		{
 			List<WebAssignment> returnAssignments = new List<WebAssignment>();
-			foreach (Models.Assignment assignment in assignments)
+			foreach (Assignment assignment in assignments)
 			{
 				returnAssignments.Add(InvertMap(assignment));
 			}

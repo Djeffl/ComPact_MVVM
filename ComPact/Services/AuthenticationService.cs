@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
@@ -107,19 +107,22 @@ namespace ComPact.Services
 			try
 			{
 				User responseUser = await _userDataService?.Login(user);
-				IEnumerable<Models.Assignment> assignments;
+				IEnumerable<Assignment> assignments;
 				IEnumerable<Payment> payments;
-				if (responseUser.Admin)
+				if (responseUser.Admin == true)
 				{
 					IEnumerable<Member> members = await _memberDataService?.GetAll(responseUser.Id);
 					assignments = await _assignmentDataService?.GetAll(responseUser.Id, true);
 					payments = await _paymentDataService?.GetAll(responseUser.Id, true);
 					await _locationDataService?.GetAll(responseUser.Id, true);
+
 				}
 				else
 				{
 					assignments = await _assignmentDataService?.GetAll(responseUser.Id, false);
 					await _paymentDataService?.GetAll(responseUser.Id, false);
+					//await _locationDataService?.GetAll(responseUser.Id, false);
+
 
 				}
 
@@ -198,19 +201,16 @@ namespace ComPact.Services
 						RefreshToken = token
 					};
 					var responseUser = await _userDataService.Login(data);
-					IEnumerable<Assignment> assignments;
-					if (responseUser.Admin == true)
-					{
-						//IEnumerable<Member> members = await _memberDataService?.GetAll(responseUser.Id);
-						//assignments = await _assignmentDataService?.GetAll(responseUser.Id, true);
-
-						//await _paymentDataService?.GetAll(responseUser.Id, true);
-					}
-					else
-					{
-						//assignments = await _assignmentDataService?.GetAll(responseUser.Id, false);
-						//await _paymentDataService?.GetAll(responseUser.Id, false);
-					}
+					//IEnumerable<Assignment> assignments;
+					//if (responseUser.Admin == true)
+					//{
+					//	IEnumerable<Member> members = await _memberDataService?.GetAll(responseUser.Id);
+					//	assignments = await _assignmentDataService?.GetAll(responseUser.Id, true);
+					//}
+					//else
+					//{
+					//	assignments = await _assignmentDataService?.GetAll(responseUser.Id, false);
+					//}
 					isSuccesful = true;
 				}
 				catch (Exception)

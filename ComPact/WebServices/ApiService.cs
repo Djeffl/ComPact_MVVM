@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using ComPact.Models;
@@ -16,17 +16,18 @@ namespace ComPact.WebServices
 		IPaymentWebService _paymentWebService;
 		ILocationWebService _locationWebService;
 
-		public ApiService(IWebMapper mapper, IAssignmentWebService assignmentWebService, 
-		                  IUserWebService userWebService, IMemberWebService memberWebService, 
-		                  IPaymentWebService paymentWebService, ILocationWebService locationWebService)
+		public ApiService(IWebMapper mapper, IAssignmentWebService assignmentWebService,
+						  IUserWebService userWebService, IMemberWebService memberWebService,
+						  IPaymentWebService paymentWebService, ILocationWebService locationWebService)
 		{
 			_mapper = mapper;
 			_assignmentWebService = assignmentWebService;
 			_userWebService = userWebService;
 			_memberWebService = memberWebService;
 			_paymentWebService = paymentWebService;
-			_locationWebService = locationWebService;
+			_locationWebService = locationWebService;       
 		}
+
 
 		public async Task<User> AddUser(User user)
 		{
@@ -152,7 +153,7 @@ namespace ComPact.WebServices
 			}
 			catch (Exception)
 			{
-				
+
 			}
 			return isSuccessful;
 		}

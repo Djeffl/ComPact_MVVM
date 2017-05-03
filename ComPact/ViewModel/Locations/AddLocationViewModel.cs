@@ -2,157 +2,159 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
+using ComPact.Extensions;
 using ComPact.Helpers;
 using ComPact.Models;
+using ComPact.Services;
 using ComPact.ViewModel;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Views;
 
 namespace ComPact.Locations
 {
-	public class AddLocationViewModel : BaseViewModel
+public class AddLocationViewModel : BaseViewModel
+{
+	/**
+	 * Import Services
+	 */
+	readonly INavigationService _navigationService;
+	readonly IMemberDataService _membersDataService;
+	readonly ILocationDataService _locationDataService;
+	readonly IPopUpService _popUpService;
+	readonly IDialogService _dialogService;
+	#region Parameters
+	/**
+	 * Parameters
+	 */
+	Location _location = new Location
 	{
-		/**
-		 * Import Services
-		 */
-		readonly INavigationService _navigationService;
-		readonly IMemberDataService _membersDataService;
-		readonly ILocationDataService _locationDataService;
-		readonly IPopUpService _popUpService;
-		readonly IDialogService _dialogService;
-		#region Parameters
-		/**
-		 * Parameters
-		 */
-		Location _location = new Location
+		Members = new List<Member>()
+	};
+	public Location Location
+	{
+		get
 		{
-			Members = new List<Member>()
-		};
-		public Location Location
-		{
-			get
-			{
-				return _location;
-			}
-			set
-			{
-				_location = value;
-				RaisePropertyChanged(nameof(Location));
-			}
+			return _location;
 		}
-
-
-		ObservableCollection<Member> _members = new ObservableCollection<Member>();
-		public ObservableCollection<Member> Members
+		set
 		{
-			get
-			{
-				return _members;
-			}
-			set
-			{
-				_members = value;
-				RaisePropertyChanged(nameof(Members));
-			}
+			_location = value;
+			RaisePropertyChanged(nameof(Location));
 		}
+	}
 
-		bool _isVisibleElementLocation;
-		public bool IsVisibleElementLocation
+
+	ObservableCollection<Member> _members = new ObservableCollection<Member>();
+	public ObservableCollection<Member> Members
+	{
+		get
 		{
-			get
-			{
-				return _isVisibleElementLocation;
-			}
-			set
-			{
-				_isVisibleElementLocation = value;
-				RaisePropertyChanged(nameof(IsVisibleElementLocation));
-			}
+			return _members;
 		}
-		#endregion
-		#region Commands
-		public RelayCommand CreateLocationCommand { get; set; }
-		public RelayCommand BackRedirectCommand { get; set; }
-		public RelayCommand ChangeVisibilityCommand { get; set; }
-		public RelayCommand LoadDataCommand { get; set; }
-		public RelayCommand<Member> AddMemberCommand { get; set; }
-
-		#endregion
-		#region Constructor
-		public AddLocationViewModel(INavigationService navigationService, IUserDataService userDataService, IMemberDataService membersDataService, ILocationDataService locationDataService, IPopUpService popUpService, IDialogService dialogService)
-			: base(userDataService)
+		set
 		{
-			_navigationService = navigationService;
-			_membersDataService = membersDataService;
-			_locationDataService = locationDataService;
-			_popUpService = popUpService;
-			_dialogService = dialogService;
-
-			Init();
-
-			RegisterCommands();
+			_members = value;
+			RaisePropertyChanged(nameof(Members));
 		}
+	}
 
-		void Init()
+	bool _isVisibleElementLocation;
+	public bool IsVisibleElementLocation
+	{
+		get
 		{
-			//Register values
+			return _isVisibleElementLocation;
 		}
-
-		void RegisterCommands()
+		set
 		{
-			BackRedirectCommand = new RelayCommand(_navigationService.GoBack);
-			CreateLocationCommand = new RelayCommand(async () =>
-			{
-				await CreateLocation();
-			});
-			ChangeVisibilityCommand = new RelayCommand(ChangeVisibility);
-			LoadDataCommand = new RelayCommand(async () =>
-			{
-				await LoadData();
-			});
-			AddMemberCommand = new RelayCommand<Member>(AddMember);
+			_isVisibleElementLocation = value;
+			RaisePropertyChanged(nameof(IsVisibleElementLocation));
 		}
+	}
+	#endregion
+	#region Commands
+	public RelayCommand CreateLocationCommand { get; set; }
+	public RelayCommand BackRedirectCommand { get; set; }
+	public RelayCommand ChangeVisibilityCommand { get; set; }
+	public RelayCommand LoadDataCommand { get; set; }
+	public RelayCommand<Member> AddMemberCommand { get; set; }
 
 	#endregion
-		#region Methods
-		async Task CreateLocation()
-		{
-			System.Diagnostics.Debug.WriteLine(Location);
-			System.Diagnostics.Debug.WriteLine(Location.Members.Count);
-			try
-			{
-				string adminId = (await UserDataService?.GetUser()).Id;
-				Location.AdminId = adminId;
-				await _locationDataService.Create(Location);
-				_navigationService.GoBack();
-			}
-			catch (ArgumentException)
-			{
-				_dialogService.ShowMessage("Please fill in all the fields");
-			}
-			catch (Exception ex)
-			{
-				_dialogService.ShowMessage(ex.ToString());
-			}
-		}
+	#region Constructor
+	public AddLocationViewModel(INavigationService navigationService, IUserDataService userDataService, IMemberDataService membersDataService, ILocationDataService locationDataService, IPopUpService popUpService, IDialogService dialogService)
+		: base(userDataService)
+	{
+		_navigationService = navigationService;
+		_membersDataService = membersDataService;
+		_locationDataService = locationDataService;
+		_popUpService = popUpService;
+		_dialogService = dialogService;
 
-		void ChangeVisibility()
-		{
-			IsVisibleElementLocation = !IsVisibleElementLocation;
-		}
+		Init();
 
-		async Task LoadData()
-		{
-			Members = Convert<Member>(await _membersDataService.GetAll());
-		}
+		RegisterCommands();
+	}
 
-		void AddMember(Member member)
+	void Init()
+	{
+		//Register values
+	}
+
+	void RegisterCommands()
+	{
+		BackRedirectCommand = new RelayCommand(_navigationService.GoBack);
+		CreateLocationCommand = new RelayCommand(async () =>
 		{
-			if (Location.Members.Contains(member))
-			{
-				Location.Members.Remove(member);
-			}
-			else
+			await CreateLocation();
+		});
+		ChangeVisibilityCommand = new RelayCommand(ChangeVisibility);
+		LoadDataCommand = new RelayCommand(async () =>
+		{
+			await LoadData();
+		});
+		AddMemberCommand = new RelayCommand<Member>(AddMember);
+	}
+
+	#endregion
+	#region Methods
+	async Task CreateLocation()
+	{
+		System.Diagnostics.Debug.WriteLine(Location);
+		System.Diagnostics.Debug.WriteLine(Location.Members.Count);
+		try
+		{
+			string adminId = (await UserDataService?.GetUser()).Id;
+			Location.AdminId = adminId;
+			await _locationDataService.Create(Location);
+			_navigationService.GoBack();
+		}
+		catch (ArgumentException)
+		{
+			_dialogService.ShowMessage("Please fill in all the fields");
+		}
+		catch (Exception ex)
+		{
+			_dialogService.ShowMessage(ex.ToString());
+		}
+	}
+
+	void ChangeVisibility()
+	{
+		IsVisibleElementLocation = !IsVisibleElementLocation;
+	}
+
+	async Task LoadData()
+	{
+			Members = (await _membersDataService.GetAll()).Convert<Member>();
+	}
+
+	void AddMember(Member member)
+	{
+		if (Location.Members.Contains(member))
+		{
+			Location.Members.Remove(member);
+		}
+		else
 			{
 				Location.Members.Add(member);
 			}

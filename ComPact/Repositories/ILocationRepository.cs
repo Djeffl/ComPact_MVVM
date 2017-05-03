@@ -1,8 +1,9 @@
-﻿using ComPact.Repositories;
+﻿using System;
+using ComPact.Models;
 
-namespace ComPact
+namespace ComPact.Repositories
 {
-	public interface ILocationRepository: IBaseRepository<RepoLocation, string>
+	public interface ILocationRepository : IBaseRepository<RepoLocation, string>
 	{
 	}
 }

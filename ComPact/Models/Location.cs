@@ -1,7 +1,7 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 
-namespace ComPact
+namespace ComPact.Models
 {
 	public class Location
 	{
@@ -16,7 +16,6 @@ namespace ComPact
 		public override string ToString()
 		{
 			return string.Format("[Location: Name={0}, City={1}, Street={2}, radius={3}, Members={4}]", Name, City, Street, Radius, Members);
-	
 		}
 	}
 }

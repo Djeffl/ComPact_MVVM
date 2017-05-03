@@ -1,4 +1,4 @@
-
+﻿
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -26,7 +26,7 @@ using Java.Util;
 
 namespace ComPact.Droid.Tasks
 {
-	[Activity]
+	[Activity(Label = "AddTaskActivity")]
 	public class AddAssignmentActivity : BaseActivity
 	{
 		//Local variables
@@ -160,7 +160,7 @@ namespace ComPact.Droid.Tasks
 			//_addTaskFloatingActionButton.SetCommand("Click", ViewModel.CreateTaskCommand);
 			_addTaskFloatingActionButton.Click += (sender, e) =>
 			{
-				var assignment = new ComPact.Models.Assignment()
+				var assignment = new Assignment()
 				{
 					Member = ViewModel.SelectedMember,
 					ItemName = _itemNameEditText.Text,
@@ -172,6 +172,10 @@ namespace ComPact.Droid.Tasks
 				ClearFields();
 			};
 			_backImageView.SetCommand("Click", ViewModel.BackRedirectCommand);
+			//_membersListView.SetCommand("Click", ViewModel.CreateUserCommand, binding);
+			//_itemNameSpinner.SetCommand("OnItemSelectedListener", ViewModel.Test?.Execute(
+			//	(TextView)_itemNameSpinner.SelectedView).Text
+			//);
 		}
 
 		void SetMemberListView()
@@ -193,7 +197,7 @@ namespace ComPact.Droid.Tasks
 		private View GetMemberAdapter(int position, Member member, View convertView)
 		{
 			// Not reusing views here
-			convertView = LayoutInflater.Inflate(Resource.Layout.ListViewPerson, null);
+			convertView = LayoutInflater.Inflate(Resource.Layout.ListViewPersonNormal, null);
 
 			TextView nameTextView = convertView.FindViewById<TextView>(Resource.Id.listViewPersonNameTextView);
 			nameTextView.Text = member.FullName();
@@ -217,7 +221,9 @@ namespace ComPact.Droid.Tasks
 		void OnIconClick(object sender, int position)
 		{
 			ViewModel.IconName = new IconList()[position].Name;
+			// Display a toast that briefly shows the enumeration of the selected photo:
 			int photoNum = position + 1;
+			//Toast.MakeText(this, "This is photo number " + photoNum, ToastLength.Short).Show();
 
 			for (int iconPlace = 0; iconPlace < iconList.Count; iconPlace++)
 			{
@@ -239,6 +245,12 @@ namespace ComPact.Droid.Tasks
 				((ImageView)((LinearLayout)_recyclerView.GetChildAt(iconPlace)).GetChildAt(0)).SetColorFilter(_resetColorFilter);
 			}
 		}
+		//void Test()
+		//{
+		//	ViewModel.ItemNameCommand?.Execute(
+		//		 ((TextView)_itemNameSpinner.SelectedView).Text
+		//	);
+		//}
 		#endregion
 	}
 }

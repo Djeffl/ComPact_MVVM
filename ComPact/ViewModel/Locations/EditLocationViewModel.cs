@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Threading.Tasks;
+using ComPact.Extensions;
 using ComPact.Helpers;
+using ComPact.Models;
+using ComPact.Services;
 using ComPact.ViewModel;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Views;
@@ -128,18 +130,34 @@ namespace ComPact.Locations
 			IsVisibleElementLocation = !IsVisibleElementLocation;
 		}
 
-		void AddMember(Member member)
+		void AddMember(Member mem)
 		{
-			if (Location.Members.Contains(member))
+
+			//if (Location.Members.Contains(member))
+			//{
+			//	Location.Members.Remove(member);
+			//}
+			//else
+			//{
+			//	Location.Members.Add(member);
+			//}
+			List<string> membersIds = new List<string>();
+			foreach (var member in Location.Members)
 			{
-				Location.Members.Remove(member);
+				membersIds.Add(member.Id);
+			}
+
+			if ( membersIds.Contains(mem.Id))
+			{
+				int index = membersIds.IndexOf(mem.Id);
+				bool tas = Location.Members.Remove(Location.Members[index]);
 			}
 			else
 			{
-				Location.Members.Add(member);
+				Location.Members.Add(mem);
 			}
 		}
-	
+
 		async Task UpdateLocation(Location location)
 		{
 			try
@@ -150,7 +168,7 @@ namespace ComPact.Locations
 			}
 			catch (Exception ex)
 			{
-				Debug.WriteLine(ex);
+				System.Diagnostics.Debug.WriteLine(ex);
 			}
 		}
 
@@ -162,7 +180,7 @@ namespace ComPact.Locations
 		async Task LoadMembers()
 		{
 			IEnumerable<Member> list = await _memberDataService?.GetAll();
-			Members = Convert<Member>(list);
+			Members = list.Convert<Member>();
 		}
 		#endregion
 	}

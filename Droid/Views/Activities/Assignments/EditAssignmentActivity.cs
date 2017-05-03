@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -191,7 +191,7 @@ namespace ComPact.Droid.Assignments
 		void Init()
 		{
 			ViewModel.LoadDataCommand?.Execute(null);
-			Assignment = Nav.GetAndRemoveParameter<ComPact.Models.Assignment>(base.Intent);
+			Assignment = Nav.GetAndRemoveParameter<Assignment>(Intent);
 			ViewModel.SetAssignmentCommand.Execute(Assignment);
 			//Edit header
 			_optionsImageView.Visibility = ViewStates.Gone;
@@ -209,10 +209,10 @@ namespace ComPact.Droid.Assignments
 		{
 			bindings.Add(this.SetBinding(() => ViewModel.Members, () => Members));
 
-			bindings.Add(this.SetBinding((System.Linq.Expressions.Expression<Func<string>>)(() => (string)ViewModel.Assignment.ItemName), () => _itemNameEditText.Text, BindingMode.TwoWay));
-			bindings.Add(this.SetBinding((System.Linq.Expressions.Expression<Func<string>>)(() => (string)ViewModel.Assignment.Description), () => _descriptionEditText.Text, BindingMode.TwoWay));
-			bindings.Add(this.SetBinding((System.Linq.Expressions.Expression<Func<string>>)(() => (string)ViewModel.Assignment.IconName), () => IconName));
-			bindings.Add(this.SetBinding((System.Linq.Expressions.Expression<Func<Member>>)(() => (Member)ViewModel.Assignment.Member), () => Member, BindingMode.TwoWay));
+			bindings.Add(this.SetBinding(() => ViewModel.Assignment.ItemName, () => _itemNameEditText.Text, BindingMode.TwoWay));
+			bindings.Add(this.SetBinding(() => ViewModel.Assignment.Description, () => _descriptionEditText.Text, BindingMode.TwoWay));
+			bindings.Add(this.SetBinding(() => ViewModel.Assignment.IconName, () => IconName));
+			bindings.Add(this.SetBinding(() => ViewModel.Assignment.Member, () => Member, BindingMode.TwoWay));
 			//bindings.Add(this.SetBinding(() => ViewModel.Assignment.Member, () => Member, BindingMode.TwoWay));
 
 			//binding = this.SetBinding(() => ViewModel.User, () => items[_membersListView.SelectedItemPosition], BindingMode.TwoWay);
@@ -247,7 +247,7 @@ namespace ComPact.Droid.Assignments
 		private View GetMemberAdapter(int position, Member member, View convertView)
 		{
 			// Not reusing views here
-			convertView = LayoutInflater.Inflate(Resource.Layout.ListViewPerson, null);
+			convertView = LayoutInflater.Inflate(Resource.Layout.ListViewPersonNormal, null);
 
 			TextView nameTextView = convertView.FindViewById<TextView>(Resource.Id.listViewPersonNameTextView);
 			nameTextView.Text = member.FullName();

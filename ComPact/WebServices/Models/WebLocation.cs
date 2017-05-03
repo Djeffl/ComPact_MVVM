@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace ComPact
+namespace ComPact.Models
 {
 	public class WebLocation
 	{

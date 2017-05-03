@@ -167,6 +167,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Views\Activities\RegisterActivity.cs" />
     <Compile Include="App.cs" />
@@ -296,7 +297,7 @@
     <AndroidResource Include="Resources\drawable-mdpi\ic_add_white_24dp.png" />
     <AndroidResource Include="Resources\layout\ActivityAddMember.axml" />
     <AndroidResource Include="Resources\layout\ListViewAssignment.axml" />
-    <AndroidResource Include="Resources\layout\ListViewPerson.axml" />
+    <AndroidResource Include="Resources\layout\ListViewPersonNormal.axml" />
     <AndroidResource Include="Resources\drawable-hdpi\ic_check_white_24dp.png" />
     <AndroidResource Include="Resources\drawable-mdpi\ic_check_white_24dp.png" />
     <AndroidResource Include="Resources\drawable-xhdpi\ic_check_white_24dp.png" />
@@ -422,10 +423,9 @@
     <AndroidResource Include="Resources\drawable-xxhdpi\ic_keyboard_arrow_up_white_24dp.png" />
     <AndroidResource Include="Resources\drawable-xxxhdpi\ic_keyboard_arrow_down_white_24dp.png" />
     <AndroidResource Include="Resources\drawable-xxxhdpi\ic_keyboard_arrow_up_white_24dp.png" />
-    <AndroidResource Include="Resources\layout\ListViewPersonCheckbox.axml" />
+    <AndroidResource Include="Resources\layout\ListViewPersonCheckBox.axml" />
+    <AndroidResource Include="Resources\layout\ListViewPersonRadioButton.axml" />
     <AndroidResource Include="Resources\layout\ActivityDetailLocation.axml" />
-    <AndroidResource Include="Resources\layout\ListViewPersonNormal.axml" />
-    <AndroidResource Include="Resources\drawable\placeholder-image-wide.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\" />
@@ -446,7 +446,9 @@
     <Folder Include="Views\Activities\Locations\" />
   </ItemGroup>
   <ItemGroup>
+    <AndroidAsset Include="Assets\RobotoTTF\Roboto-Black.ttf" />
     <AndroidAsset Include="Assets\RobotoTTF\Roboto-BlackItalic.ttf" />
+    <AndroidAsset Include="Assets\RobotoTTF\Roboto-Bold.ttf" />
     <AndroidAsset Include="Assets\RobotoTTF\Roboto-BoldItalic.ttf" />
     <AndroidAsset Include="Assets\RobotoTTF\Roboto-Italic.ttf" />
     <AndroidAsset Include="Assets\RobotoTTF\Roboto-Light.ttf" />
@@ -462,8 +464,6 @@
     <AndroidAsset Include="Assets\RobotoTTF\RobotoCondensed-Light.ttf" />
     <AndroidAsset Include="Assets\RobotoTTF\RobotoCondensed-LightItalic.ttf" />
     <AndroidAsset Include="Assets\RobotoTTF\RobotoCondensed-Regular.ttf" />
-    <AndroidAsset Include="Assets\RobotoTTF\Roboto-Black.ttf" />
-    <AndroidAsset Include="Assets\RobotoTTF\Roboto-Bold.ttf" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Import Project="..\packages\Xamarin.Build.Download.0.4.2\build\Xamarin.Build.Download.targets" Condition="Exists('..\packages\Xamarin.Build.Download.0.4.2\build\Xamarin.Build.Download.targets')" />

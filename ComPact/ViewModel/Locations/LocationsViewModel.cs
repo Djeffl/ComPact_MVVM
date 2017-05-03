@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using ComPact.Extensions;
 using ComPact.Models;
+using ComPact.Services;
 using ComPact.ViewModel;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Views;

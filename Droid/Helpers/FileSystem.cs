@@ -8,11 +8,6 @@ namespace ComPact.Droid.Helpers
 
 	public class FileSystem : IFileSystem
 	{
-		//public string WritePath = Path.GetDirectoryName(
-		//	Environment.SpecialFolder.MyPictures
-		//	.ToString()
-		//);
-
 		public void CreateDirectory(string path)
 		{
 			Directory.CreateDirectory(path);

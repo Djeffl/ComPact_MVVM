@@ -1,7 +1,6 @@
-﻿using System;
-using SQLite;
+﻿using SQLite;
 
-namespace ComPact
+namespace ComPact.Models
 {
 	public class RepoLocation
 	{
@@ -12,10 +11,5 @@ namespace ComPact
 		public string Street { get; set; }
 		public float Radius { get; set; }
 		public string AdminId { get; set; }
-
-		public override string ToString()
-		{
-			return string.Format("[Location: Name={0}, City={1}, Street={2}, radius={3}]", Name, City, Street, Radius);
-		}
 	}
 }

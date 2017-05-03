@@ -1,4 +1,4 @@
-using ComPact.Assignments;
+﻿using ComPact.Assignments;
 using ComPact.Locations;
 using ComPact.Members;
 using ComPact.Payments;
@@ -272,6 +272,8 @@ namespace ComPact
 			SimpleIoc.Default.Register<IAuthenticationService, AuthenticationService>();
 			SimpleIoc.Default.Register<IPaymentDataService, PaymentDataService>();
 			SimpleIoc.Default.Register<ILocationDataService, LocationDataService>();
+
+
 		}
 		void RegisterWebServices()
 		{
@@ -280,6 +282,7 @@ namespace ComPact
 			SimpleIoc.Default.Register<IUserWebService, UserWebService>();
 			SimpleIoc.Default.Register<IPaymentWebService, paymentWebService>();
 			SimpleIoc.Default.Register<ILocationWebService, LocationWebService>();
+
 
 		}
 		void RegisterRepositories()
@@ -290,6 +293,7 @@ namespace ComPact
 			SimpleIoc.Default.Register<IPaymentRepository, PaymentRepository>();
 			SimpleIoc.Default.Register<ILocationRepository, LocationRepository>();
 			SimpleIoc.Default.Register<ILocationMemberRepository, LocationMemberRepository>();
+
 		}
 	}
 }

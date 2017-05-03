@@ -2,20 +2,17 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Android.App;
-using Android.Graphics;
 using Android.OS;
 using Android.Support.Design.Widget;
-using Android.Support.V4.Content;
 using Android.Views;
 using Android.Widget;
 using ComPact.Locations;
-using ComPact.Models;
 using GalaSoft.MvvmLight.Helpers;
 
 namespace ComPact.Droid.Locations
 {
 	[Activity]
-	public class AddLocationActivity : BaseActivity
+	public class AddLocationActivity: BaseActivity
 	{
 		//Local variables
 		//Color _yellowColor;
@@ -176,7 +173,7 @@ namespace ComPact.Droid.Locations
 			bindings.Add(this.SetBinding(() => ViewModel.Location.Radius, () => _radiusEditText.Text, BindingMode.TwoWay));
 			bindings.Add(this.SetBinding(() => ViewModel.Members, () => Members, BindingMode.OneWay));
 		}
-	
+
 		/**
 		 * Register the commands from the ViewModel to the View
 		 */
@@ -212,10 +209,10 @@ namespace ComPact.Droid.Locations
 		{
 			_membersListView.Adapter = ViewModel.Members.GetAdapter(GetMemberAdapter);
 		}
-		private View GetMemberAdapter(int position, Member member, View convertView)
+		View GetMemberAdapter(int position, Member member, View convertView)
 		{
 			// Not reusing views here
-			convertView = LayoutInflater.Inflate(Resource.Layout.ListViewPersonCheckbox, null);
+			convertView = LayoutInflater.Inflate(Resource.Layout.ListViewPersonCheckBox, null);
 
 			TextView nameTextView = convertView.FindViewById<TextView>(Resource.Id.listViewPersonCheckBoxNameTextView);
 			nameTextView.Text = member.FullName();

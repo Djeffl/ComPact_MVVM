@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -34,6 +33,7 @@
     <Compile Include="Repositories\BaseRepository.cs" />
     <Compile Include="Repositories\MemberRepository.cs" />
     <Compile Include="Models\BaseModel.cs" />
+    <Compile Include="Models\Location.cs" />
     <Compile Include="Models\Member.cs" />
     <Compile Include="WebServices\BaseWebService.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
@@ -60,6 +60,7 @@
     <Compile Include="ViewModel\Assignments\AssignmentsViewModel.cs" />
     <Compile Include="ViewModel\Members\AddMembersViewModel.cs" />
     <Compile Include="ViewModel\Assignments\AddAssignmentViewModel.cs" />
+    <Compile Include="Services\LocationDataService.cs" />
     <Compile Include="Services\AssignmentDataService.cs" />
     <Compile Include="WebServices\IAssignmentWebService.cs" />
     <Compile Include="WebServices\Exceptions\WebException.cs" />
@@ -116,6 +117,21 @@
     <Compile Include="Helpers\PopUpLength.cs" />
     <Compile Include="Helpers\IUploadImage.cs" />
     <Compile Include="Models\Image.cs" />
+    <Compile Include="Extensions\EnumerableExtensions.cs" />
+    <Compile Include="Repositories\Models\RepoLocation.cs" />
+    <Compile Include="Repositories\Models\RepoLocationMember.cs" />
+    <Compile Include="Repositories\LocationMemberRepository.cs" />
+    <Compile Include="Repositories\ILocationMemberRepository.cs" />
+    <Compile Include="Repositories\ILocationRepository.cs" />
+    <Compile Include="Repositories\LocationRepository.cs" />
+    <Compile Include="Services\ILocationDataService.cs" />
+    <Compile Include="ViewModel\Locations\AddLocationViewModel.cs" />
+    <Compile Include="ViewModel\Locations\DetailLocationViewModel.cs" />
+    <Compile Include="ViewModel\Locations\EditLocationViewModel.cs" />
+    <Compile Include="ViewModel\Locations\LocationsViewModel.cs" />
+    <Compile Include="WebServices\Models\WebLocation.cs" />
+    <Compile Include="WebServices\ILocationWebService.cs" />
+    <Compile Include="WebServices\LocationWebService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Contracts\" />
@@ -139,6 +155,8 @@
     <Folder Include="Repositories\Models\" />
     <Folder Include="Repositories\Helpers\" />
     <Folder Include="ViewModel\Payments\" />
+    <Folder Include="Extensions\" />
+    <Folder Include="ViewModel\Locations\" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json">

@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Threading.Tasks;
-using ComPact.Extensions;
 using ComPact.Helpers;
 using ComPact.Models;
+using ComPact.Services;
 using ComPact.ViewModel;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Views;
 
-namespace ComPact
+namespace ComPact.Locations
 {
 	public class DetailLocationViewModel : BaseViewModel
 	{
@@ -127,7 +127,6 @@ namespace ComPact
 		{
 			_navigationService.NavigateTo(LocatorViewModel.EditLocationPagekey, Location);
 		}
-
 		void SetLocation(Location obj)
 		{
 			Location = obj;

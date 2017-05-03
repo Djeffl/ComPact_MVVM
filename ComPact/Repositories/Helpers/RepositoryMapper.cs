@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using ComPact.Extensions;
 using ComPact.Models;
 
 namespace ComPact
@@ -92,7 +91,7 @@ namespace ComPact
 
 		public Assignment Map(RepoAssignment assignment)
 		{
-			var returnAssignment = new Models.Assignment
+			var returnAssignment = new Assignment
 			{
 				Id = assignment.Id,
 				ItemName = assignment.ItemName,
@@ -132,10 +131,10 @@ namespace ComPact
 
 		}
 
-		public IEnumerable<RepoAssignment> InvertMap(IEnumerable<Models.Assignment> assignments)
+		public IEnumerable<RepoAssignment> InvertMap(IEnumerable<Assignment> assignments)
 		{
 			List<RepoAssignment> returnAssignments = new List<RepoAssignment>();
-			foreach (Models.Assignment assignment in assignments)
+			foreach (Assignment assignment in assignments)
 			{
 				returnAssignments.Add(InvertMap(assignment));
 			}
@@ -209,12 +208,12 @@ namespace ComPact
 
 			foreach (RepoLocationMember locationMember in locationMembers)
 			{
-				
+
 				membersIds.Add(
 					new Member
-				{
-					Id = locationMember.MemberId
-				});
+					{
+						Id = locationMember.MemberId
+					});
 			}
 
 			var returnLocation = new Location

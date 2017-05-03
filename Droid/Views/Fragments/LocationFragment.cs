@@ -7,7 +7,6 @@ using System.Text;
 
 using Android.App;
 using Android.Content;
-using Android.Graphics;
 using Android.Locations;
 using Android.OS;
 using Android.Runtime;
@@ -30,8 +29,8 @@ namespace ComPact.Droid.Fragments
 				return App.Locator.LocationsViewModel;
 			}
 		}
-		ObservableCollection<Location> _locations = new ObservableCollection<Location>();
-		public ObservableCollection<Location> Locations
+		ObservableCollection<ComPact.Models.Location> _locations = new ObservableCollection<ComPact.Models.Location>();
+		public ObservableCollection<ComPact.Models.Location> Locations
 		{
 			get
 			{
@@ -114,7 +113,7 @@ namespace ComPact.Droid.Fragments
 			_addLocationFloatingActionButton.SetCommand("Click", ViewModel.AddLocationRedirectCommand);
 		}
 
-		View GetLocationsAdapter(int position, Location location, View convertView)
+		View GetLocationsAdapter(int position, ComPact.Models.Location location, View convertView)
 		{
 			// Not reusing views here
 			LayoutInflater inflater = LayoutInflater.From(Application.Context);

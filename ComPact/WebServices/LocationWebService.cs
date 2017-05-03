@@ -1,8 +1,8 @@
-﻿using System;
-namespace ComPact
+﻿using ComPact.Models;
+
+namespace ComPact.WebServices
 {
-	public class LocationWebService: BaseWebService<WebLocation>, ILocationWebService
+	public class LocationWebService : BaseWebService<WebLocation>, ILocationWebService
 	{
-		
 	}
 }

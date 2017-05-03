@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using ComPact.Models;
 using ComPact.WebServices.Models;
@@ -30,6 +30,7 @@ namespace ComPact
 		Tuple<RepoLocation, IEnumerable<RepoLocationMember>> InvertMap(Location location);
 		IEnumerable<Location> Map(IEnumerable<Tuple<RepoLocation, IEnumerable<RepoLocationMember>>> locations);
 		IEnumerable<Tuple<RepoLocation, IEnumerable<RepoLocationMember>>> InvertMap(IEnumerable<Location> locations);
+
 
 	}
 }

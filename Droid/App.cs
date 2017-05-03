@@ -1,3 +1,4 @@
+using System;
 using GalaSoft.MvvmLight.Ioc;
 using GalaSoft.MvvmLight.Views;
 using Microsoft.Practices.ServiceLocation;
@@ -13,6 +14,7 @@ using ComPact.Droid.Members;
 using ComPact.Droid.Assignments;
 using ComPact.Droid.Tasks;
 using ComPact.Droid.Payments;
+using ComPact.Services;
 using ComPact.Droid.Locations;
 
 namespace ComPact.Droid
@@ -85,6 +87,7 @@ namespace ComPact.Droid
 			SimpleIoc.Default.Register<IDialogService, DialogService>();
 			SimpleIoc.Default.Register<IPopUpService, PopUpService>();
 			SimpleIoc.Default.Register<IDatabase, Database>();
+			//SimpleIoc.Default.Register<IMenuDialogService, MenuDialogService>();
 			SimpleIoc.Default.Register<IFileSystem, FileSystem>();
 		}
 	}

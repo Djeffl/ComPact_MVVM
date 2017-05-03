@@ -1,6 +1,7 @@
-﻿using ComPact.WebServices;
+﻿using System;
+using ComPact.Models;
 
-namespace ComPact
+namespace ComPact.WebServices
 {
 	public interface ILocationWebService: IBaseWebService<WebLocation>
 	{

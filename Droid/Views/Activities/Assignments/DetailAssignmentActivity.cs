@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Reflection.Emit;
@@ -143,7 +143,7 @@ namespace ComPact.Droid
 		void Init()
 		{
 			//Get Payment from previous screen & pass to viewmodel
-			Assignment assignment = Nav.GetAndRemoveParameter<Assignment>(base.Intent);
+			Assignment assignment = Nav.GetAndRemoveParameter<Assignment>(Intent);
 			ViewModel.SetAssignmentCommand.Execute(assignment);
 
 			_optionsImageView.Visibility = ViewStates.Gone;
@@ -156,7 +156,7 @@ namespace ComPact.Droid
 		void SetBindings()
 		{
 			bindings.Add(this.SetBinding(() => ViewModel.User, () => User));
-			bindings.Add(this.SetBinding((System.Linq.Expressions.Expression<Func<Assignment>>)(() => ViewModel.Assignment), (System.Linq.Expressions.Expression<Func<ComPact.Models.Assignment>>)(() => Assignment), BindingMode.TwoWay));
+			bindings.Add(this.SetBinding(() => ViewModel.Assignment, () => Assignment, BindingMode.TwoWay));
 		}
 
 		/**
@@ -164,8 +164,8 @@ namespace ComPact.Droid
 		 */
 		void SetCommands()
 		{
-			_editTaskFloatingActionButton.SetCommand("Click", ViewModel?.EditRedirectCommand);
-			_backImageView.SetCommand("Click", ViewModel?.BackRedirectCommand);
+			_editTaskFloatingActionButton.SetCommand("Click", ViewModel.EditRedirectCommand);
+			_backImageView.SetCommand("Click", ViewModel.BackRedirectCommand);
 			_deleteImageView.SetCommand("Click", ViewModel?.DeleteAssignmentCommand);
 		}
 		void FillView()
@@ -174,7 +174,7 @@ namespace ComPact.Droid
 			_PersonEmailTextView.Text = Assignment.Member.Email;
 			_itemNameTextView.Text = Assignment.ItemName;
 			_descriptionTextView.Text = Assignment.Description != null ? Assignment.Description : "No description was given.";
-			_iconImageView.SetImageResource(_iconList.FindByName((string)Assignment.IconName).IconId);
+			_iconImageView.SetImageResource(_iconList.FindByName(Assignment.IconName).IconId);
 		}
 		#endregion
 	}

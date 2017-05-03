@@ -1,13 +1,13 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ComPact.Extensions;
 using ComPact.Models;
 using ComPact.Repositories;
 using ComPact.WebServices;
 
-namespace ComPact
+namespace ComPact.Services
 {
 	public class LocationDataService : ILocationDataService
 	{
@@ -64,7 +64,7 @@ namespace ComPact
 		public async Task<Location> Get(string id, bool isAdmin)
 		{
 			RepoLocation repoLocation = await _locationRepository?.Get(id);
-			IEnumerable<RepoLocationMember> locationMembers = await _locationMemberRepository?.Where(x=> x.LocationId == repoLocation.Id);
+			IEnumerable<RepoLocationMember> locationMembers = await _locationMemberRepository?.Where(x => x.LocationId == repoLocation.Id);
 			Tuple<RepoLocation, IEnumerable<RepoLocationMember>> tuple = new Tuple<RepoLocation, IEnumerable<RepoLocationMember>>(repoLocation, locationMembers);
 			Location location = _mapper.Map(tuple);
 			if (isAdmin)
@@ -132,6 +132,8 @@ namespace ComPact
 		{
 			await _locationRepository?.Delete(await _locationRepository?.All());
 			await _locationMemberRepository?.Delete(await _locationMemberRepository?.All());
+			var ls = (await _locationMemberRepository.All()).Convert<RepoLocationMember>();
+			System.Diagnostics.Debug.WriteLine(ls.Count);
 		}
 
 		public async Task<Location> Update(Location location)

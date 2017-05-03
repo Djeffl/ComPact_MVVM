@@ -58,7 +58,6 @@ namespace ComPact.Droid.Fragments
 		//Elements
 		FloatingActionButton _addPaymentFloatingActionButton;
 		ListView _paymentsListView;
-		//
 		public override void OnCreate(Bundle savedInstanceState)
 		{
 			base.OnCreate(savedInstanceState);
@@ -103,7 +102,6 @@ namespace ComPact.Droid.Fragments
 		{
 			bindings.Add(this.SetBinding(() => ViewModel.Payments, () => Payments, BindingMode.OneWay));
 			bindings.Add(this.SetBinding(() => ViewModel.User, () => User, BindingMode.OneWay));
-
 
 		}
 		void SetCommands()

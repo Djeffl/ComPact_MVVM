@@ -1,6 +1,5 @@
 ﻿using System;
 using Android.App;
-using Android.Locations;
 using Android.OS;
 using Android.Views;
 
@@ -14,7 +13,6 @@ namespace ComPact.Droid.Fragments
 
 			// Create your fragment here
 		}
-
 
 		//public override void OnAttach(Android.Content.Context context)
 		//{
